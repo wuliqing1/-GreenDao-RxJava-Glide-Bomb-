@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LendPhoneSystemApp.iml" filepath="$PROJECT_DIR$/LendPhoneSystemApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/phonedaogenerator/phonedaogenerator.iml" filepath="$PROJECT_DIR$/phonedaogenerator/phonedaogenerator.iml" />
     </modules>
   </component>
 </project>
