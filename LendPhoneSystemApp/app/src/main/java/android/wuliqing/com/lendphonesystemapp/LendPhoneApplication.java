@@ -1,7 +1,7 @@
 package android.wuliqing.com.lendphonesystemapp;
 
 import android.app.Application;
-import android.wuliqing.com.lendphonesystemapp.Utils.DBHelper;
+import android.wuliqing.com.lendphonesystemapp.DataBase.DBHelper;
 
 /**
  * Created by 10172915 on 2016/5/25.

@@ -29,7 +29,8 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Phone_id = new Property(1, long.class, "phone_id", false, "PHONE_ID");
         public final static Property Lend_phone_name = new Property(2, String.class, "lend_phone_name", false, "LEND_PHONE_NAME");
-        public final static Property Lend_phone_time = new Property(3, String.class, "lend_phone_time", false, "LEND_PHONE_TIME");
+        public final static Property Lend_phone_time = new Property(3, java.util.Date.class, "lend_phone_time", false, "LEND_PHONE_TIME");
+        public final static Property Lend_phone_number = new Property(4, Integer.class, "lend_phone_number", false, "LEND_PHONE_NUMBER");
     };
 
     private DaoSession daoSession;
@@ -51,7 +52,8 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"PHONE_ID\" INTEGER NOT NULL ," + // 1: phone_id
                 "\"LEND_PHONE_NAME\" TEXT," + // 2: lend_phone_name
-                "\"LEND_PHONE_TIME\" TEXT);"); // 3: lend_phone_time
+                "\"LEND_PHONE_TIME\" INTEGER," + // 3: lend_phone_time
+                "\"LEND_PHONE_NUMBER\" INTEGER);"); // 4: lend_phone_number
     }
 
     /** Drops the underlying database table. */
@@ -76,9 +78,14 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Long> {
             stmt.bindString(3, lend_phone_name);
         }
  
-        String lend_phone_time = entity.getLend_phone_time();
+        java.util.Date lend_phone_time = entity.getLend_phone_time();
         if (lend_phone_time != null) {
-            stmt.bindString(4, lend_phone_time);
+            stmt.bindLong(4, lend_phone_time.getTime());
+        }
+ 
+        Integer lend_phone_number = entity.getLend_phone_number();
+        if (lend_phone_number != null) {
+            stmt.bindLong(5, lend_phone_number);
         }
     }
 
@@ -101,7 +108,8 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getLong(offset + 1), // phone_id
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // lend_phone_name
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // lend_phone_time
+            cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)), // lend_phone_time
+            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4) // lend_phone_number
         );
         return entity;
     }
@@ -112,7 +120,8 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setPhone_id(cursor.getLong(offset + 1));
         entity.setLend_phone_name(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setLend_phone_time(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setLend_phone_time(cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)));
+        entity.setLend_phone_number(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
      }
     
     /** @inheritdoc */

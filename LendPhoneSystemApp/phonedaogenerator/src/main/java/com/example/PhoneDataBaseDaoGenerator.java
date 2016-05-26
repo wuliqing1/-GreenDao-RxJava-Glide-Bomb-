@@ -43,8 +43,8 @@ public class PhoneDataBaseDaoGenerator {
         // For example, a property called “creationDate” will become a database column “CREATION_DATE”.
         note.addIntProperty("phone_number");
         note.addStringProperty("project_name");
-        note.addStringProperty("phone_time");
-        note.addStringProperty("phone_photo");
+        note.addDateProperty("phone_time");
+        note.addByteArrayProperty("phone_photo");
 
         Entity note1 = schema.addEntity("LendPhoneNote");
         note1.setTableName("LendPhoneNoteTable");
@@ -52,7 +52,8 @@ public class PhoneDataBaseDaoGenerator {
         Property phone_id  = note1.addLongProperty("phone_id").notNull().getProperty();
         note1.addToOne(note, phone_id);
         note1.addStringProperty("lend_phone_name");
-        note1.addStringProperty("lend_phone_time");
+        note1.addDateProperty("lend_phone_time");
+        note1.addIntProperty("lend_phone_number");
     }
 
 }
