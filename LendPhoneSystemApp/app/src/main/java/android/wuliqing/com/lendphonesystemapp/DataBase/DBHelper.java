@@ -82,6 +82,13 @@ public class DBHelper {
     }
 
     public static DBHelper getInstance() {
+        if (instance == null){
+            synchronized (DBHelper.class){
+                if (instance == null) {
+                    instance = new DBHelper();
+                }
+            }
+        }
         return instance;
     }
 

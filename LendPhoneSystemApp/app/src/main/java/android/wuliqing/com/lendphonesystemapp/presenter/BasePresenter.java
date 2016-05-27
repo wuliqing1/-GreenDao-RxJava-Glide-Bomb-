@@ -25,6 +25,7 @@
 package android.wuliqing.com.lendphonesystemapp.presenter;
 
 
+import android.wuliqing.com.lendphonesystemapp.Utils.DataSyncFactory;
 import android.wuliqing.com.lendphonesystemapp.mvpview.MvpView;
 
 /**
@@ -41,5 +42,11 @@ public abstract class BasePresenter<T extends MvpView> {
 
     public void detach() {
         mView = null;
+    }
+
+    protected DataSyncFactory dataSyncTools = DataSyncFactory.getInstance();
+
+    public void setDataSyncTool(DataSyncFactory dataSyncTools) {
+        this.dataSyncTools = dataSyncTools;
     }
 }

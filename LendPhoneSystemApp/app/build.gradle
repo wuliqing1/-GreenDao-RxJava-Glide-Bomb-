@@ -32,4 +32,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.+'
     compile 'com.android.support:design:23.+'
     compile 'de.greenrobot:greendao:2.1.0'
+    compile 'org.mockito:mockito-all:2.0.2-beta'
 }

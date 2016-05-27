@@ -2,9 +2,8 @@ package android.wuliqing.com.lendphonesystemapp;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,9 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.wuliqing.com.lendphonesystemapp.Utils.LogHelper;
+import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneListView;
+import android.wuliqing.com.lendphonesystemapp.presenter.PhoneListPresenter;
+
+import java.util.List;
+
+import zte.phone.greendao.PhoneNote;
 
 public class LendPhoneMainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, PhoneListView {
+    private static final String TAG = "LendPhoneMainActivity";
+    private PhoneListPresenter mPhoneListPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +49,14 @@ public class LendPhoneMainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        mPhoneListPresenter = new PhoneListPresenter();
+        mPhoneListPresenter.attach(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mPhoneListPresenter.onFetchedPhoneList();
     }
 
     @Override
@@ -97,5 +114,26 @@ public class LendPhoneMainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPhoneListPresenter.detach();
+    }
+
+    @Override
+    public void onFetchedPhones(List<PhoneNote> phoneNotes) {
+        LogHelper.logD(TAG, "");
+    }
+
+    @Override
+    public void onShowLoading() {
+
+    }
+
+    @Override
+    public void onHideLoading() {
+
     }
 }
