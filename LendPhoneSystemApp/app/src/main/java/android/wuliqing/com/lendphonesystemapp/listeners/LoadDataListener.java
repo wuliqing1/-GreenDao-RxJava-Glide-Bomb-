@@ -24,6 +24,6 @@
 
 package android.wuliqing.com.lendphonesystemapp.listeners;
 
-public interface DataListener<T> {
+public interface LoadDataListener<T> {
     void onComplete(T result);
 }

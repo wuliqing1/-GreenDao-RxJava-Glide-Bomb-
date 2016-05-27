@@ -1,7 +1,7 @@
 package android.wuliqing.com.lendphonesystemapp.presenter;
 
 import android.wuliqing.com.lendphonesystemapp.DataBase.PhoneTableAction;
-import android.wuliqing.com.lendphonesystemapp.listeners.DataListener;
+import android.wuliqing.com.lendphonesystemapp.listeners.LoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneListView;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
     }
 
     public void loadData() {
-        dataSyncTools.loadData(new DataListener<List<PhoneNote>>() {
+        dataSyncTools.loadData(new LoadDataListener<List<PhoneNote>>() {
             @Override
             public void onComplete(List<PhoneNote> result) {
                 mView.onHideLoading();

@@ -1,7 +1,7 @@
 package android.wuliqing.com.lendphonesystemapp.presenter;
 
 import android.wuliqing.com.lendphonesystemapp.DataBase.LendPhoneTableAction;
-import android.wuliqing.com.lendphonesystemapp.listeners.DataListener;
+import android.wuliqing.com.lendphonesystemapp.listeners.LoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.mvpview.LendPhoneListView;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class LendPhoneListPresenter extends BasePresenter<LendPhoneListView> {
     }
 
     public void loadData(final long phone_id) {
-        dataSyncTools.loadData(new DataListener<List<LendPhoneNote>>() {
+        dataSyncTools.loadData(new LoadDataListener<List<LendPhoneNote>>() {
             @Override
             public void onComplete(List<LendPhoneNote> result) {
                 mView.onHideLoading();

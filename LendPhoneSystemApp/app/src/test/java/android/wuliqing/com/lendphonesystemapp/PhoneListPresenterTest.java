@@ -2,7 +2,7 @@ package android.wuliqing.com.lendphonesystemapp;
 
 import android.wuliqing.com.lendphonesystemapp.DataBase.PhoneTableAction;
 import android.wuliqing.com.lendphonesystemapp.Utils.DataSyncFactory;
-import android.wuliqing.com.lendphonesystemapp.listeners.DataListener;
+import android.wuliqing.com.lendphonesystemapp.listeners.LoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneListView;
 import android.wuliqing.com.lendphonesystemapp.presenter.PhoneListPresenter;
 
@@ -47,13 +47,13 @@ public class PhoneListPresenterTest extends TestCase {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 Object[] arguments = invocation.getArguments();
-                DataListener dataListener = (DataListener)arguments[0];
+                LoadDataListener dataListener = (LoadDataListener)arguments[0];
                 List<PhoneNote> result = new ArrayList<PhoneNote>();
                 dataListener.onComplete(result);
 
                 return result;
             }
-        }).when(dataSyncTools).loadData(Mockito.any(DataListener.class), Mockito.any(PhoneTableAction.class));
+        }).when(dataSyncTools).loadData(Mockito.any(LoadDataListener.class), Mockito.any(PhoneTableAction.class));
 
         phoneListPresenter.onFetchedPhoneList();
         Mockito.verify(phoneListView).onShowLoading();
