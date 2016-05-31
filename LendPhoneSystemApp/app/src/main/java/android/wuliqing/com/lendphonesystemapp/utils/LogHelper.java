@@ -1,4 +1,4 @@
-package android.wuliqing.com.lendphonesystemapp.Utils;
+package android.wuliqing.com.lendphonesystemapp.utils;
 
 import android.util.Log;
 

@@ -1,4 +1,4 @@
-package android.wuliqing.com.lendphonesystemapp.DataBase;
+package android.wuliqing.com.lendphonesystemapp.dataBase;
 
 import java.util.List;
 
@@ -57,4 +57,25 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
         }
         lendPhoneNoteDao.insert(note);
     }
+
+    @Override
+    public List<LendPhoneNote> queryWithKey(String column, String key) {
+        String[] columns = lendPhoneNoteDao.getAllColumns();
+        boolean isColumnExist = false;
+        for (String column_temp :
+                columns) {
+            if (column_temp.equalsIgnoreCase(column)) {
+                isColumnExist = true;
+            }
+        }
+        if(!isColumnExist || key == null){
+            throw new IllegalArgumentException();
+        }
+        //需要优化，目前只支持lend_phone_name字段查询
+        List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
+                .where(LendPhoneNoteDao.Properties.Lend_phone_name.like(key))
+                .orderAsc(LendPhoneNoteDao.Properties.Lend_phone_time).build().list();
+        return list;
+    }
+
 }

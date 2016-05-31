@@ -1,4 +1,4 @@
-package android.wuliqing.com.lendphonesystemapp.DataBase;
+package android.wuliqing.com.lendphonesystemapp.dataBase;
 
 import java.util.List;
 
@@ -10,4 +10,6 @@ public interface DataBaseAction<T> {
     public void update(T note);
     public void remove(long id);
     public void add(T note);
+
+    public List<T> queryWithKey(String column, String key);
 }

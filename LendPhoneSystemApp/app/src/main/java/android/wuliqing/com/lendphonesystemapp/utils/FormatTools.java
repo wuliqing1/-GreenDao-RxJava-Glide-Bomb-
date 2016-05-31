@@ -1,4 +1,4 @@
-package android.wuliqing.com.lendphonesystemapp.Utils;
+package android.wuliqing.com.lendphonesystemapp.utils;
 
 /**
  * Created by 10172915 on 2016/5/26.

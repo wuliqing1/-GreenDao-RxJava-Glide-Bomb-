@@ -4,8 +4,8 @@ import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.test.AndroidTestCase;
-import android.wuliqing.com.lendphonesystemapp.DataBase.DBHelper;
-import android.wuliqing.com.lendphonesystemapp.Utils.FormatTools;
+import android.wuliqing.com.lendphonesystemapp.dataBase.DBHelper;
+import android.wuliqing.com.lendphonesystemapp.utils.FormatTools;
 
 import java.util.Date;
 import java.util.List;

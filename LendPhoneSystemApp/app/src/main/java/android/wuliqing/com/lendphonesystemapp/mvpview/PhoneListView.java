@@ -9,4 +9,8 @@ import zte.phone.greendao.PhoneNote;
  */
 public interface PhoneListView extends MvpView{
     public void onFetchedPhones(List<PhoneNote> phoneNotes);
+
+    public void onRemoveResult(boolean result);
+
+    public void onQueryResult(List<PhoneNote> phoneNotes);
 }

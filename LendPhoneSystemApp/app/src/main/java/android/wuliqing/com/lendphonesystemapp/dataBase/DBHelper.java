@@ -1,8 +1,8 @@
-package android.wuliqing.com.lendphonesystemapp.DataBase;
+package android.wuliqing.com.lendphonesystemapp.dataBase;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.wuliqing.com.lendphonesystemapp.Utils.FormatTools;
+import android.wuliqing.com.lendphonesystemapp.utils.FormatTools;
 
 import java.util.Date;
 import java.util.List;

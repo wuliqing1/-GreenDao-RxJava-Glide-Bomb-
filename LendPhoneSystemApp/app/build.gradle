@@ -33,4 +33,7 @@ dependencies {
     compile 'com.android.support:design:23.+'
     compile 'de.greenrobot:greendao:2.1.0'
     compile 'org.mockito:mockito-all:2.0.2-beta'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:cardview-v7:23.3.0'
+    compile project(':cptr')
 }

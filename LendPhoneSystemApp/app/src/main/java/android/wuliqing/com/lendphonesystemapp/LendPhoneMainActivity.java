@@ -12,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.wuliqing.com.lendphonesystemapp.Utils.LogHelper;
+import android.wuliqing.com.lendphonesystemapp.utils.LogHelper;
 import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneListView;
 import android.wuliqing.com.lendphonesystemapp.presenter.PhoneListPresenter;
 
@@ -56,7 +56,7 @@ public class LendPhoneMainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        mPhoneListPresenter.onFetchedPhoneList();
+        mPhoneListPresenter.loadData();
     }
 
     @Override
@@ -84,8 +84,11 @@ public class LendPhoneMainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add_phone) {
+
             return true;
+        } else if (id == R.id.action_sync_phone) {
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -125,6 +128,16 @@ public class LendPhoneMainActivity extends AppCompatActivity
     @Override
     public void onFetchedPhones(List<PhoneNote> phoneNotes) {
         LogHelper.logD(TAG, "");
+    }
+
+    @Override
+    public void onRemoveResult(boolean result) {
+
+    }
+
+    @Override
+    public void onQueryResult(List<PhoneNote> phoneNotes) {
+
     }
 
     @Override

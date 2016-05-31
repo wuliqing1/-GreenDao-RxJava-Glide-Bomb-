@@ -1,7 +1,7 @@
 package android.wuliqing.com.lendphonesystemapp.presenter;
 
-import android.wuliqing.com.lendphonesystemapp.DataBase.LendPhoneTableAction;
-import android.wuliqing.com.lendphonesystemapp.listeners.LoadDataListener;
+import android.wuliqing.com.lendphonesystemapp.dataBase.DataBaseAction;
+import android.wuliqing.com.lendphonesystemapp.dataBase.LendPhoneTableAction;
 import android.wuliqing.com.lendphonesystemapp.mvpview.LendPhoneListView;
 
 import java.util.List;
@@ -13,18 +13,30 @@ import zte.phone.greendao.LendPhoneNote;
  */
 public class LendPhoneListPresenter extends BasePresenter<LendPhoneListView> {
 
-    public void onFetchedLendPhoneList(long phone_id) {
-        mView.onShowLoading();
-        loadData(phone_id);
+    private DataBaseAction mLendPhoneTableAction;
+
+    public LendPhoneListPresenter(long phone_id) {
+        if (phone_id <= 0) {
+            throw new IllegalArgumentException();
+        }
+        mLendPhoneTableAction = new LendPhoneTableAction(phone_id);
     }
 
     public void loadData(final long phone_id) {
-        dataSyncTools.loadData(new LoadDataListener<List<LendPhoneNote>>() {
-            @Override
-            public void onComplete(List<LendPhoneNote> result) {
-                mView.onHideLoading();
-                mView.onFetchedLendPhones(result);
-            }
-        }, new LendPhoneTableAction(phone_id));
+        queryDataBaseAll(phone_id);
+    }
+
+    public void queryDataBaseAll(final long phone_id) {
+        List<LendPhoneNote> list = mLendPhoneTableAction.query();//从数据库获取
+        if (mView != null) {
+            mView.onFetchedLendPhones(list);
+        }
+    }
+
+    public void setDatabaseAction(DataBaseAction databaseAction) {
+        if (databaseAction == null) {
+            throw new IllegalArgumentException();
+        }
+        mLendPhoneTableAction = databaseAction;
     }
 }
