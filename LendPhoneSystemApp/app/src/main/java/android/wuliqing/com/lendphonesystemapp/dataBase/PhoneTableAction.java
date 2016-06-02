@@ -1,5 +1,6 @@
 package android.wuliqing.com.lendphonesystemapp.dataBase;
 
+import java.util.Date;
 import java.util.List;
 
 import zte.phone.greendao.PhoneNote;
@@ -26,6 +27,7 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
         if (phoneNote == null){
             throw new IllegalArgumentException();
         }
+        phoneNote.setPhone_time(new Date());
         phoneNoteDao.insert(phoneNote);
     }
 
@@ -46,6 +48,11 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
         List<PhoneNote> list = phoneNoteDao.queryBuilder().where(PhoneNoteDao.Properties.Phone_name.like(key))
                 .orderAsc(PhoneNoteDao.Properties.Phone_time).build().list();
         return list;
+    }
+
+    @Override
+    public void clearData() {
+        phoneNoteDao.deleteAll();
     }
 
 
@@ -69,6 +76,7 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
         if (phoneNote == null || phoneNote.getId() <= 0) {
             throw new IllegalArgumentException();
         }
+        phoneNote.setPhone_time(new Date());
         phoneNoteDao.update(phoneNote);
     }
 

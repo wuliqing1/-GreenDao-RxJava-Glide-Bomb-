@@ -12,4 +12,6 @@ public interface DataBaseAction<T> {
     public void add(T note);
 
     public List<T> queryWithKey(String column, String key);
+
+    public void clearData();
 }

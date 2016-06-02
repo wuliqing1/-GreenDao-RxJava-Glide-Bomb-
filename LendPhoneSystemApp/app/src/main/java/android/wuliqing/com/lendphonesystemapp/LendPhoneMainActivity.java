@@ -1,62 +1,56 @@
 package android.wuliqing.com.lendphonesystemapp;
 
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.wuliqing.com.lendphonesystemapp.utils.LogHelper;
-import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneListView;
-import android.wuliqing.com.lendphonesystemapp.presenter.PhoneListPresenter;
+import android.wuliqing.com.lendphonesystemapp.fragment.PhoneListFragment;
+import android.wuliqing.com.lendphonesystemapp.mvpview.MainView;
+import android.wuliqing.com.lendphonesystemapp.presenter.MainPresenter;
+import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import java.util.List;
 
 import zte.phone.greendao.PhoneNote;
 
-public class LendPhoneMainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, PhoneListView {
+public class LendPhoneMainActivity extends BaseToolBarActivity
+        implements NavigationView.OnNavigationItemSelectedListener, MainView{
     private static final String TAG = "LendPhoneMainActivity";
-    private PhoneListPresenter mPhoneListPresenter;
+    private MainPresenter mainPresenter = new MainPresenter();
+    private FragmentManager mFragmentManager;
+    private PhoneListFragment mPhoneListFragment = new PhoneListFragment();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lend_phone_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    protected void detachPresenter() {
+        mainPresenter.detach();
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    @Override
+    protected void createPresenter() {
+        mainPresenter.attach(this);
+    }
 
+    @Override
+    protected int getContentViewResId() {
+        return R.layout.activity_lend_phone_main;
+    }
+
+    @Override
+    protected void initWidgets() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        mPhoneListPresenter = new PhoneListPresenter();
-        mPhoneListPresenter.attach(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPhoneListPresenter.loadData();
+        mFragmentManager = getFragmentManager();
+        mFragmentManager.beginTransaction().add(R.id.fragment_layout_content, mPhoneListFragment).commitAllowingStateLoss();
     }
 
     @Override
@@ -85,10 +79,11 @@ public class LendPhoneMainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_add_phone) {
-
+            Intent intent = new Intent(this, AddPhoneActivity.class);
+            startActivity(intent);
             return true;
         } else if (id == R.id.action_sync_phone) {
-
+            mainPresenter.syncLocalDataBaseAndNetWork();
         }
 
         return super.onOptionsItemSelected(item);
@@ -108,10 +103,11 @@ public class LendPhoneMainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_home) {
+            mFragmentManager.beginTransaction().replace(R.id.fragment_layout_content, mPhoneListFragment).commit();
+        } else if (id == R.id.nav_clear) {
+            mainPresenter.clearDataBase();
+            ToastUtils.show(this, R.string.clear_database_success);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -120,23 +116,7 @@ public class LendPhoneMainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mPhoneListPresenter.detach();
-    }
-
-    @Override
-    public void onFetchedPhones(List<PhoneNote> phoneNotes) {
-        LogHelper.logD(TAG, "");
-    }
-
-    @Override
-    public void onRemoveResult(boolean result) {
-
-    }
-
-    @Override
-    public void onQueryResult(List<PhoneNote> phoneNotes) {
+    public void onSyncResult(List<PhoneNote> phoneNotes) {
 
     }
 

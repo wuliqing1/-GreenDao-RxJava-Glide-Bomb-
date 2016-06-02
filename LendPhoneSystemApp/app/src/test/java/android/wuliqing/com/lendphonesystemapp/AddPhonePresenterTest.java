@@ -8,6 +8,9 @@ import junit.framework.TestCase;
 
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import zte.phone.greendao.PhoneNote;
 
 /**
@@ -43,5 +46,14 @@ public class AddPhonePresenterTest extends TestCase {
         Mockito.verify(addPhoneView,Mockito.never()).onShowLoading();
         Mockito.verify(addPhonePresenter).addPhone(phoneNote);
         Mockito.verify(addPhoneView,Mockito.never()).onHideLoading();
+    }
+
+    public void testQueryPhoneNameAndProjectName() {
+        List<PhoneNote> phoneNotes = new ArrayList<>();
+        List<String> list = new ArrayList<>();
+        Mockito.doReturn(phoneNotes).when(phoneTableAction).query();
+        addPhonePresenter.queryPhoneNameAndProjectName();
+        Mockito.verify(addPhoneView).onQueryPhoneNameResult(list);
+        Mockito.verify(addPhoneView).onQueryProjectNameResult(list);
     }
 }

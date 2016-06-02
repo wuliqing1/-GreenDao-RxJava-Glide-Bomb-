@@ -13,4 +13,5 @@ public interface PhoneListView extends MvpView{
     public void onRemoveResult(boolean result);
 
     public void onQueryResult(List<PhoneNote> phoneNotes);
+
 }

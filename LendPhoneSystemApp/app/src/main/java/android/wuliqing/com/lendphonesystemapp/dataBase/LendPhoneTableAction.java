@@ -1,5 +1,6 @@
 package android.wuliqing.com.lendphonesystemapp.dataBase;
 
+import java.util.Date;
 import java.util.List;
 
 import zte.phone.greendao.LendPhoneNote;
@@ -32,6 +33,7 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
         if (note == null || note.getId() <= 0) {
             throw new IllegalArgumentException();
         }
+        note.setLend_phone_time(new Date());
         lendPhoneNoteDao.update(note);
     }
 
@@ -55,6 +57,7 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
         if (note == null) {
             throw new IllegalArgumentException();
         }
+        note.setLend_phone_time(new Date());
         lendPhoneNoteDao.insert(note);
     }
 
@@ -76,6 +79,11 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
                 .where(LendPhoneNoteDao.Properties.Lend_phone_name.like(key))
                 .orderAsc(LendPhoneNoteDao.Properties.Lend_phone_time).build().list();
         return list;
+    }
+
+    @Override
+    public void clearData() {
+        lendPhoneNoteDao.deleteAll();
     }
 
 }

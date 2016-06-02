@@ -1,8 +1,22 @@
 <resources>
     <string name="app_name">借机系统</string>
-
+    <string name="add_phone_title">添加手机</string>
+    <string name="add_phone_name_title">添加手机名称</string>
+    <string name="add_phone_name_invalid">请输入有效的手机名称!</string>
+    <string name="add_phone_number_title">添加手机数量</string>
+    <string name="add_phone_number_invalid">请输入有效的手机数量!</string>
+    <string name="add_phone_project_name_title">添加手机项目名称</string>
+    <string name="clear_database_success">成功清理数据库!</string>
+    <string name="add_phone_success">成功添加手机!</string>
+    <string name="add_phone_alert_dialog">该修改是否需要保存起来?</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="menu_clear_title">清除数据</string>
+    <string name="menu_home_title">主界面</string>
+    <string name="phone_number_left">剩余数量:</string>
+    <string name="phone_number_lend">借走数量:</string>
+    <string name="phone_names_lend">借走人员:</string>
 </resources>

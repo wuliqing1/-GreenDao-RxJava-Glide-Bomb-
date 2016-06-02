@@ -13,7 +13,7 @@ public class LendPhoneMainActivityUnitTest extends ActivityInstrumentationTestCa
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        lendPhoneMainActivity = (LendPhoneMainActivity)getActivity();
+        lendPhoneMainActivity = getActivity();
         floatingActionButton = findViewById(R.id.fab);
     }
 
