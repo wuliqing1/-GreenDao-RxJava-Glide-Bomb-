@@ -121,12 +121,8 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     }
 
     @Override
-    public void onShowLoading() {
-
-    }
-
-    @Override
-    public void onHideLoading() {
-
+    protected void onDestroy() {
+        super.onDestroy();
+        LendPhoneApplication.getRefWatcher().watch(this);
     }
 }

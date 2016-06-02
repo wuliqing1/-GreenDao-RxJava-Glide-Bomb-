@@ -149,16 +149,6 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
     }
 
     @Override
-    public void onShowLoading() {
-
-    }
-
-    @Override
-    public void onHideLoading() {
-
-    }
-
-    @Override
     public void onClickDialogOk() {
         addPhone();
     }

@@ -25,6 +25,6 @@
 package android.wuliqing.com.lendphonesystemapp.mvpview;
 
 public interface MvpView {
-    public void onShowLoading();
-    public void onHideLoading();
+//    public void onShowLoading();
+//    public void onHideLoading();
 }

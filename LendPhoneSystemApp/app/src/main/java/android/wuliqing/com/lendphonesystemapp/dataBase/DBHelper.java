@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.wuliqing.com.lendphonesystemapp.utils.FormatTools;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -82,8 +83,8 @@ public class DBHelper {
     }
 
     public static DBHelper getInstance() {
-        if (instance == null){
-            synchronized (DBHelper.class){
+        if (instance == null) {
+            synchronized (DBHelper.class) {
                 if (instance == null) {
                     instance = new DBHelper();
                 }
@@ -139,7 +140,33 @@ public class DBHelper {
     }
 
     public List<LendPhoneNote> LendPhoneTableQuery(long phone_id) {
-       return new LendPhoneTableAction(phone_id).query();
+        return new LendPhoneTableAction(phone_id).query();
+    }
+
+    public String lendPhoneNames(long phone_id) {
+        if (phone_id <= 0) {
+            throw new IllegalArgumentException();
+        }
+        List<String> names = new ArrayList<>();
+        List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
+                .where(LendPhoneNoteDao.Properties.Phone_id.eq(phone_id)).build().list();
+        for (LendPhoneNote lendPhoneNote : list) {
+            if (!names.contains(lendPhoneNote.getLend_phone_name())) {
+                names.add(lendPhoneNote.getLend_phone_name());
+            }
+        }
+        list = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < names.size(); i++) {
+            String name = names.get(i);
+            if (i != names.size() - 1) {
+                stringBuilder.append(name).append(',');
+            } else {
+                stringBuilder.append(name);
+            }
+        }
+        names = null;
+        return stringBuilder.toString();
     }
 
     public int LendPhoneNumber(long phone_id) {//借手机数量
@@ -152,6 +179,7 @@ public class DBHelper {
         for (LendPhoneNote lendPhoneNote : list) {
             number += lendPhoneNote.getLend_phone_number();
         }
+        list = null;
         return number;
     }
 
@@ -174,6 +202,8 @@ public class DBHelper {
 //        if (lend_number > total_number){
 //            throw new IndexOutOfBoundsException();
 //        }
+        phoneNotes = null;
+        lendPhoneNotes = null;
         int left_num = total_number - lend_number;
         return left_num < 0 ? 0 : left_num;
     }
