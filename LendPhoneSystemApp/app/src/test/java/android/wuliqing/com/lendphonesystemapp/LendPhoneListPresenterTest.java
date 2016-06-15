@@ -35,8 +35,6 @@ public class LendPhoneListPresenterTest extends TestCase {
     public void testOnFetchedPhoneList() {
         Mockito.doReturn(null).when(lendPhoneTableAction).query();
         phoneListPresenter.loadData(1);
-        Mockito.verify(phoneListView,Mockito.never()).onShowLoading();
         Mockito.verify(phoneListPresenter).loadData(1);
-        Mockito.verify(phoneListView,Mockito.never()).onHideLoading();
     }
 }

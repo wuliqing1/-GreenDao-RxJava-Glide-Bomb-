@@ -43,9 +43,7 @@ public class AddPhonePresenterTest extends TestCase {
         addPhonePresenter.addPhone(phoneNote);
         Mockito.verify(addPhonePresenter).addPhoneTable(phoneNote);
         Mockito.verify(phoneTableAction, Mockito.never()).add(phoneNote);
-        Mockito.verify(addPhoneView,Mockito.never()).onShowLoading();
         Mockito.verify(addPhonePresenter).addPhone(phoneNote);
-        Mockito.verify(addPhoneView,Mockito.never()).onHideLoading();
     }
 
     public void testQueryPhoneNameAndProjectName() {

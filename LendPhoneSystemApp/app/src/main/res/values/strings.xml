@@ -8,6 +8,7 @@
     <string name="add_phone_project_name_title">添加手机项目名称</string>
     <string name="clear_database_success">成功清理数据库!</string>
     <string name="add_phone_success">成功添加手机!</string>
+    <string name="add_phone_error">添加手机失败,请检查网络!</string>
     <string name="add_phone_alert_dialog">该修改是否需要保存起来?</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

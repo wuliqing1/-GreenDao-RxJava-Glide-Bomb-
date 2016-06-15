@@ -44,11 +44,11 @@ public abstract class BaseListFragment<T> extends Fragment implements PullRecycl
 
 
     protected ILayoutManager getLayoutManager() {
-        return new MyLinearLayoutManager(getContext());
+        return new MyLinearLayoutManager(getActivity());
     }
 
     protected RecyclerView.ItemDecoration getItemDecoration() {
-        return new DividerItemDecoration(getContext(),R.drawable.list_divider);
+        return new DividerItemDecoration(getActivity(),R.drawable.list_divider);
     }
 
 }

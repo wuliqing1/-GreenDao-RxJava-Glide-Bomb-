@@ -106,6 +106,8 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
         if (result) {
             ToastUtils.show(this, R.string.add_phone_success);
             finish();
+        }else {
+            ToastUtils.show(this, R.string.add_phone_error);
         }
     }
 

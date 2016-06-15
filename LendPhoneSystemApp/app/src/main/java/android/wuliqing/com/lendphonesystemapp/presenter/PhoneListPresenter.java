@@ -1,16 +1,23 @@
 package android.wuliqing.com.lendphonesystemapp.presenter;
 
-import android.os.AsyncTask;
+import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DBHelper;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DataBaseAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
 import android.wuliqing.com.lendphonesystemapp.model.PhoneNoteModel;
 import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneListView;
 import android.wuliqing.com.lendphonesystemapp.utils.FormatTools;
+import android.wuliqing.com.lendphonesystemapp.utils.LogHelper;
+import android.wuliqing.com.lendphonesystemapp.utils.NetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import zte.phone.greendao.PhoneNote;
 import zte.phone.greendao.PhoneNoteDao;
 
@@ -22,23 +29,70 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
     private DataBaseAction mDataBaseAction = new PhoneTableAction();
 
     public void loadData() {
-        new AsyncTask<Void, Void, List<PhoneNoteModel>>() {
+//        Observable dataBase_observable = Observable.create(new Observable.OnSubscribe<List<PhoneNoteModel>>() {
+//            @Override
+//            public void call(Subscriber<? super List<PhoneNoteModel>> subscriber) {
+//                if (!NetUtil.isNetworkConnected(LendPhoneApplication.getAppContext())) {
+//                    List<PhoneNote> list = mDataBaseAction.query();//从数据库获取
+//                    List<PhoneNoteModel> phoneNoteModels = getConvertPhoneData(list);
+//                    subscriber.onNext(phoneNoteModels);
+//                } else {
+//                    subscriber.onCompleted();
+//                }
+//            }
+//        });
+        Observable network_observable = Observable.just("network")
+                .map(new Func1<String, List<PhoneNote>>() {
+                    @Override
+                    public List<PhoneNote> call(String s) {
+                        List<PhoneNote> phoneNotes = null;//从网络获取
+                        if (NetUtil.isNetworkConnected(LendPhoneApplication.getAppContext())) {
+                            phoneNotes = null;
+                            if (phoneNotes == null) {
+                                phoneNotes = mDataBaseAction.query();//从数据库获取
+                            }
+                        } else {
+                            phoneNotes = mDataBaseAction.query();
+                        }
+
+                        return phoneNotes;
+                    }
+                }).map(new Func1<List<PhoneNote>, List<PhoneNoteModel>>() {
+                    @Override
+                    public List<PhoneNoteModel> call(List<PhoneNote> phoneNotes) {
+                        return phoneNotes == null ? null : getConvertPhoneData(phoneNotes);
+                    }
+                });
+
+        Subscriber subscriber = new Subscriber<List<PhoneNoteModel>>() {
             @Override
-            protected List<PhoneNoteModel> doInBackground(Void... params) {
-                List<PhoneNote> list = mDataBaseAction.query();//从数据库获取
-                if (mView != null) {
-                    List<PhoneNoteModel> phoneNoteModels = getConvertPhoneData(list);
-                    return phoneNoteModels;
-                }
-                return null;
+            public void onCompleted() {
+
             }
 
             @Override
-            protected void onPostExecute(List<PhoneNoteModel> phoneNoteModels) {
-                mView.onFetchedPhones(phoneNoteModels);
+            public void onError(Throwable e) {
+                LogHelper.logD(TAG, e.toString());
             }
-        }.execute();
 
+            @Override
+            public void onNext(List<PhoneNoteModel> phoneNoteModels) {
+                if (mView != null)
+                    mView.onFetchedPhones(phoneNoteModels);
+            }
+        };
+//        Action1<List<PhoneNoteModel>> action_complete = new Action1<List<PhoneNoteModel>>() {
+//            @Override
+//            public void call(List<PhoneNoteModel> phoneNoteModels) {
+//                if (mView != null)
+//                    mView.onFetchedPhones(phoneNoteModels);
+//            }
+//        };
+
+//        Observable.concat(dataBase_observable, network_observable).first()
+        network_observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
     }
 
     private List<PhoneNoteModel> getConvertPhoneData(List<PhoneNote> list) {

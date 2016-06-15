@@ -78,8 +78,10 @@ public abstract class BasePullListAdapter<T> extends CommonAdapter<T> {
     }
 
     public void setData(List<T> phoneNotes) {
-        mDatas.clear();
-        mDatas.addAll(phoneNotes);
-        notifyDataSetChanged();
+        if(phoneNotes != null) {
+            mDatas.clear();
+            mDatas.addAll(phoneNotes);
+            notifyDataSetChanged();
+        }
     }
 }
