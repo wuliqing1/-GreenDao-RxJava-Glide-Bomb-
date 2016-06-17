@@ -1,8 +1,6 @@
 package android.wuliqing.com.lendphonesystemapp.dataBase;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.wuliqing.com.lendphonesystemapp.utils.FormatTools;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -97,13 +95,13 @@ public class DBHelper {
         return lendPhoneNoteDao;
     }
 
-    public void PhoneTableAdd(String phone_name, int phone_number, String project_name, Bitmap bitmap) {
+    public void PhoneTableAdd(String phone_name, int phone_number, String project_name, String url) {
         PhoneNote phoneNote = new PhoneNote();
         phoneNote.setPhone_name(phone_name);
         phoneNote.setPhone_number(phone_number);
         phoneNote.setProject_name(project_name);
         phoneNote.setPhone_time(new Date().toString());
-        phoneNote.setPhone_photo(FormatTools.getInstance().Bitmap2Bytes(bitmap));
+        phoneNote.setPhone_photo_url(url);
         new PhoneTableAction().add(phoneNote);
     }
 

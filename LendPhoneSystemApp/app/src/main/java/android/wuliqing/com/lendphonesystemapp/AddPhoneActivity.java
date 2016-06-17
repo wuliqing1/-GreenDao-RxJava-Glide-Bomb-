@@ -1,6 +1,8 @@
 package android.wuliqing.com.lendphonesystemapp;
 
-import android.graphics.drawable.Drawable;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,15 +11,20 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.wuliqing.com.lendphonesystemapp.fragment.MyDialogFragment;
+import android.wuliqing.com.lendphonesystemapp.listeners.LoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.mvpview.AddPhoneView;
 import android.wuliqing.com.lendphonesystemapp.presenter.AddPhonePresenter;
-import android.wuliqing.com.lendphonesystemapp.utils.FormatTools;
 import android.wuliqing.com.lendphonesystemapp.utils.MyTextUtils;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
+import com.soundcloud.android.crop.Crop;
+
+import java.io.File;
 import java.util.List;
 
+import cn.bmob.v3.datatype.BmobFile;
 import zte.phone.greendao.PhoneNote;
 
 public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneView, MyDialogFragment.DialogListener {
@@ -26,6 +33,8 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
     private AutoCompleteTextView mAdd_phone_name_view;
     private EditText mAdd_phone_number_view;
     private AutoCompleteTextView mAdd_phone_project_view;
+    private BmobFile bmobFile = null;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void detachPresenter() {
@@ -52,9 +61,11 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
         mAdd_phone_photo_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Crop.pickImage(AddPhoneActivity.this);
             }
         });
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(getResources().getString(R.string.up_data_message));
     }
 
     @Override
@@ -92,28 +103,41 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
     }
 
     private void addPhone() {
-        PhoneNote phoneNote = new PhoneNote();
+        final PhoneNote phoneNote = new PhoneNote();
         String phone_name = mAdd_phone_name_view.getText().toString();
         String phone_number = mAdd_phone_number_view.getText().toString();
         String project_name = mAdd_phone_project_view.getText().toString();
-        Drawable drawable = mAdd_phone_photo_view.getDrawable();
         if (!isInvalidString(phone_name, phone_number)) {
             phoneNote.setPhone_name(phone_name);
             phoneNote.setPhone_number(Integer.valueOf(phone_number));
             phoneNote.setProject_name(project_name);
-            if (drawable != null) {
-                phoneNote.setPhone_photo(FormatTools.getInstance().Drawable2Bytes(drawable));
+            mProgressDialog.show();
+            if (bmobFile != null) {
+                mAddPhonePresenter.addPicToNetWork(this, bmobFile, new LoadDataListener<String>() {
+                    @Override
+                    public void onComplete(String result) {
+                        phoneNote.setPhone_photo_url(result);
+                        mAddPhonePresenter.addPhone(phoneNote);
+                    }
+
+                    @Override
+                    public void onError() {
+                        mProgressDialog.dismiss();
+                    }
+                });
+            } else {
+                mAddPhonePresenter.addPhone(phoneNote);
             }
-            mAddPhonePresenter.addPhone(phoneNote);
         }
     }
 
     @Override
     public void onResult(boolean result) {
+        mProgressDialog.dismiss();
         if (result) {
             ToastUtils.show(this, R.string.add_phone_success);
             finish();
-        }else {
+        } else {
             ToastUtils.show(this, R.string.add_phone_error);
         }
     }
@@ -165,5 +189,36 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
     @Override
     public void onClickDialogCancel() {
         finish();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent result) {
+        if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
+            beginCrop(result.getData());
+        } else if (requestCode == Crop.REQUEST_CROP) {
+            handleCrop(resultCode, result);
+        }
+    }
+
+    private void beginCrop(Uri source) {
+        String fileName = MyTextUtils.getDateStringForName() + "_cropped";
+        File file = new File(getCacheDir(), fileName);
+        Uri destination = Uri.fromFile(file);
+        setBmobFile(file);
+        Crop.of(source, destination).asSquare().start(this);
+    }
+
+    private void handleCrop(int resultCode, Intent result) {
+        if (resultCode == RESULT_OK) {
+            Uri uri = Crop.getOutput(result);
+            mAdd_phone_photo_view.setImageURI(uri);
+        } else if (resultCode == Crop.RESULT_ERROR) {
+            Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setBmobFile(File file) {
+        bmobFile = null;
+        bmobFile = new BmobFile(file);
     }
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_transparent_bg" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#aa000000" />
+
+    <LinearLayout
+        android:id="@+id/user_head_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/ic_item_write_bg"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/user_head_capture"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/item_select_bg"
+            android:gravity="center"
+            android:text="@string/select_capture_title"
+            android:textColor="@android:color/holo_blue_light" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#888888" />
+
+        <TextView
+            android:id="@+id/user_head_picture"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/item_select_bg"
+            android:gravity="center"
+            android:text="@string/select_picture_title"
+            android:textColor="@android:color/holo_blue_light" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#888888" />
+
+        <TextView
+            android:id="@+id/user_head_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/item_select_bg"
+            android:gravity="center"
+            android:text="@android:string/cancel"
+            android:textColor="@android:color/holo_blue_light" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,14 +1,13 @@
 package android.wuliqing.com.lendphonesystemapp.model;
 
 import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.datatype.BmobFile;
 import zte.phone.greendao.PhoneNote;
 
-public class BmobPhoneNote extends BmobObject{
+public class BmobPhoneNote extends BmobObject {
     private String phone_name;
     private Integer phone_number;
     private String project_name;
-    private BmobFile bmobFile;
+    private String pic_url;
 
     public String getPhone_name() {
         return phone_name;
@@ -34,12 +33,12 @@ public class BmobPhoneNote extends BmobObject{
         this.project_name = project_name;
     }
 
-    public BmobFile getBmobFile() {
-        return bmobFile;
+    public String getPic_url() {
+        return pic_url;
     }
 
-    public void setBmobFile(BmobFile bmobFile) {
-        this.bmobFile = bmobFile;
+    public void setPic_url(String pic_url) {
+        this.pic_url = pic_url;
     }
 
     public static BmobPhoneNote transformPhoneNote(PhoneNote phoneNote) {
@@ -47,7 +46,7 @@ public class BmobPhoneNote extends BmobObject{
         bmobPhoneNote.setPhone_name(phoneNote.getPhone_name());
         bmobPhoneNote.setPhone_number(phoneNote.getPhone_number());
         bmobPhoneNote.setProject_name(phoneNote.getProject_name());
-        bmobPhoneNote.setBmobFile(BmobFile.createEmptyFile());
+        bmobPhoneNote.setPic_url(phoneNote.getPhone_photo_url());
         return bmobPhoneNote;
     }
 }

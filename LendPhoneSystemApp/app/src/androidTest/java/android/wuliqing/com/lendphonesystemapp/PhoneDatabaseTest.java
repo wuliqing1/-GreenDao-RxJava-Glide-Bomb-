@@ -1,13 +1,10 @@
 package android.wuliqing.com.lendphonesystemapp;
 
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.test.AndroidTestCase;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DBHelper;
-import android.wuliqing.com.lendphonesystemapp.utils.FormatTools;
 
-import java.util.Date;
 import java.util.List;
 
 import zte.phone.greendao.LendPhoneNote;
@@ -47,8 +44,7 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         phoneNoteDao.insert(new PhoneNote());
 
         assertEquals(3, phoneNoteDao.queryBuilder().buildCount().count());
-        DBHelper.getInstance().PhoneTableAdd("T60",5,"8939",
-                BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));
+        DBHelper.getInstance().PhoneTableAdd("T60",5,"8939",null);
         assertEquals(4, phoneNoteDao.queryBuilder().buildCount().count());
         phoneNoteDao.deleteAll();
     }
@@ -297,9 +293,8 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         phoneNote.setPhone_name("P635A50");
         phoneNote.setPhone_number(10);
         phoneNote.setProject_name("MT6735P");
-        phoneNote.setPhone_time(new Date());
+        phoneNote.setPhone_time("2016-6-17");
         Drawable drawable = mContext.getResources().getDrawable(R.mipmap.ic_launcher);
-        phoneNote.setPhone_photo(FormatTools.getInstance().Drawable2Bytes(drawable));
         phoneNoteDao.insert(phoneNote);
     }
 
@@ -308,16 +303,15 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         phoneNote1.setPhone_name("P635A10");
         phoneNote1.setPhone_number(8);
         phoneNote1.setProject_name("MT6735M");
-        phoneNote1.setPhone_time(new Date());
+        phoneNote1.setPhone_time("2016-6-17");
         Drawable drawable = mContext.getResources().getDrawable(R.mipmap.ic_launcher);
-        phoneNote1.setPhone_photo(FormatTools.getInstance().Drawable2Bytes(drawable));
         phoneNoteDao.insert(phoneNote1);
     }
 
     private void insertLendPhoneNote(LendPhoneNoteDao lendPhoneNoteDao, int phone_id) {
         LendPhoneNote lendPhoneNote = new LendPhoneNote();
         lendPhoneNote.setLend_phone_name("wuliqing");
-        lendPhoneNote.setLend_phone_time(new Date());
+        lendPhoneNote.setLend_phone_time("2016-6-17");
         lendPhoneNote.setLend_phone_number(2);
         lendPhoneNote.setPhone_id(phone_id);
         lendPhoneNoteDao.insert(lendPhoneNote);

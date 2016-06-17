@@ -11,7 +11,7 @@ public class PhoneNote {
     private Integer phone_number;
     private String project_name;
     private String phone_time;
-    private byte[] phone_photo;
+    private String phone_photo_url;
 
     public PhoneNote() {
     }
@@ -20,13 +20,13 @@ public class PhoneNote {
         this.id = id;
     }
 
-    public PhoneNote(Long id, String phone_name, Integer phone_number, String project_name, String phone_time, byte[] phone_photo) {
+    public PhoneNote(Long id, String phone_name, Integer phone_number, String project_name, String phone_time, String phone_photo_url) {
         this.id = id;
         this.phone_name = phone_name;
         this.phone_number = phone_number;
         this.project_name = project_name;
         this.phone_time = phone_time;
-        this.phone_photo = phone_photo;
+        this.phone_photo_url = phone_photo_url;
     }
 
     public Long getId() {
@@ -69,12 +69,12 @@ public class PhoneNote {
         this.phone_time = phone_time;
     }
 
-    public byte[] getPhone_photo() {
-        return phone_photo;
+    public String getPhone_photo_url() {
+        return phone_photo_url;
     }
 
-    public void setPhone_photo(byte[] phone_photo) {
-        this.phone_photo = phone_photo;
+    public void setPhone_photo_url(String phone_photo_url) {
+        this.phone_photo_url = phone_photo_url;
     }
 
 }

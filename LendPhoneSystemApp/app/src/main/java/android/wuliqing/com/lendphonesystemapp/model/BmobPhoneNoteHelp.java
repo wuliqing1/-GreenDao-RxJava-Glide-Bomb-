@@ -5,7 +5,6 @@ import android.wuliqing.com.lendphonesystemapp.dataBase.DBHelper;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
 import android.wuliqing.com.lendphonesystemapp.listeners.LoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.listeners.UpdateDataListener;
-import android.wuliqing.com.lendphonesystemapp.utils.FormatTools;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class BmobPhoneNoteHelp {
         phoneNote.setPhone_time(bmobPhoneNote.getUpdatedAt());
         phoneNote.setProject_name(bmobPhoneNote.getProject_name());
         phoneNote.setPhone_name(bmobPhoneNote.getPhone_name());
-//        phoneNote.setPhone_photo();
+        phoneNote.setPhone_photo_url(bmobPhoneNote.getPic_url());
         return phoneNote;
     }
 
@@ -107,7 +106,7 @@ public class BmobPhoneNoteHelp {
         phoneNoteModel.setLend_number(lend_number);
         phoneNoteModel.setLend_names(DBHelper.getInstance().lendPhoneNames(phoneNote.getId()));
         phoneNoteModel.setDate(phoneNote.getPhone_time());
-        phoneNoteModel.setBitmap(FormatTools.getInstance().Bytes2Bitmap(phoneNote.getPhone_photo()));
+        phoneNoteModel.setPic_path(phoneNote.getPhone_photo_url());
         return phoneNoteModel;
     }
 }

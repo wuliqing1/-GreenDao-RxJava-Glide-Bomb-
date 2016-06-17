@@ -1,9 +1,11 @@
 package android.wuliqing.com.lendphonesystemapp.presenter;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DataBaseAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
+import android.wuliqing.com.lendphonesystemapp.listeners.LoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.mvpview.AddPhoneView;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
@@ -12,8 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadFileListener;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -39,10 +43,34 @@ public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
 
             @Override
             public void onFailure(int i, String s) {
-                ToastUtils.show(LendPhoneApplication.getAppContext(),s);
+                ToastUtils.show(LendPhoneApplication.getAppContext(), s);
+                if (mView != null)
+                    mView.onResult(false);
             }
         });
 
+    }
+
+    public void addPicToNetWork(final Context context, final BmobFile bmobFile,
+                                final LoadDataListener<String> loadDataListener) {
+        bmobFile.uploadblock(context, new UploadFileListener() {
+
+            @Override
+            public void onSuccess() {
+                //bmobFile.getFileUrl(context)--返回的上传文件的完整地址
+                loadDataListener.onComplete(bmobFile.getFileUrl(context));
+            }
+
+            @Override
+            public void onProgress(Integer value) {
+                // 返回的上传进度（百分比）
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                ToastUtils.show(context, msg);
+            }
+        });
     }
 
     public void addPhoneTable(final PhoneNote phoneNote) {
@@ -62,7 +90,7 @@ public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtils.show(LendPhoneApplication.getAppContext(),e.toString());
+                        ToastUtils.show(LendPhoneApplication.getAppContext(), e.toString());
                     }
 
                     @Override
@@ -88,7 +116,7 @@ public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
 
             @Override
             public void onError(int i, String s) {
-                ToastUtils.show(LendPhoneApplication.getAppContext(),s);
+                ToastUtils.show(LendPhoneApplication.getAppContext(), s);
                 queryNameInDataBase();
             }
         });

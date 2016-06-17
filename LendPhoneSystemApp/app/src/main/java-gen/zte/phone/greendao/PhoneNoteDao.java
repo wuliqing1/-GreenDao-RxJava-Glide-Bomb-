@@ -28,7 +28,7 @@ public class PhoneNoteDao extends AbstractDao<PhoneNote, Long> {
         public final static Property Phone_number = new Property(2, Integer.class, "phone_number", false, "PHONE_NUMBER");
         public final static Property Project_name = new Property(3, String.class, "project_name", false, "PROJECT_NAME");
         public final static Property Phone_time = new Property(4, String.class, "phone_time", false, "PHONE_TIME");
-        public final static Property Phone_photo = new Property(5, byte[].class, "phone_photo", false, "PHONE_PHOTO");
+        public final static Property Phone_photo_url = new Property(5, String.class, "phone_photo_url", false, "PHONE_PHOTO_URL");
     };
 
 
@@ -49,7 +49,7 @@ public class PhoneNoteDao extends AbstractDao<PhoneNote, Long> {
                 "\"PHONE_NUMBER\" INTEGER," + // 2: phone_number
                 "\"PROJECT_NAME\" TEXT," + // 3: project_name
                 "\"PHONE_TIME\" TEXT," + // 4: phone_time
-                "\"PHONE_PHOTO\" BLOB);"); // 5: phone_photo
+                "\"PHONE_PHOTO_URL\" TEXT);"); // 5: phone_photo_url
     }
 
     /** Drops the underlying database table. */
@@ -88,9 +88,9 @@ public class PhoneNoteDao extends AbstractDao<PhoneNote, Long> {
             stmt.bindString(5, phone_time);
         }
  
-        byte[] phone_photo = entity.getPhone_photo();
-        if (phone_photo != null) {
-            stmt.bindBlob(6, phone_photo);
+        String phone_photo_url = entity.getPhone_photo_url();
+        if (phone_photo_url != null) {
+            stmt.bindString(6, phone_photo_url);
         }
     }
 
@@ -109,7 +109,7 @@ public class PhoneNoteDao extends AbstractDao<PhoneNote, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // phone_number
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // project_name
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // phone_time
-            cursor.isNull(offset + 5) ? null : cursor.getBlob(offset + 5) // phone_photo
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // phone_photo_url
         );
         return entity;
     }
@@ -122,7 +122,7 @@ public class PhoneNoteDao extends AbstractDao<PhoneNote, Long> {
         entity.setPhone_number(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
         entity.setProject_name(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setPhone_time(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setPhone_photo(cursor.isNull(offset + 5) ? null : cursor.getBlob(offset + 5));
+        entity.setPhone_photo_url(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
      }
     
     /** @inheritdoc */

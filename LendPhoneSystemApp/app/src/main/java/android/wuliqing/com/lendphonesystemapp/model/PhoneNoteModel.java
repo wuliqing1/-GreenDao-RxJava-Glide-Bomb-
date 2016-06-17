@@ -1,12 +1,10 @@
 package android.wuliqing.com.lendphonesystemapp.model;
 
-import android.graphics.Bitmap;
-
 /**
  * Created by 10172915 on 2016/6/2.
  */
 public class PhoneNoteModel {
-    private Bitmap bitmap;
+    private String pic_url;
     private String phone_name;
     private int left_number;
     private int lend_number;
@@ -21,12 +19,12 @@ public class PhoneNoteModel {
         this.date = date;
     }
 
-    public Bitmap getBitmap() {
-        return bitmap;
+    public String getPic_path() {
+        return pic_url;
     }
 
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
+    public void setPic_path(String pic_path) {
+        this.pic_url = pic_path;
     }
 
     public String getPhone_name() {

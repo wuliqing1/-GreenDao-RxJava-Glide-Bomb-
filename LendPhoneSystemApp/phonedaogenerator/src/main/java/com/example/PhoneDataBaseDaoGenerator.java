@@ -44,7 +44,7 @@ public class PhoneDataBaseDaoGenerator {
         note.addIntProperty("phone_number");
         note.addStringProperty("project_name");
         note.addStringProperty("phone_time");
-        note.addByteArrayProperty("phone_photo");
+        note.addStringProperty("phone_photo_url");
 
         Entity note1 = schema.addEntity("LendPhoneNote");
         note1.setTableName("LendPhoneNoteTable");

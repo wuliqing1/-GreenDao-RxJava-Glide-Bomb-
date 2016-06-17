@@ -1,5 +1,8 @@
 package android.wuliqing.com.lendphonesystemapp.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by 10172915 on 2016/5/31.
  */
@@ -14,4 +17,9 @@ public class MyTextUtils {
         return true;
     }
 
+    public static String getDateStringForName() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
+        String str = format.format(new Date());
+        return str;
+    }
 }
