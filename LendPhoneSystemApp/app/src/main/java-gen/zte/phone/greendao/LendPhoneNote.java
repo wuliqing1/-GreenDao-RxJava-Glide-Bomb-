@@ -12,7 +12,7 @@ public class LendPhoneNote {
     private Long id;
     private long phone_id;
     private String lend_phone_name;
-    private java.util.Date lend_phone_time;
+    private String lend_phone_time;
     private Integer lend_phone_number;
 
     /** Used to resolve relations */
@@ -32,7 +32,7 @@ public class LendPhoneNote {
         this.id = id;
     }
 
-    public LendPhoneNote(Long id, long phone_id, String lend_phone_name, java.util.Date lend_phone_time, Integer lend_phone_number) {
+    public LendPhoneNote(Long id, long phone_id, String lend_phone_name, String lend_phone_time, Integer lend_phone_number) {
         this.id = id;
         this.phone_id = phone_id;
         this.lend_phone_name = lend_phone_name;
@@ -70,11 +70,11 @@ public class LendPhoneNote {
         this.lend_phone_name = lend_phone_name;
     }
 
-    public java.util.Date getLend_phone_time() {
+    public String getLend_phone_time() {
         return lend_phone_time;
     }
 
-    public void setLend_phone_time(java.util.Date lend_phone_time) {
+    public void setLend_phone_time(String lend_phone_time) {
         this.lend_phone_time = lend_phone_time;
     }
 

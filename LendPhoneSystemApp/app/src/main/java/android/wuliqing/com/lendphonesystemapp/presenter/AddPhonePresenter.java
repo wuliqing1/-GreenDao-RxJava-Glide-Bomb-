@@ -4,12 +4,16 @@ import android.text.TextUtils;
 import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DataBaseAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
+import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.mvpview.AddPhoneView;
-import android.wuliqing.com.lendphonesystemapp.utils.NetUtil;
+import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -27,28 +31,28 @@ public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
             throw new IllegalArgumentException();
         }
 
-        Observable network_observable = Observable.create(new Observable.OnSubscribe<Boolean>() {
+        BmobPhoneNote.transformPhoneNote(phoneNote).save(LendPhoneApplication.getAppContext(), new SaveListener() {
             @Override
-            public void call(Subscriber<? super Boolean> subscriber) {
-                if (NetUtil.isNetworkConnected(LendPhoneApplication.getAppContext())) {
-                    if (addPhoneNetWork(phoneNote)) {
-                        subscriber.onCompleted();
-                    } else {
-                        subscriber.onNext(false);
-                    }
-                } else {
-                    subscriber.onNext(false);
-                }
+            public void onSuccess() {
+                addPhoneTable(phoneNote);
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                ToastUtils.show(LendPhoneApplication.getAppContext(),s);
             }
         });
-        Observable database_observable = Observable.create(new Observable.OnSubscribe<Boolean>() {
+
+    }
+
+    public void addPhoneTable(final PhoneNote phoneNote) {
+        Observable.create(new Observable.OnSubscribe<Boolean>() {
             @Override
             public void call(Subscriber<? super Boolean> subscriber) {
-                addPhoneTable(phoneNote);
+                mPhoneTableAction.add(phoneNote);
                 subscriber.onNext(true);
             }
-        });
-        Observable.concat(network_observable, database_observable).first().subscribeOn(Schedulers.io())
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Boolean>() {
                     @Override
@@ -58,7 +62,7 @@ public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        ToastUtils.show(LendPhoneApplication.getAppContext(),e.toString());
                     }
 
                     @Override
@@ -70,30 +74,32 @@ public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
                 });
     }
 
-    private boolean addPhoneNetWork(final PhoneNote phoneNote) {
-
-        return true;
-    }
-
-    public boolean addPhoneTable(final PhoneNote phoneNote) {
-        mPhoneTableAction.add(phoneNote);
-        return true;
-    }
-
     public void setDataBaseAction(DataBaseAction mDataBaseAction) {
         this.mPhoneTableAction = mDataBaseAction;
     }
 
     public void queryPhoneNameAndProjectName() {
+        BmobQuery<BmobPhoneNote> bmobPhoneNoteBmobQuery = new BmobQuery<>();
+        bmobPhoneNoteBmobQuery.findObjects(LendPhoneApplication.getAppContext(), new FindListener<BmobPhoneNote>() {
+            @Override
+            public void onSuccess(List<BmobPhoneNote> list) {
+                queryResultHandler(list);
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                ToastUtils.show(LendPhoneApplication.getAppContext(),s);
+                queryNameInDataBase();
+            }
+        });
+
+    }
+
+    private void queryNameInDataBase() {
         Observable.create(new Observable.OnSubscribe<List<PhoneNote>>() {
             @Override
             public void call(Subscriber<? super List<PhoneNote>> subscriber) {
-                List<PhoneNote> phoneNotes = null;
-                if (NetUtil.isNetworkConnected(LendPhoneApplication.getAppContext())) {
-                    phoneNotes = null;//从网络获取
-                } else {
-                    phoneNotes = mPhoneTableAction.query();
-                }
+                List<PhoneNote> phoneNotes = mPhoneTableAction.query();
                 subscriber.onNext(phoneNotes);
             }
         }).subscribeOn(Schedulers.io())
@@ -127,6 +133,22 @@ public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
                         }
                     }
                 });
+    }
 
+    private void queryResultHandler(List<BmobPhoneNote> list) {
+        if (mView != null) {
+            List<String> phoneNames = new ArrayList<>();
+            List<String> projectNames = new ArrayList<>();
+            for (BmobPhoneNote phoneNote : list) {
+                if (!TextUtils.isEmpty(phoneNote.getPhone_name())) {
+                    phoneNames.add(phoneNote.getPhone_name());
+                }
+                if (!TextUtils.isEmpty(phoneNote.getProject_name())) {
+                    projectNames.add(phoneNote.getProject_name());
+                }
+            }
+            mView.onQueryPhoneNameResult(phoneNames);
+            mView.onQueryProjectNameResult(projectNames);
+        }
     }
 }

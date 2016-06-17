@@ -10,7 +10,7 @@ public class PhoneNote {
     private String phone_name;
     private Integer phone_number;
     private String project_name;
-    private java.util.Date phone_time;
+    private String phone_time;
     private byte[] phone_photo;
 
     public PhoneNote() {
@@ -20,7 +20,7 @@ public class PhoneNote {
         this.id = id;
     }
 
-    public PhoneNote(Long id, String phone_name, Integer phone_number, String project_name, java.util.Date phone_time, byte[] phone_photo) {
+    public PhoneNote(Long id, String phone_name, Integer phone_number, String project_name, String phone_time, byte[] phone_photo) {
         this.id = id;
         this.phone_name = phone_name;
         this.phone_number = phone_number;
@@ -61,11 +61,11 @@ public class PhoneNote {
         this.project_name = project_name;
     }
 
-    public java.util.Date getPhone_time() {
+    public String getPhone_time() {
         return phone_time;
     }
 
-    public void setPhone_time(java.util.Date phone_time) {
+    public void setPhone_time(String phone_time) {
         this.phone_time = phone_time;
     }
 

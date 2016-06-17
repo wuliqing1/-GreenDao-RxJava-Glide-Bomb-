@@ -102,7 +102,7 @@ public class DBHelper {
         phoneNote.setPhone_name(phone_name);
         phoneNote.setPhone_number(phone_number);
         phoneNote.setProject_name(project_name);
-        phoneNote.setPhone_time(new Date());
+        phoneNote.setPhone_time(new Date().toString());
         phoneNote.setPhone_photo(FormatTools.getInstance().Bitmap2Bytes(bitmap));
         new PhoneTableAction().add(phoneNote);
     }
@@ -126,7 +126,7 @@ public class DBHelper {
         LendPhoneNote lendPhoneNote = new LendPhoneNote();
         lendPhoneNote.setLend_phone_name(lend_phone_name);
         lendPhoneNote.setLend_phone_number(lend_phone_number);
-        lendPhoneNote.setLend_phone_time(new Date());
+//        lendPhoneNote.setLend_phone_time(new Date().toString());
         lendPhoneNote.setPhone_id(phone_id);
         new LendPhoneTableAction(phone_id).add(lendPhoneNote);
     }

@@ -1,6 +1,5 @@
 package android.wuliqing.com.lendphonesystemapp.dataBase;
 
-import java.util.Date;
 import java.util.List;
 
 import zte.phone.greendao.PhoneNote;
@@ -24,11 +23,17 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
 
     @Override
     public void add(PhoneNote phoneNote) {
-        if (phoneNote == null){
+        if (phoneNote == null) {
             throw new IllegalArgumentException();
         }
-        phoneNote.setPhone_time(new Date());
         phoneNoteDao.insert(phoneNote);
+    }
+
+    public void addCollection(List<PhoneNote> phoneNotes) {
+        if (phoneNotes == null) {
+            throw new IllegalArgumentException();
+        }
+        phoneNoteDao.insertInTx(phoneNotes);
     }
 
     @Override
@@ -41,7 +46,7 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
                 isColumnExist = true;
             }
         }
-        if(!isColumnExist || key == null){
+        if (!isColumnExist || key == null) {
             throw new IllegalArgumentException();
         }
         //需要优化，目前只支持phone_name字段查询
@@ -76,7 +81,6 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
         if (phoneNote == null || phoneNote.getId() <= 0) {
             throw new IllegalArgumentException();
         }
-        phoneNote.setPhone_time(new Date());
         phoneNoteDao.update(phoneNote);
     }
 

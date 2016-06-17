@@ -2,8 +2,6 @@ package android.wuliqing.com.lendphonesystemapp.model;
 
 import android.graphics.Bitmap;
 
-import java.util.Date;
-
 /**
  * Created by 10172915 on 2016/6/2.
  */
@@ -13,13 +11,13 @@ public class PhoneNoteModel {
     private int left_number;
     private int lend_number;
     private String lend_names;
-    private Date date;
+    private String date;
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -48,6 +49,12 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
         mAdd_phone_name_view = (AutoCompleteTextView) findViewById(R.id.add_phone_name_view);
         mAdd_phone_number_view = (EditText) findViewById(R.id.add_phone_number_view);
         mAdd_phone_project_view = (AutoCompleteTextView) findViewById(R.id.add_phone_project_view);
+        mAdd_phone_photo_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
