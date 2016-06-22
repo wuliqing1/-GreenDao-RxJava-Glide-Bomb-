@@ -384,7 +384,7 @@ public class CropImageActivity extends MonitoredActivity {
                 outputStream = getContentResolver().openOutputStream(saveUri);
                 if (outputStream != null) {
                     croppedImage.compress(saveAsPng ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG,
-                            90,     // note: quality is ignored when using PNG
+                            50,     // note: quality is ignored when using PNG
                             outputStream);
                 }
             } catch (IOException e) {

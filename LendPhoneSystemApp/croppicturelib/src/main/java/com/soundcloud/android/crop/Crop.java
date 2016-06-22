@@ -18,6 +18,7 @@ public class Crop {
 
     public static final int REQUEST_CROP = 6709;
     public static final int REQUEST_PICK = 9162;
+    public static final int REQUEST_CAPTURE = 9163;
     public static final int RESULT_ERROR = 404;
 
     interface Extra {
@@ -82,6 +83,7 @@ public class Crop {
 
     /**
      * Set whether to save the result as a PNG or not. Helpful to preserve alpha.
+     *
      * @param asPng whether to save the result as a PNG or not
      */
     public Crop asPng(boolean asPng) {
@@ -224,6 +226,14 @@ public class Crop {
         }
     }
 
+    public static void pickCapture(Activity activity, Uri uri) {
+        try {
+            activity.startActivityForResult(getCapturePicker(uri), REQUEST_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+            showImagePickerError(activity);
+        }
+    }
+
     /**
      * Pick image from a Fragment with a custom request code
      *
@@ -257,6 +267,11 @@ public class Crop {
 
     private static Intent getImagePicker() {
         return new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
+    }
+
+    private static Intent getCapturePicker(Uri uri) {
+        return new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                .putExtra(MediaStore.EXTRA_OUTPUT, uri);
     }
 
     private static void showImagePickerError(Context context) {

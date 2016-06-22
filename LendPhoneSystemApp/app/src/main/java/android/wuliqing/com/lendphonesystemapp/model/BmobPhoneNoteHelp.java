@@ -3,15 +3,12 @@ package android.wuliqing.com.lendphonesystemapp.model;
 import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DBHelper;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
-import android.wuliqing.com.lendphonesystemapp.listeners.LoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.listeners.UpdateDataListener;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -22,21 +19,6 @@ import zte.phone.greendao.PhoneNote;
  * Created by 10172915 on 2016/6/16.
  */
 public class BmobPhoneNoteHelp {
-    public static void queryBmobPhoneNote(final LoadDataListener loadDataListener) {
-        BmobQuery<BmobPhoneNote> bmobPhoneNoteBmobQuery = new BmobQuery<>();
-        bmobPhoneNoteBmobQuery.findObjects(LendPhoneApplication.getAppContext(), new FindListener<BmobPhoneNote>() {
-            @Override
-            public void onSuccess(List<BmobPhoneNote> list) {
-                loadDataListener.onComplete(list);
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                ToastUtils.show(LendPhoneApplication.getAppContext(), s);
-                loadDataListener.onError();
-            }
-        });
-    }
 
     public static PhoneNote convertBmobPhoneNoteToPhoneNote(BmobPhoneNote bmobPhoneNote) {
         PhoneNote phoneNote = new PhoneNote();

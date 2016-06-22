@@ -5,19 +5,20 @@ import android.text.TextUtils;
 import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DataBaseAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
-import android.wuliqing.com.lendphonesystemapp.listeners.LoadDataListener;
+import android.wuliqing.com.lendphonesystemapp.listeners.SendDataListener;
+import android.wuliqing.com.lendphonesystemapp.listeners.UpLoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.mvpview.AddPhoneView;
+import android.wuliqing.com.lendphonesystemapp.net.BaseHttp;
+import android.wuliqing.com.lendphonesystemapp.net.BmobHttp;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UploadFileListener;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,13 +30,18 @@ import zte.phone.greendao.PhoneNote;
  */
 public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
     private DataBaseAction mPhoneTableAction = new PhoneTableAction();
+    private File file = null;
+    private BaseHttp mBaseHttp = new BmobHttp();
+
+    public void setHttp(BaseHttp mBaseHttp) {//可以定制网络框架
+        this.mBaseHttp = mBaseHttp;
+    }
 
     public void addPhone(final PhoneNote phoneNote) {
         if (phoneNote == null) {
             throw new IllegalArgumentException();
         }
-
-        BmobPhoneNote.transformPhoneNote(phoneNote).save(LendPhoneApplication.getAppContext(), new SaveListener() {
+        mBaseHttp.send(null, null, phoneNote, new SendDataListener() {
             @Override
             public void onSuccess() {
                 addPhoneTable(phoneNote);
@@ -48,29 +54,10 @@ public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
                     mView.onResult(false);
             }
         });
-
     }
 
-    public void addPicToNetWork(final Context context, final BmobFile bmobFile,
-                                final LoadDataListener<String> loadDataListener) {
-        bmobFile.uploadblock(context, new UploadFileListener() {
-
-            @Override
-            public void onSuccess() {
-                //bmobFile.getFileUrl(context)--返回的上传文件的完整地址
-                loadDataListener.onComplete(bmobFile.getFileUrl(context));
-            }
-
-            @Override
-            public void onProgress(Integer value) {
-                // 返回的上传进度（百分比）
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                ToastUtils.show(context, msg);
-            }
-        });
+    public void addPicToNetWork(final Context context, final UpLoadDataListener<String> upLoadDataListener) {
+        mBaseHttp.upLoad(file, null, upLoadDataListener);
     }
 
     public void addPhoneTable(final PhoneNote phoneNote) {
@@ -178,5 +165,13 @@ public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
             mView.onQueryPhoneNameResult(phoneNames);
             mView.onQueryProjectNameResult(projectNames);
         }
+    }
+
+    public void setBmobFile(File file) {
+        this.file = file;
+    }
+
+    public File getBmobFile() {
+        return file;
     }
 }

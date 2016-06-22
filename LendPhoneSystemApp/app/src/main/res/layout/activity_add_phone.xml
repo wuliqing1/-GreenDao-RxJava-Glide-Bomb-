@@ -9,6 +9,7 @@
     <include layout="@layout/toolbar_view" />
 
     <ImageView
+        android:layout_margin="5dp"
         android:id="@+id/add_phone_photo_view"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"

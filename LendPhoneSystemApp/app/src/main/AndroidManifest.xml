@@ -24,7 +24,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:name=".LendPhoneApplication"
         android:allowBackup="true"
@@ -46,7 +45,10 @@
             android:name=".AddPhoneActivity"
             android:label="@string/add_phone_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-
+        <!--<activity-->
+            <!--android:name=".crop.SelectPhotoActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>-->
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
     </application>
 

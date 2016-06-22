@@ -16,6 +16,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
+            android:padding="5dp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_phone_iphone_48pt_2x" />
 
@@ -25,7 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/phone_icon_view"
             android:layout_centerHorizontal="true"
-            android:text="name" />
+            android:text="name"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="?colorPrimary" />
     </RelativeLayout>
 
     <LinearLayout
@@ -43,14 +46,16 @@
                 android:id="@+id/phone_number_left_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/phone_number_left" />
+                android:text="@string/phone_number_left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/phone_number_left_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/phone_number_left_tv"
-                android:text="10" />
+                android:text="10"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -61,14 +66,16 @@
                 android:id="@+id/phone_number_lend_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/phone_number_lend" />
+                android:text="@string/phone_number_lend"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/phone_number_lend_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/phone_number_lend_tv"
-                android:text="10" />
+                android:text="10"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -79,14 +86,16 @@
                 android:id="@+id/phone_names_lend_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/phone_names_lend" />
+                android:text="@string/phone_names_lend"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/phone_names_lend_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/phone_names_lend_tv"
-                android:text="wuliqing " />
+                android:text="wuliqing "
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -97,14 +106,16 @@
                 android:id="@+id/phone_record_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/phone_record_time" />
+                android:text="@string/phone_record_time"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/phone_record_time_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/phone_record_time_tv"
-                android:text="2010 10-12" />
+                android:text="2010 10-12"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
     </LinearLayout>
 

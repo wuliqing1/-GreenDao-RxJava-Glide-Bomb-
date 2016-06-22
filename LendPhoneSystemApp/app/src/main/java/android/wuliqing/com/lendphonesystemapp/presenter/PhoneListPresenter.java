@@ -9,6 +9,8 @@ import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNoteHelp;
 import android.wuliqing.com.lendphonesystemapp.model.PhoneNoteModel;
 import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneListView;
+import android.wuliqing.com.lendphonesystemapp.net.BaseHttp;
+import android.wuliqing.com.lendphonesystemapp.net.BmobHttp;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import java.util.List;
@@ -26,11 +28,16 @@ import zte.phone.greendao.PhoneNoteDao;
 public class PhoneListPresenter extends BasePresenter<PhoneListView> {
     private static final String TAG = "PhoneListPresenter";
     private DataBaseAction mDataBaseAction = new PhoneTableAction();
+    private BaseHttp mBaseHttp = new BmobHttp();
+
+    public void setHttp(BaseHttp mBaseHttp) {//可以定制网络框架
+        this.mBaseHttp = mBaseHttp;
+    }
 
     public void loadData() {
-        BmobPhoneNoteHelp.queryBmobPhoneNote(new LoadDataListener<List<BmobPhoneNote>>() {//网络获取
+        mBaseHttp.load(null, null, new LoadDataListener<List<BmobPhoneNote>>() {
             @Override
-            public void onComplete(List<BmobPhoneNote> result) {//网络获取成功
+            public void onComplete(List<BmobPhoneNote> result) {
                 BmobPhoneNoteHelp.updatePhoneNoteTable(result, new UpdateDataListener() {//更新本地数据库
                     @Override
                     public void onResult(boolean result) {
@@ -47,7 +54,7 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
             @Override
             public void onError() {
                 queryListInDataBase();
-            }//网络获取失败
+            }
         });
     }
 

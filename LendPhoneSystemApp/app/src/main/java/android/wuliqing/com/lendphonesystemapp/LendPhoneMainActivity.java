@@ -120,9 +120,4 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        LendPhoneApplication.getRefWatcher().watch(this);
-    }
 }

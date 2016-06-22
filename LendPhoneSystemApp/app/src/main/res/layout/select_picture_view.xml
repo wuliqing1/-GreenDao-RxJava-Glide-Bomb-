@@ -19,7 +19,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/user_head_capture"
+            android:id="@+id/phone_head_capture"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -34,7 +34,7 @@
             android:background="#888888" />
 
         <TextView
-            android:id="@+id/user_head_picture"
+            android:id="@+id/phone_head_picture"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -49,7 +49,7 @@
             android:background="#888888" />
 
         <TextView
-            android:id="@+id/user_head_cancel"
+            android:id="@+id/phone_head_cancel"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
