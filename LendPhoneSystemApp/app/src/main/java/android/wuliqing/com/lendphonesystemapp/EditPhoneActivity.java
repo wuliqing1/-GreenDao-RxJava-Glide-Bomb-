@@ -15,10 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListPopupWindow;
 import android.widget.Toast;
-import android.wuliqing.com.lendphonesystemapp.crop.BitmapUtil;
-import android.wuliqing.com.lendphonesystemapp.crop.CropFileUtils;
-import android.wuliqing.com.lendphonesystemapp.crop.CropHelper;
-import android.wuliqing.com.lendphonesystemapp.crop.SelectPhotoActivity;
 import android.wuliqing.com.lendphonesystemapp.fragment.MyDialogFragment;
 import android.wuliqing.com.lendphonesystemapp.listeners.UpLoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.mvpview.AddPhoneView;
@@ -27,13 +23,18 @@ import android.wuliqing.com.lendphonesystemapp.utils.MyTextUtils;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import com.soundcloud.android.crop.Crop;
+import com.soundcloud.android.crop.other.BitmapUtil;
+import com.soundcloud.android.crop.other.CropFileUtils;
+import com.soundcloud.android.crop.other.CropHelper;
 
 import java.io.File;
 import java.util.List;
 
 import zte.phone.greendao.PhoneNote;
 
-public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneView, MyDialogFragment.DialogListener {
+public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneView, MyDialogFragment.DialogListener {
+    public static final int ADD_PHONE_REQUEST_CODE = 222;
+    public static final String ADD_PHONE_RESULT_KEY = "add_phone_result_key";
     private AddPhonePresenter mAddPhonePresenter = new AddPhonePresenter();
     private ImageView mAdd_phone_photo_view;
     private AutoCompleteTextView mAdd_phone_name_view;
@@ -67,7 +68,7 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
         mAdd_phone_photo_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(AddPhoneActivity.this, SelectPhotoActivity.class);
+//                Intent intent = new Intent(EditPhoneActivity.this, SelectPhotoActivity.class);
 //                startActivityForResult(intent, SelectPhotoActivity.SELECT_PHOTO_REQUEST_CODE);
 //                overridePendingTransition(R.anim.sub_enter,
 //                        R.anim.main_exit);
@@ -81,7 +82,8 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
         final ListPopupWindow listPopupWindow = new ListPopupWindow(this);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 new String[]{getString(R.string.select_capture_title),
-                        getString(R.string.select_picture_title)});
+                        getString(R.string.select_picture_title),
+                        getString(R.string.select_delete_title)});
         listPopupWindow.setAdapter(arrayAdapter);
         listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -89,10 +91,15 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
                 switch (position) {
                     case 0:
                         outUri = CropHelper.generateUri();
-                        Crop.pickCapture(AddPhoneActivity.this, outUri);
+                        Crop.pickCapture(EditPhoneActivity.this, outUri);
                         break;
                     case 1:
-                        Crop.pickImage(AddPhoneActivity.this);
+                        Crop.pickImage(EditPhoneActivity.this);
+                        break;
+                    case 2:{
+                        mAddPhonePresenter.setBmobFile(null);
+                        mAdd_phone_photo_view.setImageResource(R.drawable.ic_camera_48pt_3x);
+                    }
                         break;
                 }
                 listPopupWindow.dismiss();
@@ -188,6 +195,9 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
         mProgressDialog.dismiss();
         if (result) {
             ToastUtils.show(this, R.string.add_phone_success);
+            Intent intent = new Intent();
+            intent.putExtra(ADD_PHONE_RESULT_KEY, true);
+            setResult(RESULT_OK, intent);
             finish();
         } else {
             ToastUtils.show(this, R.string.add_phone_error);
@@ -213,7 +223,7 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
     @Override
     public void onQueryPhoneNameResult(List<String> list) {
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(AddPhoneActivity.this,
+                new ArrayAdapter<>(EditPhoneActivity.this,
                         android.R.layout.simple_dropdown_item_1line, list);
 
         mAdd_phone_name_view.setAdapter(adapter);
@@ -222,7 +232,7 @@ public class AddPhoneActivity extends BaseToolBarActivity implements AddPhoneVie
     @Override
     public void onQueryProjectNameResult(List<String> list) {
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(AddPhoneActivity.this,
+                new ArrayAdapter<>(EditPhoneActivity.this,
                         android.R.layout.simple_dropdown_item_1line, list);
 
         mAdd_phone_project_view.setAdapter(adapter);

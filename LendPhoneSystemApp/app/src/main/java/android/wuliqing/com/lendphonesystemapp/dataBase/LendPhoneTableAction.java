@@ -23,13 +23,13 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
             throw new IllegalArgumentException();
         }
         List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
-                .where(LendPhoneNoteDao.Properties.Phone_id.eq(phone_id)).build().list();
+                .where(LendPhoneNoteDao.Properties.Attach_bmob_phone_id.eq(phone_id)).build().list();
         return list;
     }
 
     @Override
     public void update(LendPhoneNote note) {
-        if (note == null || note.getId() <= 0) {
+        if (note == null || note.getBmob_lend_phone_id() <= 0) {
             throw new IllegalArgumentException();
         }
         lendPhoneNoteDao.update(note);
@@ -41,7 +41,7 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
             throw new IllegalArgumentException();
         }
         List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
-                .where(LendPhoneNoteDao.Properties.Id.eq(id)).build().list();
+                .where(LendPhoneNoteDao.Properties.Bmob_lend_phone_id.eq(id)).build().list();
         if (list.size() <= 0) {
             return;
         }

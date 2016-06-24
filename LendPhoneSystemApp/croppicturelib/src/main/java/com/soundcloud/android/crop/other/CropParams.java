@@ -1,4 +1,4 @@
-package android.wuliqing.com.lendphonesystemapp.crop;
+package com.soundcloud.android.crop.other;
 
 import android.content.Context;
 import android.graphics.Bitmap;

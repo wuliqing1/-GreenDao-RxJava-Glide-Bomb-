@@ -4,17 +4,17 @@ package android.wuliqing.com.lendphonesystemapp.model;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 
-public class BmobLendPhoneNote extends BmobObject{
-    private Long phone_id;
+public class BmobLendPhoneNote extends BmobObject {
+    private String phone_id;
     private String lend_phone_name;
     private Integer lend_phone_number;
     private BmobFile bmobFile;
 
-    public Long getPhone_id() {
+    public String getPhone_id() {
         return phone_id;
     }
 
-    public void setPhone_id(Long phone_id) {
+    public void setPhone_id(String phone_id) {
         this.phone_id = phone_id;
     }
 

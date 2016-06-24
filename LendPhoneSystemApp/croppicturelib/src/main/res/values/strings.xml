@@ -6,5 +6,4 @@
 
     <string name="crop__done">DONE</string>
     <string name="crop__cancel" tools:ignore="ButtonCase">CANCEL</string>
-
 </resources>

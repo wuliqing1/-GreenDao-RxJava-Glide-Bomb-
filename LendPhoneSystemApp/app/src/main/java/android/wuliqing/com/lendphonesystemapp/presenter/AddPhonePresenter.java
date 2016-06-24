@@ -44,7 +44,10 @@ public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
         mBaseHttp.send(null, null, phoneNote, new SendDataListener() {
             @Override
             public void onSuccess() {
-                addPhoneTable(phoneNote);
+//                addPhoneTable(phoneNote);
+                if (mView != null) {
+                    mView.onResult(true);
+                }
             }
 
             @Override
@@ -60,34 +63,34 @@ public class AddPhonePresenter extends BasePresenter<AddPhoneView> {
         mBaseHttp.upLoad(file, null, upLoadDataListener);
     }
 
-    public void addPhoneTable(final PhoneNote phoneNote) {
-        Observable.create(new Observable.OnSubscribe<Boolean>() {
-            @Override
-            public void call(Subscriber<? super Boolean> subscriber) {
-                mPhoneTableAction.add(phoneNote);
-                subscriber.onNext(true);
-            }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Boolean>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtils.show(LendPhoneApplication.getAppContext(), e.toString());
-                    }
-
-                    @Override
-                    public void onNext(Boolean aBoolean) {
-                        if (mView != null) {
-                            mView.onResult(aBoolean);
-                        }
-                    }
-                });
-    }
+//    public void addPhoneTable(final PhoneNote phoneNote) {
+//        Observable.create(new Observable.OnSubscribe<Boolean>() {
+//            @Override
+//            public void call(Subscriber<? super Boolean> subscriber) {
+//                mPhoneTableAction.add(phoneNote);
+//                subscriber.onNext(true);
+//            }
+//        }).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<Boolean>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        ToastUtils.show(LendPhoneApplication.getAppContext(), e.toString());
+//                    }
+//
+//                    @Override
+//                    public void onNext(Boolean aBoolean) {
+//                        if (mView != null) {
+//                            mView.onResult(aBoolean);
+//                        }
+//                    }
+//                });
+//    }
 
     public void setDataBaseAction(DataBaseAction mDataBaseAction) {
         this.mPhoneTableAction = mDataBaseAction;

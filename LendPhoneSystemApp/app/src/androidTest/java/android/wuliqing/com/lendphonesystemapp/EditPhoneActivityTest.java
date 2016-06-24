@@ -9,24 +9,24 @@ import android.widget.ImageView;
 /**
  * Created by 10172915 on 2016/5/31.
  */
-public class AddPhoneActivityTest extends ActivityInstrumentationTestCase2<AddPhoneActivity> {
-    AddPhoneActivity mAddPhoneActivity;
+public class EditPhoneActivityTest extends ActivityInstrumentationTestCase2<EditPhoneActivity> {
+    EditPhoneActivity mEditPhoneActivity;
     private ImageView mAdd_phone_photo_view;
     private AutoCompleteTextView mAdd_phone_name_view;
     private EditText mAdd_phone_number_view;
     private AutoCompleteTextView mAdd_phone_project_view;
-    public AddPhoneActivityTest() {
-        super(AddPhoneActivity.class);
+    public EditPhoneActivityTest() {
+        super(EditPhoneActivity.class);
     }
 
-    public AddPhoneActivityTest(Class<AddPhoneActivity> activityClass) {
+    public EditPhoneActivityTest(Class<EditPhoneActivity> activityClass) {
         super(activityClass);
     }
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mAddPhoneActivity = getActivity();
+        mEditPhoneActivity = getActivity();
         checkWidgets();
     }
 
@@ -45,7 +45,7 @@ public class AddPhoneActivityTest extends ActivityInstrumentationTestCase2<AddPh
     }
 
     public void testAddPhone() {
-        mAddPhoneActivity.runOnUiThread(new Runnable() {
+        mEditPhoneActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mAdd_phone_photo_view.setImageResource(R.drawable.ic_arrow_back_white_2x);
@@ -66,6 +66,6 @@ public class AddPhoneActivityTest extends ActivityInstrumentationTestCase2<AddPh
     }
 
     private <T extends View> T findViewById(int id) {
-        return (T) mAddPhoneActivity.findViewById(id);
+        return (T) mEditPhoneActivity.findViewById(id);
     }
 }

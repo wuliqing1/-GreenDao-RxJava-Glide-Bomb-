@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddPhoneActivity"
+            android:name=".EditPhoneActivity"
             android:label="@string/add_phone_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <!--<activity-->

@@ -3,14 +3,9 @@ package android.wuliqing.com.lendphonesystemapp.presenter;
 import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DataBaseAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
-import android.wuliqing.com.lendphonesystemapp.listeners.LoadDataListener;
-import android.wuliqing.com.lendphonesystemapp.listeners.UpdateDataListener;
-import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNoteHelp;
 import android.wuliqing.com.lendphonesystemapp.model.PhoneNoteModel;
 import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneListView;
-import android.wuliqing.com.lendphonesystemapp.net.BaseHttp;
-import android.wuliqing.com.lendphonesystemapp.net.BmobHttp;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import java.util.List;
@@ -28,34 +23,9 @@ import zte.phone.greendao.PhoneNoteDao;
 public class PhoneListPresenter extends BasePresenter<PhoneListView> {
     private static final String TAG = "PhoneListPresenter";
     private DataBaseAction mDataBaseAction = new PhoneTableAction();
-    private BaseHttp mBaseHttp = new BmobHttp();
-
-    public void setHttp(BaseHttp mBaseHttp) {//可以定制网络框架
-        this.mBaseHttp = mBaseHttp;
-    }
 
     public void loadData() {
-        mBaseHttp.load(null, null, new LoadDataListener<List<BmobPhoneNote>>() {
-            @Override
-            public void onComplete(List<BmobPhoneNote> result) {
-                BmobPhoneNoteHelp.updatePhoneNoteTable(result, new UpdateDataListener() {//更新本地数据库
-                    @Override
-                    public void onResult(boolean result) {
-                        if (result) {//更新本地数据库成功
-                            queryListInDataBase();
-                        } else {//更新本地数据库失败
-                            if (mView != null)
-                                mView.onFetchedPhones(null);
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void onError() {
-                queryListInDataBase();
-            }
-        });
+        queryListInDataBase();
     }
 
     private void queryListInDataBase() {//查询本地数据库

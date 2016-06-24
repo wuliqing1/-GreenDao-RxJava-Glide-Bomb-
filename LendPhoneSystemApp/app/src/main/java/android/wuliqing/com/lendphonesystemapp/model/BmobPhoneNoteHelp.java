@@ -27,6 +27,7 @@ public class BmobPhoneNoteHelp {
         phoneNote.setProject_name(bmobPhoneNote.getProject_name());
         phoneNote.setPhone_name(bmobPhoneNote.getPhone_name());
         phoneNote.setPhone_photo_url(bmobPhoneNote.getPic_url());
+        phoneNote.setBmob_phone_id(Long.parseLong(bmobPhoneNote.getObjectId(), 16));
         return phoneNote;
     }
 
@@ -37,13 +38,19 @@ public class BmobPhoneNoteHelp {
         Observable.create(new Observable.OnSubscribe<Boolean>() {
             @Override
             public void call(Subscriber<? super Boolean> subscriber) {
-                mPhoneTableAction.clearData();
-                List<PhoneNote> phoneNotes = new ArrayList<PhoneNote>();
+                List<PhoneNote> phoneNotes = mPhoneTableAction.query();
+                List<Long> phoneIds = new ArrayList<Long>();
+                for (PhoneNote phoneNote :
+                        phoneNotes) {
+                    phoneIds.add(phoneNote.getBmob_phone_id());
+                }
                 for (BmobPhoneNote bmobPhoneNote :
                         bmobPhoneNotes) {
-                    phoneNotes.add(convertBmobPhoneNoteToPhoneNote(bmobPhoneNote));
+                    Long id = Long.parseLong(bmobPhoneNote.getObjectId(), 16);
+                    if (!phoneIds.contains(id)) {//如果数据不存在 则添加本地数据库
+                        mPhoneTableAction.add(convertBmobPhoneNoteToPhoneNote(bmobPhoneNote));
+                    }
                 }
-                mPhoneTableAction.addCollection(phoneNotes);
                 subscriber.onNext(true);
             }
         }).subscribeOn(Schedulers.io())
@@ -82,13 +89,14 @@ public class BmobPhoneNoteHelp {
     public static PhoneNoteModel convertPhoneNoteToPhoneNoteModel(PhoneNote phoneNote) {
         PhoneNoteModel phoneNoteModel = new PhoneNoteModel();
         phoneNoteModel.setPhone_name(phoneNote.getPhone_name());
-        int left_number = DBHelper.getInstance().LeftPhoneNumber(phoneNote.getId());
+        int left_number = DBHelper.getInstance().LeftPhoneNumber(phoneNote.getBmob_phone_id());
         phoneNoteModel.setLeft_number(left_number);
-        int lend_number = DBHelper.getInstance().LendPhoneNumber(phoneNote.getId());
+        int lend_number = DBHelper.getInstance().LendPhoneNumber(phoneNote.getBmob_phone_id());
         phoneNoteModel.setLend_number(lend_number);
-        phoneNoteModel.setLend_names(DBHelper.getInstance().lendPhoneNames(phoneNote.getId()));
+        phoneNoteModel.setLend_names(DBHelper.getInstance().lendPhoneNames(phoneNote.getBmob_phone_id()));
         phoneNoteModel.setDate(phoneNote.getPhone_time());
         phoneNoteModel.setPic_path(phoneNote.getPhone_photo_url());
+        phoneNoteModel.setPhone_id(phoneNote.getBmob_phone_id());
         return phoneNoteModel;
     }
 }

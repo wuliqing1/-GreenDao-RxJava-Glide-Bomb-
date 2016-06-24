@@ -67,7 +67,7 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
             throw new IllegalArgumentException();
         }
         List<PhoneNote> list = phoneNoteDao.queryBuilder()
-                .where(PhoneNoteDao.Properties.Id.eq(phone_id)).build().list();
+                .where(PhoneNoteDao.Properties.Bmob_phone_id.eq(phone_id)).build().list();
         if (list.size() <= 0) {
             return;
         }
@@ -78,7 +78,7 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
 
     @Override
     public void update(PhoneNote phoneNote) {
-        if (phoneNote == null || phoneNote.getId() <= 0) {
+        if (phoneNote == null || phoneNote.getBmob_phone_id() <= 0) {
             throw new IllegalArgumentException();
         }
         phoneNoteDao.update(phoneNote);

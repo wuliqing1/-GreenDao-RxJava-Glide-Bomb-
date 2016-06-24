@@ -125,7 +125,7 @@ public class DBHelper {
         lendPhoneNote.setLend_phone_name(lend_phone_name);
         lendPhoneNote.setLend_phone_number(lend_phone_number);
 //        lendPhoneNote.setLend_phone_time(new Date().toString());
-        lendPhoneNote.setPhone_id(phone_id);
+        lendPhoneNote.setAttach_bmob_phone_id(phone_id);
         new LendPhoneTableAction(phone_id).add(lendPhoneNote);
     }
 
@@ -147,7 +147,7 @@ public class DBHelper {
         }
         List<String> names = new ArrayList<>();
         List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
-                .where(LendPhoneNoteDao.Properties.Phone_id.eq(phone_id)).build().list();
+                .where(LendPhoneNoteDao.Properties.Attach_bmob_phone_id.eq(phone_id)).build().list();
         for (LendPhoneNote lendPhoneNote : list) {
             if (!names.contains(lendPhoneNote.getLend_phone_name())) {
                 names.add(lendPhoneNote.getLend_phone_name());
@@ -173,7 +173,7 @@ public class DBHelper {
         }
         int number = 0;
         List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
-                .where(LendPhoneNoteDao.Properties.Phone_id.eq(phone_id)).build().list();
+                .where(LendPhoneNoteDao.Properties.Attach_bmob_phone_id.eq(phone_id)).build().list();
         for (LendPhoneNote lendPhoneNote : list) {
             number += lendPhoneNote.getLend_phone_number();
         }
@@ -187,13 +187,13 @@ public class DBHelper {
         }
         int lend_number = 0;
         List<PhoneNote> phoneNotes = phoneNoteDao.queryBuilder()
-                .where(PhoneNoteDao.Properties.Id.eq(phone_id)).build().list();
+                .where(PhoneNoteDao.Properties.Bmob_phone_id.eq(phone_id)).build().list();
         int total_number = 0;
         for (PhoneNote phoneNote : phoneNotes) {
             total_number += phoneNote.getPhone_number();
         }
         List<LendPhoneNote> lendPhoneNotes = lendPhoneNoteDao.queryBuilder()
-                .where(LendPhoneNoteDao.Properties.Phone_id.eq(phone_id)).build().list();
+                .where(LendPhoneNoteDao.Properties.Attach_bmob_phone_id.eq(phone_id)).build().list();
         for (LendPhoneNote lendPhoneNote : lendPhoneNotes) {
             lend_number += lendPhoneNote.getLend_phone_number();
         }

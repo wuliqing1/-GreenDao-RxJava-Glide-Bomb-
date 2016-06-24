@@ -2,7 +2,6 @@ package com.example;
 
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
-import de.greenrobot.daogenerator.Property;
 import de.greenrobot.daogenerator.Schema;
 
 public class PhoneDataBaseDaoGenerator {
@@ -37,7 +36,8 @@ public class PhoneDataBaseDaoGenerator {
 
         // greenDAO 会自动根据实体类的属性值来创建表字段，并赋予默认值
         // 接下来你便可以设置表中的字段：
-        note.addIdProperty();
+//        note.addIdProperty();
+        note.addLongProperty("bmob_phone_id");
         note.addStringProperty("phone_name");
         // 与在 Java 中使用驼峰命名法不同，默认数据库中的命名是使用大写和下划线来分割单词的。
         // For example, a property called “creationDate” will become a database column “CREATION_DATE”.
@@ -48,9 +48,10 @@ public class PhoneDataBaseDaoGenerator {
 
         Entity note1 = schema.addEntity("LendPhoneNote");
         note1.setTableName("LendPhoneNoteTable");
-        note1.addIdProperty();
-        Property phone_id  = note1.addLongProperty("phone_id").notNull().getProperty();
-        note1.addToOne(note, phone_id);
+//        note1.addIdProperty();
+        note1.addLongProperty("bmob_lend_phone_id");
+        note1.addLongProperty("attach_bmob_phone_id");
+//        note1.addToOne(note, phone_id);
         note1.addStringProperty("lend_phone_name");
         note1.addStringProperty("lend_phone_time");
         note1.addIntProperty("lend_phone_number");

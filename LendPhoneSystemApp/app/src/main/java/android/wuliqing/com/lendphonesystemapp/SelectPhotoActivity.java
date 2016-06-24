@@ -1,4 +1,4 @@
-package android.wuliqing.com.lendphonesystemapp.crop;
+package android.wuliqing.com.lendphonesystemapp;
 
 import android.Manifest;
 import android.app.Activity;
@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.wuliqing.com.lendphonesystemapp.R;
 import android.wuliqing.com.lendphonesystemapp.permission.PermissionListener;
 import android.wuliqing.com.lendphonesystemapp.permission.PermissionManager;
+
+import com.soundcloud.android.crop.other.CropHandler;
+import com.soundcloud.android.crop.other.CropHelper;
+import com.soundcloud.android.crop.other.CropParams;
 
 public class SelectPhotoActivity extends Activity implements CropHandler {
     public static final int SELECT_PHOTO_REQUEST_CODE = 0x123;
@@ -56,7 +59,7 @@ public class SelectPhotoActivity extends Activity implements CropHandler {
                     public void onShowRationale(String[] permissions) {
                         //当用户拒绝某权限时并点击`不再提醒`的按钮时，下次应用再请求该权限时，需要给出合适的响应（比如,给个展示对话框来解释应用为什么需要该权限）
                         Snackbar.make(mTextViewPicture, "需要相机权限去拍照", Snackbar.LENGTH_INDEFINITE)
-                                .setAction("ok", new View.OnClickListener() {
+                                .setAction("ok", new OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         //必须调用该`setIsPositive(true)`方法

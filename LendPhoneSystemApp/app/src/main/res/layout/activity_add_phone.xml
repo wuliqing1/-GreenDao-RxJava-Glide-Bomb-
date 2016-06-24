@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="android.wuliqing.com.lendphonesystemapp.AddPhoneActivity">
+    tools:context=".EditPhoneActivity">
 
     <include layout="@layout/toolbar_view" />
 
