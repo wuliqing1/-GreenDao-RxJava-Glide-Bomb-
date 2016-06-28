@@ -39,18 +39,27 @@ public class BmobPhoneNoteHelp {
             @Override
             public void call(Subscriber<? super Boolean> subscriber) {
                 List<PhoneNote> phoneNotes = mPhoneTableAction.query();
-                List<Long> phoneIds = new ArrayList<Long>();
+                List<Long> localPhoneIds = new ArrayList<Long>();
                 for (PhoneNote phoneNote :
                         phoneNotes) {
-                    phoneIds.add(phoneNote.getBmob_phone_id());
+                    localPhoneIds.add(phoneNote.getBmob_phone_id());
                 }
+                List<Long> bmobPhoneIds = new ArrayList<Long>();
                 for (BmobPhoneNote bmobPhoneNote :
-                        bmobPhoneNotes) {
+                        bmobPhoneNotes) {//本地数据库不存在的 则添加到本地数据库
                     Long id = Long.parseLong(bmobPhoneNote.getObjectId(), 16);
-                    if (!phoneIds.contains(id)) {//如果数据不存在 则添加本地数据库
+                    bmobPhoneIds.add(id);
+                    if (!localPhoneIds.contains(id)) {//如果数据不存在 则添加本地数据库
                         mPhoneTableAction.add(convertBmobPhoneNoteToPhoneNote(bmobPhoneNote));
+                        localPhoneIds.add(id);
                     }
                 }
+                for (int i = 0; i < localPhoneIds.size(); i++) {//本地数据库多余的 则删除本地数据多余的数据
+                    if (!bmobPhoneIds.contains(localPhoneIds.get(i))) {
+                        mPhoneTableAction.remove(localPhoneIds.get(i));
+                    }
+                }
+
                 subscriber.onNext(true);
             }
         }).subscribeOn(Schedulers.io())

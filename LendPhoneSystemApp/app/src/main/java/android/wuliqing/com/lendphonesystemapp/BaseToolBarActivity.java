@@ -35,7 +35,7 @@ public abstract class BaseToolBarActivity extends AppCompatActivity {
     protected Toolbar mToolbar;
 
     @Override
-    protected final void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewResId());
         setupToolbar();

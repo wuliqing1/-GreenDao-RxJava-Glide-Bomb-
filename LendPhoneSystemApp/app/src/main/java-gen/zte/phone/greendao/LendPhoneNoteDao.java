@@ -14,7 +14,7 @@ import zte.phone.greendao.LendPhoneNote;
 /** 
  * DAO for table "LendPhoneNoteTable".
 */
-public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Void> {
+public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Long> {
 
     public static final String TABLENAME = "LendPhoneNoteTable";
 
@@ -23,11 +23,12 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Void> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Bmob_lend_phone_id = new Property(0, Long.class, "bmob_lend_phone_id", false, "BMOB_LEND_PHONE_ID");
-        public final static Property Attach_bmob_phone_id = new Property(1, Long.class, "attach_bmob_phone_id", false, "ATTACH_BMOB_PHONE_ID");
-        public final static Property Lend_phone_name = new Property(2, String.class, "lend_phone_name", false, "LEND_PHONE_NAME");
-        public final static Property Lend_phone_time = new Property(3, String.class, "lend_phone_time", false, "LEND_PHONE_TIME");
-        public final static Property Lend_phone_number = new Property(4, Integer.class, "lend_phone_number", false, "LEND_PHONE_NUMBER");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Bmob_lend_phone_id = new Property(1, Long.class, "bmob_lend_phone_id", false, "BMOB_LEND_PHONE_ID");
+        public final static Property Attach_bmob_phone_id = new Property(2, Long.class, "attach_bmob_phone_id", false, "ATTACH_BMOB_PHONE_ID");
+        public final static Property Lend_phone_name = new Property(3, String.class, "lend_phone_name", false, "LEND_PHONE_NAME");
+        public final static Property Lend_phone_time = new Property(4, String.class, "lend_phone_time", false, "LEND_PHONE_TIME");
+        public final static Property Lend_phone_number = new Property(5, Integer.class, "lend_phone_number", false, "LEND_PHONE_NUMBER");
     };
 
 
@@ -43,11 +44,12 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Void> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"LendPhoneNoteTable\" (" + //
-                "\"BMOB_LEND_PHONE_ID\" INTEGER," + // 0: bmob_lend_phone_id
-                "\"ATTACH_BMOB_PHONE_ID\" INTEGER," + // 1: attach_bmob_phone_id
-                "\"LEND_PHONE_NAME\" TEXT," + // 2: lend_phone_name
-                "\"LEND_PHONE_TIME\" TEXT," + // 3: lend_phone_time
-                "\"LEND_PHONE_NUMBER\" INTEGER);"); // 4: lend_phone_number
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
+                "\"BMOB_LEND_PHONE_ID\" INTEGER," + // 1: bmob_lend_phone_id
+                "\"ATTACH_BMOB_PHONE_ID\" INTEGER," + // 2: attach_bmob_phone_id
+                "\"LEND_PHONE_NAME\" TEXT," + // 3: lend_phone_name
+                "\"LEND_PHONE_TIME\" TEXT," + // 4: lend_phone_time
+                "\"LEND_PHONE_NUMBER\" INTEGER);"); // 5: lend_phone_number
     }
 
     /** Drops the underlying database table. */
@@ -61,47 +63,53 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Void> {
     protected void bindValues(SQLiteStatement stmt, LendPhoneNote entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         Long bmob_lend_phone_id = entity.getBmob_lend_phone_id();
         if (bmob_lend_phone_id != null) {
-            stmt.bindLong(1, bmob_lend_phone_id);
+            stmt.bindLong(2, bmob_lend_phone_id);
         }
  
         Long attach_bmob_phone_id = entity.getAttach_bmob_phone_id();
         if (attach_bmob_phone_id != null) {
-            stmt.bindLong(2, attach_bmob_phone_id);
+            stmt.bindLong(3, attach_bmob_phone_id);
         }
  
         String lend_phone_name = entity.getLend_phone_name();
         if (lend_phone_name != null) {
-            stmt.bindString(3, lend_phone_name);
+            stmt.bindString(4, lend_phone_name);
         }
  
         String lend_phone_time = entity.getLend_phone_time();
         if (lend_phone_time != null) {
-            stmt.bindString(4, lend_phone_time);
+            stmt.bindString(5, lend_phone_time);
         }
  
         Integer lend_phone_number = entity.getLend_phone_number();
         if (lend_phone_number != null) {
-            stmt.bindLong(5, lend_phone_number);
+            stmt.bindLong(6, lend_phone_number);
         }
     }
 
     /** @inheritdoc */
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     /** @inheritdoc */
     @Override
     public LendPhoneNote readEntity(Cursor cursor, int offset) {
         LendPhoneNote entity = new LendPhoneNote( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // bmob_lend_phone_id
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // attach_bmob_phone_id
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // lend_phone_name
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // lend_phone_time
-            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4) // lend_phone_number
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // bmob_lend_phone_id
+            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // attach_bmob_phone_id
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // lend_phone_name
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // lend_phone_time
+            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5) // lend_phone_number
         );
         return entity;
     }
@@ -109,24 +117,29 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Void> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, LendPhoneNote entity, int offset) {
-        entity.setBmob_lend_phone_id(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setAttach_bmob_phone_id(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setLend_phone_name(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setLend_phone_time(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setLend_phone_number(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setBmob_lend_phone_id(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
+        entity.setAttach_bmob_phone_id(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
+        entity.setLend_phone_name(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setLend_phone_time(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setLend_phone_number(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
      }
     
     /** @inheritdoc */
     @Override
-    protected Void updateKeyAfterInsert(LendPhoneNote entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected Long updateKeyAfterInsert(LendPhoneNote entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     /** @inheritdoc */
     @Override
-    public Void getKey(LendPhoneNote entity) {
-        return null;
+    public Long getKey(LendPhoneNote entity) {
+        if(entity != null) {
+            return entity.getId();
+        } else {
+            return null;
+        }
     }
 
     /** @inheritdoc */

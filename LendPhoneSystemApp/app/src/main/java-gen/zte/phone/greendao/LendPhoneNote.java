@@ -6,6 +6,7 @@ package zte.phone.greendao;
  */
 public class LendPhoneNote {
 
+    private Long id;
     private Long bmob_lend_phone_id;
     private Long attach_bmob_phone_id;
     private String lend_phone_name;
@@ -15,12 +16,25 @@ public class LendPhoneNote {
     public LendPhoneNote() {
     }
 
-    public LendPhoneNote(Long bmob_lend_phone_id, Long attach_bmob_phone_id, String lend_phone_name, String lend_phone_time, Integer lend_phone_number) {
+    public LendPhoneNote(Long id) {
+        this.id = id;
+    }
+
+    public LendPhoneNote(Long id, Long bmob_lend_phone_id, Long attach_bmob_phone_id, String lend_phone_name, String lend_phone_time, Integer lend_phone_number) {
+        this.id = id;
         this.bmob_lend_phone_id = bmob_lend_phone_id;
         this.attach_bmob_phone_id = attach_bmob_phone_id;
         this.lend_phone_name = lend_phone_name;
         this.lend_phone_time = lend_phone_time;
         this.lend_phone_number = lend_phone_number;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getBmob_lend_phone_id() {

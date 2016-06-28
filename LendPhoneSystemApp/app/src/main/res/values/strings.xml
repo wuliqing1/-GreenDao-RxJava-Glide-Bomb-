@@ -16,6 +16,8 @@
     <string name="action_settings">设置</string>
     <string name="action_sync">同步</string>
     <string name="action_add">添加</string>
+    <string name="action_exit">退出</string>
+    <string name="sync_in_msg">正在同步...</string>
     <string name="sync_error_msg">同步失败!!</string>
     <string name="load_more_message">正在加载...</string>
     <string name="up_data_message">正在上传...</string>
@@ -26,7 +28,28 @@
     <string name="phone_names_lend">借走人员:</string>
     <string name="phone_record_time">入库时间:</string>
     <string name="none">无</string>
-    <string name="select_picture_title">从相册中选取</string>
+    <string name="select_picture_title">相册</string>
     <string name="select_capture_title">拍照</string>
     <string name="select_delete_title">删除</string>
+    <string name="user_no_login_msg">请点击头像登录</string>
+    <string name="title_activity_login">登陆</string>
+    <string name="title_activity_update">用户更新</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">邮箱</string>
+    <string name="prompt_name">姓名</string>
+    <string name="prompt_password">密码</string>
+    <string name="prompt_password_again">重复密码</string>
+    <string name="prompt_department">科室</string>
+    <string name="prompt_position">职位</string>
+    <string name="action_sign_in">登陆</string>
+    <string name="action_save">保存</string>
+    <string name="action_register">注册</string>
+    <string name="register_success">注册成功</string>
+    <string name="exit_account_message">确定退出该账户吗?</string>
+    <string name="error_invalid_email">邮箱地址无效</string>
+    <string name="error_invalid_password">密码太短</string>
+    <string name="error_not_same_password">密码不相同</string>
+    <string name="error_incorrect_password">密码不正确</string>
+    <string name="error_field_required">该字段不能为空</string>
 </resources>
