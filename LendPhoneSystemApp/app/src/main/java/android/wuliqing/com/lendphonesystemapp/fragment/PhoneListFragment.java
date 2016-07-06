@@ -1,8 +1,10 @@
 package android.wuliqing.com.lendphonesystemapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.wuliqing.com.lendphonesystemapp.EditPhoneActivity;
 import android.wuliqing.com.lendphonesystemapp.R;
 import android.wuliqing.com.lendphonesystemapp.adapter.BasePullListAdapter;
 import android.wuliqing.com.lendphonesystemapp.adapter.PhoneListAdapter;
@@ -76,11 +78,28 @@ public class PhoneListFragment extends BaseListFragment<PhoneNoteModel> implemen
 
             @Override
             public boolean onItemLongClick(ViewGroup parent, View view, PhoneNoteModel phoneNoteModel, int position) {
-                ToastUtils.show(getActivity(), "onItemLongClick " + position);
+                showEditPhoneDialog(phoneNoteModel);
                 return true;
             }
         });
         return basePullListAdapter;
+    }
+
+    private void showEditPhoneDialog(final PhoneNoteModel phoneNoteModel) {
+        MyDialogFragment.newInstance("", getString(R.string.phone_edit_dialog_msg, phoneNoteModel.getPhone_name()),
+                new MyDialogFragment.DialogListener() {
+                    @Override
+                    public void onClickDialogOk() {
+                        Intent intent = new Intent(getActivity(), EditPhoneActivity.class);
+                        intent.putExtra(EditPhoneActivity.EDIT_PHONE_DATA, phoneNoteModel);
+                        getActivity().startActivityForResult(intent, EditPhoneActivity.EDIT_PHONE_REQUEST_CODE);
+                    }
+
+                    @Override
+                    public void onClickDialogCancel() {
+
+                    }
+                }).show(getFragmentManager(), "");
     }
 
     @Override

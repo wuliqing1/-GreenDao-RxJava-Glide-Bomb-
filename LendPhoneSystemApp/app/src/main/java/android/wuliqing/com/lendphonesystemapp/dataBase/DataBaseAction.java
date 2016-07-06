@@ -8,10 +8,14 @@ import java.util.List;
 public interface DataBaseAction<T> {
     public List<T> query();
     public void update(T note);
+    public void remove(String id);
+
     public void remove(long id);
     public void add(T note);
 
     public List<T> queryWithKey(String column, String key);
 
     public void clearData();
+
+    public T queryOneDataWithID(String id);
 }

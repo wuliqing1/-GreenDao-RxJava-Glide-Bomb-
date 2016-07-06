@@ -21,9 +21,9 @@ public class MainPresenter extends BasePresenter<MainView> {
         mBaseHttp.load(null, null, new LoadDataListener<List<BmobPhoneNote>>() {
             @Override
             public void onComplete(List<BmobPhoneNote> result) {
-                BmobPhoneNoteHelp.updatePhoneNoteTable(result, new UpdateDataListener() {//更新本地数据库
+                BmobPhoneNoteHelp.updatePhoneNoteTable(result, new UpdateDataListener<Boolean>() {//更新本地数据库
                     @Override
-                    public void onResult(boolean result) {
+                    public void onResult(Boolean result) {
                         if (result) {//更新本地数据库成功
                             mView.onSyncResult(true);
                         } else {//更新本地数据库失败

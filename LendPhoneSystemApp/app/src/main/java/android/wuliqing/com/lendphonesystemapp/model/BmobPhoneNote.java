@@ -1,5 +1,7 @@
 package android.wuliqing.com.lendphonesystemapp.model;
 
+import android.text.TextUtils;
+
 import cn.bmob.v3.BmobObject;
 import zte.phone.greendao.PhoneNote;
 
@@ -47,6 +49,9 @@ public class BmobPhoneNote extends BmobObject {
         bmobPhoneNote.setPhone_number(phoneNote.getPhone_number());
         bmobPhoneNote.setProject_name(phoneNote.getProject_name());
         bmobPhoneNote.setPic_url(phoneNote.getPhone_photo_url());
+        if (!TextUtils.isEmpty(phoneNote.getBmob_phone_id())) {
+            bmobPhoneNote.setObjectId(phoneNote.getBmob_phone_id());
+        }
         return bmobPhoneNote;
     }
 }

@@ -20,8 +20,8 @@ public class LendPhoneListPresenterTest extends TestCase {
         super.setUp();
 //        MockitoAnnotations.initMocks(this);
         phoneListView = Mockito.mock(LendPhoneListView.class);
-        phoneListPresenter = Mockito.spy(new LendPhoneListPresenter(1));
-        lendPhoneTableAction = Mockito.spy(new LendPhoneTableAction(1));
+        phoneListPresenter = Mockito.spy(new LendPhoneListPresenter("1"));
+        lendPhoneTableAction = Mockito.spy(new LendPhoneTableAction("1"));
         phoneListPresenter.setDatabaseAction(lendPhoneTableAction);
         phoneListPresenter.attach(phoneListView);
     }

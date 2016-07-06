@@ -1,9 +1,13 @@
 package android.wuliqing.com.lendphonesystemapp;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,11 +21,16 @@ import android.widget.ListPopupWindow;
 import android.widget.Toast;
 import android.wuliqing.com.lendphonesystemapp.fragment.MyDialogFragment;
 import android.wuliqing.com.lendphonesystemapp.listeners.UpLoadDataListener;
+import android.wuliqing.com.lendphonesystemapp.model.PhoneNoteModel;
 import android.wuliqing.com.lendphonesystemapp.mvpview.AddPhoneView;
-import android.wuliqing.com.lendphonesystemapp.presenter.AddPhonePresenter;
+import android.wuliqing.com.lendphonesystemapp.permission.PermissionListener;
+import android.wuliqing.com.lendphonesystemapp.permission.PermissionManager;
+import android.wuliqing.com.lendphonesystemapp.presenter.EditPhonePresenter;
+import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 import android.wuliqing.com.lendphonesystemapp.utils.MyTextUtils;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
+import com.bumptech.glide.Glide;
 import com.soundcloud.android.crop.Crop;
 import com.soundcloud.android.crop.other.BitmapUtil;
 import com.soundcloud.android.crop.other.CropFileUtils;
@@ -34,14 +43,20 @@ import zte.phone.greendao.PhoneNote;
 
 public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneView, MyDialogFragment.DialogListener {
     public static final int ADD_PHONE_REQUEST_CODE = 222;
-    public static final String ADD_PHONE_RESULT_KEY = "add_phone_result_key";
-    private AddPhonePresenter mAddPhonePresenter = new AddPhonePresenter();
+    public static final int EDIT_PHONE_REQUEST_CODE = 223;
+    private static final int REQUEST_CODE_EXTERNAL = 8127;
+    public static final String UPDATE_PHONE_RESULT_KEY = "update_phone_result_key";
+    public static final String DELETE_PHONE_RESULT_KEY = "delete_phone_result_key";
+    public static final String EDIT_PHONE_DATA = "edit_phone_data";
+    private PhoneNoteModel phoneNoteModel;
+    private EditPhonePresenter mAddPhonePresenter = new EditPhonePresenter();
     private ImageView mAdd_phone_photo_view;
     private AutoCompleteTextView mAdd_phone_name_view;
     private EditText mAdd_phone_number_view;
     private AutoCompleteTextView mAdd_phone_project_view;
     private ProgressDialog mProgressDialog;
     private Uri outUri;
+    private PermissionManager helper;
 
     @Override
     protected void detachPresenter() {
@@ -52,6 +67,15 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     protected void createPresenter() {
         mAddPhonePresenter.attach(this);
         mAddPhonePresenter.queryPhoneNameAndProjectName();
+        if (phoneNoteModel != null) {
+//            mAddPhonePresenter.queryPhoneWithID(phone_id);
+            updateUi();
+        }
+    }
+
+    @Override
+    protected void initIntentData(Bundle savedInstanceState) {
+        phoneNoteModel = getIntent().getParcelableExtra(EDIT_PHONE_DATA);
     }
 
     @Override
@@ -79,6 +103,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     }
 
     private void showPopWindow() {
+        requestPermission();
         final ListPopupWindow listPopupWindow = new ListPopupWindow(this);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 new String[]{getString(R.string.select_capture_title),
@@ -96,11 +121,11 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
                     case 1:
                         Crop.pickImage(EditPhoneActivity.this);
                         break;
-                    case 2:{
+                    case 2: {
                         mAddPhonePresenter.setBmobFile(null);
                         mAdd_phone_photo_view.setImageResource(R.drawable.ic_camera_48pt_3x);
                     }
-                        break;
+                    break;
                 }
                 listPopupWindow.dismiss();
             }
@@ -109,6 +134,49 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
         listPopupWindow.setWidth(300);
         listPopupWindow.setAnchorView(mAdd_phone_photo_view);
         listPopupWindow.show();
+    }
+
+    public void requestPermission() {
+        helper = PermissionManager.with(this)
+                .addRequestCode(EditPhoneActivity.REQUEST_CODE_EXTERNAL)
+                .permissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .setPermissionsListener(new PermissionListener() {
+
+                    @Override
+                    public void onGranted() {
+                        ToastUtils.show(EditPhoneActivity.this, getString(R.string.get_permission_success));
+                    }
+
+                    @Override
+                    public void onDenied() {
+                        ToastUtils.show(EditPhoneActivity.this, getString(R.string.get_permission_error));
+                    }
+
+                    @Override
+                    public void onShowRationale(String[] permissions) {
+                        //当用户拒绝某权限时并点击`不再提醒`的按钮时，下次应用再请求该权限时，需要给出合适的响应（比如,给个展示对话框来解释应用为什么需要该权限）
+                        Snackbar.make(mAdd_phone_photo_view, getString(R.string.need_permission_msg), Snackbar.LENGTH_INDEFINITE)
+                                .setAction("ok", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //必须调用该`setIsPositive(true)`方法
+                                        helper.setIsPositive(true);
+                                        helper.request();
+                                    }
+                                }).show();
+                    }
+                })
+                .request();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_CODE_EXTERNAL:
+                helper.onPermissionResult(permissions, grantResults);
+                break;
+        }
     }
 
     private void initProgressDialog() {
@@ -125,7 +193,11 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     @Override
     protected void setupToolbar() {
         super.setupToolbar();
-        mToolbar.setTitle(R.string.add_phone_title);
+        if (phoneNoteModel != null) {
+            mToolbar.setTitle(R.string.edit_phone_title);
+        } else {
+            mToolbar.setTitle(R.string.add_phone_title);
+        }
     }
 
     @Override
@@ -135,13 +207,45 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem deleteMenu = menu.findItem(R.id.action_delete_phone);
+        if (phoneNoteModel != null) {
+            deleteMenu.setVisible(true);
+        } else {
+            deleteMenu.setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save_phone:
                 addPhone();
                 break;
+            case R.id.action_delete_phone:
+                showDeletePhoneDialog();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDeletePhoneDialog() {
+        MyDialogFragment.newInstance("", getString(R.string.phone_delete_dialog_msg, phoneNoteModel.getPhone_name()),
+                new MyDialogFragment.DialogListener() {
+                    @Override
+                    public void onClickDialogOk() {
+                        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        mProgressDialog.setMessage(getString(R.string.delete_message));
+                        mProgressDialog.show();
+                        mAddPhonePresenter.deletePhone(phoneNoteModel.getPhone_id());
+                    }
+
+                    @Override
+                    public void onClickDialogCancel() {
+
+                    }
+                }).show(getFragmentManager(), "");
     }
 
     private boolean isInvalidString(String phone_name, String phone_number) {
@@ -165,42 +269,85 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
             phoneNote.setPhone_name(phone_name);
             phoneNote.setPhone_number(Integer.valueOf(phone_number));
             phoneNote.setProject_name(project_name);
-            mProgressDialog.show();
+            if (phoneNoteModel != null) {
+                phoneNote.setBmob_phone_id(phoneNoteModel.getPhone_id());
+                phoneNote.setPhone_photo_url(phoneNoteModel.getPic_url());
+            }
+
             if (mAddPhonePresenter.getBmobFile() != null && mAddPhonePresenter.getBmobFile().exists()) {
-                mAddPhonePresenter.addPicToNetWork(this, new UpLoadDataListener<String>() {
-                    @Override
-                    public void onComplete(String result) {
-                        phoneNote.setPhone_photo_url(result);
-                        mAddPhonePresenter.addPhone(phoneNote);
-                    }
-
-                    @Override
-                    public void onProgress(int value) {
-                        mProgressDialog.setProgress(value);
-                    }
-
-                    @Override
-                    public void onError() {
-                        mProgressDialog.dismiss();
-                    }
-                });
+                upDataWithFile(phoneNote);
             } else {
-                mAddPhonePresenter.addPhone(phoneNote);
+                upData(phoneNote);
             }
         }
+    }
+
+    private void upData(PhoneNote phoneNote) {
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        if (phoneNoteModel != null) {
+            mProgressDialog.setMessage(getString(R.string.update_message));
+            mProgressDialog.show();
+            mAddPhonePresenter.updatePhone(phoneNote);
+        } else {
+            mProgressDialog.show();
+            mAddPhonePresenter.addPhone(phoneNote);
+        }
+    }
+
+    private void upDataWithFile(final PhoneNote phoneNote) {
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.show();
+        mAddPhonePresenter.addPicToNetWork(this, new UpLoadDataListener<String>() {
+            @Override
+            public void onComplete(String result) {
+                phoneNote.setPhone_photo_url(result);
+                if (!TextUtils.isEmpty(phoneNote.getBmob_phone_id())) {
+                    mAddPhonePresenter.updatePhone(phoneNote);
+                } else {
+                    mAddPhonePresenter.addPhone(phoneNote);
+                }
+            }
+
+            @Override
+            public void onProgress(int value) {
+                mProgressDialog.setProgress(value);
+            }
+
+            @Override
+            public void onError() {
+                mProgressDialog.dismiss();
+            }
+        });
     }
 
     @Override
     public void onResult(boolean result) {
         mProgressDialog.dismiss();
         if (result) {
-            ToastUtils.show(this, R.string.add_phone_success);
+            if (phoneNoteModel != null) {
+                ToastUtils.show(this, R.string.update_phone_success);
+            } else {
+                ToastUtils.show(this, R.string.add_phone_success);
+            }
+
             Intent intent = new Intent();
-            intent.putExtra(ADD_PHONE_RESULT_KEY, true);
+            intent.putExtra(UPDATE_PHONE_RESULT_KEY, true);
             setResult(RESULT_OK, intent);
             finish();
         } else {
-            ToastUtils.show(this, R.string.add_phone_error);
+//            ToastUtils.show(this, R.string.add_phone_error);
+        }
+    }
+
+    @Override
+    public void onDeleteResult(boolean result) {
+        mProgressDialog.dismiss();
+        if (result) {
+            ToastUtils.show(this, R.string.delete_phone_success);
+            Intent intent = new Intent();
+            intent.putExtra(DELETE_PHONE_RESULT_KEY, true);
+            setResult(RESULT_OK, intent);
+            finish();
         }
     }
 
@@ -239,8 +386,26 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     }
 
     @Override
-    protected void finishActivity() {
-        onBackPressed();
+    public void onQueryPhone(PhoneNote phoneNote) {
+//        if (phoneNote != null) {
+//            updateUi(phoneNote);
+//        }
+    }
+
+    private void updateUi() {
+        mAdd_phone_name_view.setText(phoneNoteModel.getPhone_name());
+        mAdd_phone_number_view.setText(String.valueOf(phoneNoteModel.getPhone_number()));
+        mAdd_phone_project_view.setText(phoneNoteModel.getProject_name());
+        if (phoneNoteModel.getPic_url() != null) {
+            Glide.with(this)
+                    .load(phoneNoteModel.getPic_url())
+                    .placeholder(R.drawable.ic_camera_48pt_3x)
+                    .error(R.drawable.ic_camera_48pt_3x)
+                    .crossFade()
+                    .centerCrop()
+                    .bitmapTransform(new CropCircleTransformation(this))
+                    .into(mAdd_phone_photo_view);
+        }
     }
 
     @Override
@@ -295,7 +460,15 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     private void handleCrop(int resultCode, Intent result) {
         if (resultCode == RESULT_OK) {
             Uri uri = Crop.getOutput(result);
-            mAdd_phone_photo_view.setImageURI(uri);
+            Glide.with(this)
+                    .load(uri)
+                    .placeholder(R.drawable.ic_camera_48pt_3x)
+                    .error(R.drawable.ic_camera_48pt_3x)
+                    .crossFade()
+                    .centerCrop()
+                    .bitmapTransform(new CropCircleTransformation(this))
+                    .into(mAdd_phone_photo_view);
+//            mAdd_phone_photo_view.setImageURI(uri);
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }

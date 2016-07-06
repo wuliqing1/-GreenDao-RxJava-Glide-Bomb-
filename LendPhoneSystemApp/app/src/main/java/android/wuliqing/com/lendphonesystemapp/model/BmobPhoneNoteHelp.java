@@ -27,7 +27,7 @@ public class BmobPhoneNoteHelp {
         phoneNote.setProject_name(bmobPhoneNote.getProject_name());
         phoneNote.setPhone_name(bmobPhoneNote.getPhone_name());
         phoneNote.setPhone_photo_url(bmobPhoneNote.getPic_url());
-        phoneNote.setBmob_phone_id(Long.parseLong(bmobPhoneNote.getObjectId(), 16));
+        phoneNote.setBmob_phone_id(bmobPhoneNote.getObjectId());
         return phoneNote;
     }
 
@@ -39,15 +39,15 @@ public class BmobPhoneNoteHelp {
             @Override
             public void call(Subscriber<? super Boolean> subscriber) {
                 List<PhoneNote> phoneNotes = mPhoneTableAction.query();
-                List<Long> localPhoneIds = new ArrayList<Long>();
+                List<String> localPhoneIds = new ArrayList<String>();
                 for (PhoneNote phoneNote :
                         phoneNotes) {
                     localPhoneIds.add(phoneNote.getBmob_phone_id());
                 }
-                List<Long> bmobPhoneIds = new ArrayList<Long>();
+                List<String> bmobPhoneIds = new ArrayList<String>();
                 for (BmobPhoneNote bmobPhoneNote :
                         bmobPhoneNotes) {//本地数据库不存在的 则添加到本地数据库
-                    Long id = Long.parseLong(bmobPhoneNote.getObjectId(), 16);
+                    String id = bmobPhoneNote.getObjectId();
                     bmobPhoneIds.add(id);
                     if (!localPhoneIds.contains(id)) {//如果数据不存在 则添加本地数据库
                         mPhoneTableAction.add(convertBmobPhoneNoteToPhoneNote(bmobPhoneNote));
@@ -56,7 +56,24 @@ public class BmobPhoneNoteHelp {
                 }
                 for (int i = 0; i < localPhoneIds.size(); i++) {//本地数据库多余的 则删除本地数据多余的数据
                     if (!bmobPhoneIds.contains(localPhoneIds.get(i))) {
-                        mPhoneTableAction.remove(localPhoneIds.get(i));
+                        try {
+                            mPhoneTableAction.remove(localPhoneIds.get(i));
+                        } catch (IllegalArgumentException e) {
+                            mPhoneTableAction.remove(phoneNotes.get(i).getId());
+                        }
+                    }
+                }
+
+                List<PhoneNote> phoneNotes1 = mPhoneTableAction.query();
+                for (int i = 0; i < bmobPhoneNotes.size(); i++) {//更新本地数据库
+                    BmobPhoneNote bmobPhoneNote = bmobPhoneNotes.get(i);
+                    for (int j = 0; j < phoneNotes1.size(); j++) {
+                        PhoneNote phoneNote = phoneNotes1.get(j);
+                        if (bmobPhoneNote.getObjectId().equals(phoneNote.getBmob_phone_id())) {
+                            bmobPhoneNoteCopyToPhoneNote(bmobPhoneNote, phoneNote);
+                            mPhoneTableAction.update(phoneNote);
+                            break;
+                        }
                     }
                 }
 
@@ -104,8 +121,18 @@ public class BmobPhoneNoteHelp {
         phoneNoteModel.setLend_number(lend_number);
         phoneNoteModel.setLend_names(DBHelper.getInstance().lendPhoneNames(phoneNote.getBmob_phone_id()));
         phoneNoteModel.setDate(phoneNote.getPhone_time());
-        phoneNoteModel.setPic_path(phoneNote.getPhone_photo_url());
+        phoneNoteModel.setPic_url(phoneNote.getPhone_photo_url());
         phoneNoteModel.setPhone_id(phoneNote.getBmob_phone_id());
+        phoneNoteModel.setProject_name(phoneNote.getProject_name());
+        phoneNoteModel.setPhone_number(phoneNote.getPhone_number());
         return phoneNoteModel;
+    }
+
+    public static void bmobPhoneNoteCopyToPhoneNote(BmobPhoneNote bmobPhoneNote, PhoneNote phoneNote) {
+        phoneNote.setPhone_number(bmobPhoneNote.getPhone_number());
+        phoneNote.setPhone_photo_url(bmobPhoneNote.getPic_url());
+        phoneNote.setProject_name(bmobPhoneNote.getProject_name());
+        phoneNote.setPhone_name(bmobPhoneNote.getPhone_name());
+        phoneNote.setPhone_time(bmobPhoneNote.getUpdatedAt());
     }
 }

@@ -10,16 +10,16 @@ import zte.phone.greendao.LendPhoneNoteDao;
  */
 public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
     private LendPhoneNoteDao lendPhoneNoteDao;
-    private long phone_id;
+    private String phone_id;
 
-    public LendPhoneTableAction(long phone_id) {
+    public LendPhoneTableAction(String phone_id) {
         lendPhoneNoteDao = DBHelper.getInstance().getLendPhoneNoteDao();
         this.phone_id = phone_id;
     }
 
     @Override
     public List<LendPhoneNote> query() {
-        if (phone_id <= 0) {
+        if (phone_id == null) {
             throw new IllegalArgumentException();
         }
         List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
@@ -29,19 +29,34 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
 
     @Override
     public void update(LendPhoneNote note) {
-        if (note == null || note.getBmob_lend_phone_id() <= 0) {
+        if (note == null || note.getBmob_lend_phone_id() == null) {
             throw new IllegalArgumentException();
         }
         lendPhoneNoteDao.update(note);
     }
 
     @Override
-    public void remove(long id) {
-        if (id <= 0) {
+    public void remove(String id) {
+        if (id == null) {
             throw new IllegalArgumentException();
         }
         List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
                 .where(LendPhoneNoteDao.Properties.Bmob_lend_phone_id.eq(id)).build().list();
+        if (list.size() <= 0) {
+            return;
+        }
+        for (LendPhoneNote lendPhoneNote : list) {
+            lendPhoneNoteDao.delete(lendPhoneNote);
+        }
+    }
+
+    @Override
+    public void remove(long id) {
+        if (id == 0) {
+            throw new IllegalArgumentException();
+        }
+        List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
+                .where(LendPhoneNoteDao.Properties.Id.eq(id)).build().list();
         if (list.size() <= 0) {
             return;
         }
@@ -68,7 +83,7 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
                 isColumnExist = true;
             }
         }
-        if(!isColumnExist || key == null){
+        if (!isColumnExist || key == null) {
             throw new IllegalArgumentException();
         }
         //需要优化，目前只支持lend_phone_name字段查询
@@ -81,6 +96,19 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
     @Override
     public void clearData() {
         lendPhoneNoteDao.deleteAll();
+    }
+
+    @Override
+    public LendPhoneNote queryOneDataWithID(String id) {
+        if (id == null) {
+            throw new IllegalArgumentException();
+        }
+        List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
+                .where(LendPhoneNoteDao.Properties.Bmob_lend_phone_id.eq(id)).build().list();
+        if (list != null && list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
     }
 
 }

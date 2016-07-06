@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 import android.wuliqing.com.lendphonesystemapp.R;
 import android.wuliqing.com.lendphonesystemapp.model.PhoneNoteModel;
+import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 
 import com.bumptech.glide.Glide;
 
@@ -29,15 +30,21 @@ public class PhoneListAdapter extends BasePullListAdapter<PhoneNoteModel> {
             names = mContext.getResources().getString(R.string.none);
         }
         holder.setText(R.id.phone_names_lend_view, names);
-        if (phoneNoteModel.getPic_path() != null) {
+        if (phoneNoteModel.getPic_url() != null) {
             Glide.with(mContext)
-                    .load(phoneNoteModel.getPic_path())
-                    .centerCrop()
+                    .load(phoneNoteModel.getPic_url())
                     .placeholder(R.drawable.ic_phone_iphone_48pt_2x)
                     .error(R.drawable.ic_phone_iphone_48pt_2x)
+                    .crossFade()
+                    .centerCrop()
+                    .bitmapTransform(new CropCircleTransformation(mContext))
                     .into((ImageView) holder.getView(R.id.phone_icon_view));
+        } else {
+            ((ImageView) holder.getView(R.id.phone_icon_view)).setImageResource(R.drawable.ic_phone_iphone_48pt_2x);
         }
-        holder.setText(R.id.phone_record_time_view, phoneNoteModel.getDate().toString());
+        if (!TextUtils.isEmpty(phoneNoteModel.getDate())) {
+            holder.setText(R.id.phone_record_time_view, phoneNoteModel.getDate().toString());
+        }
     }
 
 }

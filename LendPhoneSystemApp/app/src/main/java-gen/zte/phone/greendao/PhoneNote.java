@@ -7,7 +7,7 @@ package zte.phone.greendao;
 public class PhoneNote {
 
     private Long id;
-    private Long bmob_phone_id;
+    private String bmob_phone_id;
     private String phone_name;
     private Integer phone_number;
     private String project_name;
@@ -21,7 +21,7 @@ public class PhoneNote {
         this.id = id;
     }
 
-    public PhoneNote(Long id, Long bmob_phone_id, String phone_name, Integer phone_number, String project_name, String phone_time, String phone_photo_url) {
+    public PhoneNote(Long id, String bmob_phone_id, String phone_name, Integer phone_number, String project_name, String phone_time, String phone_photo_url) {
         this.id = id;
         this.bmob_phone_id = bmob_phone_id;
         this.phone_name = phone_name;
@@ -39,11 +39,11 @@ public class PhoneNote {
         this.id = id;
     }
 
-    public Long getBmob_phone_id() {
+    public String getBmob_phone_id() {
         return bmob_phone_id;
     }
 
-    public void setBmob_phone_id(Long bmob_phone_id) {
+    public void setBmob_phone_id(String bmob_phone_id) {
         this.bmob_phone_id = bmob_phone_id;
     }
 

@@ -47,7 +47,7 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtils.show(LendPhoneApplication.getAppContext(), e.toString());
+                        ToastUtils.show(LendPhoneApplication.getAppContext(), "queryListInDataBase " + e.toString());
                         if (mView != null) {
                             mView.onFetchedPhones(null);
                         }
@@ -62,7 +62,7 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
                 });
     }
 
-    public void removeData(long id) {
+    public void removeData(String id) {
         mDataBaseAction.remove(id);
     }
 

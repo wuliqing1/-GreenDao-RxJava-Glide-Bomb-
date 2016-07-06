@@ -27,6 +27,7 @@ import android.wuliqing.com.lendphonesystemapp.listeners.UpLoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.model.MyUser;
 import android.wuliqing.com.lendphonesystemapp.mvpview.UserView;
 import android.wuliqing.com.lendphonesystemapp.presenter.UserPresenter;
+import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 import android.wuliqing.com.lendphonesystemapp.utils.MyTextUtils;
 
 import com.bumptech.glide.Glide;
@@ -114,9 +115,11 @@ public class UserActivity extends BaseToolBarActivity implements UserView {
             if (!TextUtils.isEmpty(myUser.getPhoto_url())) {
                 Glide.with(this)
                         .load(myUser.getPhoto_url())
-                        .centerCrop()
                         .placeholder(R.drawable.ic_account_circle_60pt_2x)
                         .error(R.drawable.ic_account_circle_60pt_2x)
+                        .crossFade()
+                        .centerCrop()
+                        .bitmapTransform(new CropCircleTransformation(this))
                         .into(mPhoto);
             }
         }

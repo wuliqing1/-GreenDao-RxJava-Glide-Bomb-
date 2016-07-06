@@ -17,7 +17,8 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
 
     @Override
     public List<PhoneNote> query() {
-        List<PhoneNote> list = phoneNoteDao.queryBuilder().build().list();
+        List<PhoneNote> list = phoneNoteDao.queryBuilder().orderDesc(PhoneNoteDao.Properties.Phone_time)
+                .build().list();
         return list;
     }
 
@@ -60,10 +61,23 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
         phoneNoteDao.deleteAll();
     }
 
+    @Override
+    public PhoneNote queryOneDataWithID(String phone_id) {
+        if (phone_id == null) {
+            throw new IllegalArgumentException();
+        }
+        List<PhoneNote> list = phoneNoteDao.queryBuilder()
+                .where(PhoneNoteDao.Properties.Bmob_phone_id.eq(phone_id)).build().list();
+        if (list != null && list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
+    }
+
 
     @Override
-    public void remove(long phone_id) {
-        if (phone_id <= 0) {
+    public void remove(String phone_id) {
+        if (phone_id == null) {
             throw new IllegalArgumentException();
         }
         List<PhoneNote> list = phoneNoteDao.queryBuilder()
@@ -77,8 +91,23 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
     }
 
     @Override
+    public void remove(long id) {
+        if (id == 0) {
+            throw new IllegalArgumentException();
+        }
+        List<PhoneNote> list = phoneNoteDao.queryBuilder()
+                .where(PhoneNoteDao.Properties.Id.eq(id)).build().list();
+        if (list.size() <= 0) {
+            return;
+        }
+        for (PhoneNote phoneNote : list) {
+            phoneNoteDao.delete(phoneNote);
+        }
+    }
+
+    @Override
     public void update(PhoneNote phoneNote) {
-        if (phoneNote == null || phoneNote.getBmob_phone_id() <= 0) {
+        if (phoneNote == null || phoneNote.getBmob_phone_id() == null) {
             throw new IllegalArgumentException();
         }
         phoneNoteDao.update(phoneNote);

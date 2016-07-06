@@ -17,6 +17,7 @@ import android.wuliqing.com.lendphonesystemapp.fragment.PhoneListFragment;
 import android.wuliqing.com.lendphonesystemapp.model.MyUser;
 import android.wuliqing.com.lendphonesystemapp.mvpview.MainView;
 import android.wuliqing.com.lendphonesystemapp.presenter.MainPresenter;
+import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import com.bumptech.glide.Glide;
@@ -100,9 +101,11 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             if (!TextUtils.isEmpty(photo_url)) {
                 Glide.with(this)
                         .load(photo_url)
-                        .centerCrop()
-                        .placeholder(R.drawable.ic_account_circle_60pt_2x)
+//                        .placeholder(R.drawable.ic_account_circle_60pt_2x)
                         .error(R.drawable.ic_account_circle_60pt_2x)
+                        .crossFade()
+                        .centerCrop()
+                        .bitmapTransform(new CropCircleTransformation(this))
                         .into(user_photo_iv);
             }
         } else {
@@ -157,9 +160,10 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == EditPhoneActivity.ADD_PHONE_REQUEST_CODE && resultCode == RESULT_OK) {
-            boolean is_update = data.getBooleanExtra(EditPhoneActivity.ADD_PHONE_RESULT_KEY, false);
+            boolean is_update = data.getBooleanExtra(EditPhoneActivity.UPDATE_PHONE_RESULT_KEY, false);
             if (is_update) {
-                doSyncAction();
+//                doSyncAction();
+                mPhoneListFragment.updateData();
             }
         } else if (requestCode == LoginActivity.LOGIN_REQUEST_CODE && resultCode == RESULT_OK) {
             boolean flag = data.getBooleanExtra(LoginActivity.LOGIN_FLAG_KEY, false);
@@ -170,6 +174,14 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             boolean flag = data.getBooleanExtra(UserActivity.USER_FLAG_KEY, false);
             if (flag) {
                 updateUserData();
+            }
+        } else if (requestCode == EditPhoneActivity.EDIT_PHONE_REQUEST_CODE && resultCode == RESULT_OK) {
+            boolean update_flag = data.getBooleanExtra(EditPhoneActivity.UPDATE_PHONE_RESULT_KEY, false);
+            boolean delete_flag = data.getBooleanExtra(EditPhoneActivity.DELETE_PHONE_RESULT_KEY, false);
+            if (update_flag) {
+                mPhoneListFragment.updateData();
+            } else if (delete_flag) {
+                mPhoneListFragment.updateData();
             }
         }
     }

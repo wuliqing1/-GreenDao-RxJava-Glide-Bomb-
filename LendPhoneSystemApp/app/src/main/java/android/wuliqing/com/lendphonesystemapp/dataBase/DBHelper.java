@@ -1,6 +1,7 @@
 package android.wuliqing.com.lendphonesystemapp.dataBase;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -105,7 +106,7 @@ public class DBHelper {
         new PhoneTableAction().add(phoneNote);
     }
 
-    public void PhoneTableRemove(long phone_id) {
+    public void PhoneTableRemove(String phone_id) {
         new PhoneTableAction().remove(phone_id);
     }
 
@@ -117,8 +118,8 @@ public class DBHelper {
         return new PhoneTableAction().query();
     }
 
-    public void LendPhoneTableAdd(String lend_phone_name, int lend_phone_number, long phone_id) {
-        if (phone_id <= 0) {
+    public void LendPhoneTableAdd(String lend_phone_name, int lend_phone_number, String phone_id) {
+        if (phone_id == null) {
             throw new IllegalArgumentException();
         }
         LendPhoneNote lendPhoneNote = new LendPhoneNote();
@@ -129,20 +130,20 @@ public class DBHelper {
         new LendPhoneTableAction(phone_id).add(lendPhoneNote);
     }
 
-    public void LendPhoneTableRemove(long id) {
-        new LendPhoneTableAction(0).remove(id);
+    public void LendPhoneTableRemove(String id) {
+        new LendPhoneTableAction("").remove(id);
     }
 
     public void LendPhoneTableUpdate(LendPhoneNote lendPhoneNote) {
-        new LendPhoneTableAction(0).update(lendPhoneNote);
+        new LendPhoneTableAction("").update(lendPhoneNote);
     }
 
-    public List<LendPhoneNote> LendPhoneTableQuery(long phone_id) {
+    public List<LendPhoneNote> LendPhoneTableQuery(String phone_id) {
         return new LendPhoneTableAction(phone_id).query();
     }
 
-    public String lendPhoneNames(long phone_id) {
-        if (phone_id <= 0) {
+    public String lendPhoneNames(String phone_id) {
+        if (phone_id == null) {
             throw new IllegalArgumentException();
         }
         List<String> names = new ArrayList<>();
@@ -167,8 +168,8 @@ public class DBHelper {
         return stringBuilder.toString();
     }
 
-    public int LendPhoneNumber(long phone_id) {//借手机数量
-        if (phone_id <= 0) {
+    public int LendPhoneNumber(String phone_id) {//借手机数量
+        if (phone_id == null) {
             throw new IllegalArgumentException();
         }
         int number = 0;
@@ -181,8 +182,8 @@ public class DBHelper {
         return number;
     }
 
-    public int LeftPhoneNumber(long phone_id) {//剩余手机数量
-        if (phone_id <= 0) {
+    public int LeftPhoneNumber(String phone_id) {//剩余手机数量
+        if (TextUtils.isEmpty(phone_id)) {
             throw new IllegalArgumentException();
         }
         int lend_number = 0;

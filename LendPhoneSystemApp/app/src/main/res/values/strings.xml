@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">借机系统</string>
     <string name="add_phone_title">添加手机</string>
     <string name="add_phone_name_title">添加手机名称</string>
@@ -7,9 +7,11 @@
     <string name="add_phone_number_invalid">请输入有效的手机数量!</string>
     <string name="add_phone_project_name_title">添加手机项目名称</string>
     <string name="clear_database_success">成功清理数据库!</string>
-    <string name="add_phone_success">成功添加手机!</string>
+    <string name="add_phone_success">添加手机成功!</string>
+    <string name="update_phone_success">更新手机成功!</string>
+    <string name="delete_phone_success">删除手机成功!</string>
     <string name="add_phone_error">添加手机失败,请检查网络!</string>
-    <string name="add_phone_alert_dialog">该修改是否需要保存起来?</string>
+    <string name="add_phone_alert_dialog">确定对该修改进行保存吗?</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -21,12 +23,17 @@
     <string name="sync_error_msg">同步失败!!</string>
     <string name="load_more_message">正在加载...</string>
     <string name="up_data_message">正在上传...</string>
+    <string name="update_message">正在更新...</string>
+    <string name="delete_message">正在删除...</string>
     <string name="menu_clear_title">清除数据</string>
     <string name="menu_home_title">主界面</string>
     <string name="phone_number_left">剩余数量:</string>
     <string name="phone_number_lend">借走数量:</string>
     <string name="phone_names_lend">借走人员:</string>
     <string name="phone_record_time">入库时间:</string>
+    <string name="phone_edit_dialog_msg">确定对 <xliff:g id="name">%s</xliff:g> 手机进行编辑或删除?</string>
+    <string name="phone_delete_dialog_msg">确定删除 <xliff:g id="name">%s</xliff:g> 手机吗？</string>
+    <string name="edit_phone_title">编辑手机</string>
     <string name="none">无</string>
     <string name="select_picture_title">相册</string>
     <string name="select_capture_title">拍照</string>
@@ -52,4 +59,8 @@
     <string name="error_not_same_password">密码不相同</string>
     <string name="error_incorrect_password">密码不正确</string>
     <string name="error_field_required">该字段不能为空</string>
+
+    <string name="need_permission_msg">需要相应权限才能设置头像!</string>
+    <string name="get_permission_error">获取权限失败!</string>
+    <string name="get_permission_success">获取权限成功!</string>
 </resources>

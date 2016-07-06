@@ -37,11 +37,14 @@ public abstract class BaseToolBarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initIntentData(savedInstanceState);
         setContentView(getContentViewResId());
         setupToolbar();
         initWidgets();
         createPresenter();
     }
+
+    protected void initIntentData(Bundle savedInstanceState){}
 
     @Override
     protected void onDestroy() {

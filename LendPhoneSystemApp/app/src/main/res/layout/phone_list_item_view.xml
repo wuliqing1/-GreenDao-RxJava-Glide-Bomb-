@@ -47,15 +47,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_number_left"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="@android:style/TextAppearance.Material.Body1" />
 
             <TextView
                 android:id="@+id/phone_number_left_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/phone_number_left_tv"
                 android:text="10"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -67,15 +69,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_number_lend"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="@android:style/TextAppearance.Material.Body1" />
 
             <TextView
                 android:id="@+id/phone_number_lend_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/phone_number_lend_tv"
                 android:text="10"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -87,15 +91,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_names_lend"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="@android:style/TextAppearance.Material.Body1" />
 
             <TextView
                 android:id="@+id/phone_names_lend_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/phone_names_lend_tv"
                 android:text="wuliqing "
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -107,15 +113,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_record_time"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="@android:style/TextAppearance.Material.Body1" />
 
             <TextView
                 android:id="@+id/phone_record_time_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/phone_record_time_tv"
                 android:text="2010 10-12"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>
 

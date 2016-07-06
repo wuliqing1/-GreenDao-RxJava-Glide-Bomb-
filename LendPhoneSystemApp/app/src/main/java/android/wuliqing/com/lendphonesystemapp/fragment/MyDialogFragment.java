@@ -69,6 +69,7 @@ public class MyDialogFragment extends DialogFragment {
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
                 if (mDialogListener != null) {
                     mDialogListener.onClickDialogOk();
                 }

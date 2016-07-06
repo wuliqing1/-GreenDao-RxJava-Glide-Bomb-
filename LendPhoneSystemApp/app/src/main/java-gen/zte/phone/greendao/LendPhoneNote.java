@@ -7,8 +7,8 @@ package zte.phone.greendao;
 public class LendPhoneNote {
 
     private Long id;
-    private Long bmob_lend_phone_id;
-    private Long attach_bmob_phone_id;
+    private String bmob_lend_phone_id;
+    private String attach_bmob_phone_id;
     private String lend_phone_name;
     private String lend_phone_time;
     private Integer lend_phone_number;
@@ -20,7 +20,7 @@ public class LendPhoneNote {
         this.id = id;
     }
 
-    public LendPhoneNote(Long id, Long bmob_lend_phone_id, Long attach_bmob_phone_id, String lend_phone_name, String lend_phone_time, Integer lend_phone_number) {
+    public LendPhoneNote(Long id, String bmob_lend_phone_id, String attach_bmob_phone_id, String lend_phone_name, String lend_phone_time, Integer lend_phone_number) {
         this.id = id;
         this.bmob_lend_phone_id = bmob_lend_phone_id;
         this.attach_bmob_phone_id = attach_bmob_phone_id;
@@ -37,19 +37,19 @@ public class LendPhoneNote {
         this.id = id;
     }
 
-    public Long getBmob_lend_phone_id() {
+    public String getBmob_lend_phone_id() {
         return bmob_lend_phone_id;
     }
 
-    public void setBmob_lend_phone_id(Long bmob_lend_phone_id) {
+    public void setBmob_lend_phone_id(String bmob_lend_phone_id) {
         this.bmob_lend_phone_id = bmob_lend_phone_id;
     }
 
-    public Long getAttach_bmob_phone_id() {
+    public String getAttach_bmob_phone_id() {
         return attach_bmob_phone_id;
     }
 
-    public void setAttach_bmob_phone_id(Long attach_bmob_phone_id) {
+    public void setAttach_bmob_phone_id(String attach_bmob_phone_id) {
         this.attach_bmob_phone_id = attach_bmob_phone_id;
     }
 

@@ -63,7 +63,7 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
 
         insertPhoneNote(phoneNoteDao);
         assertEquals(1, phoneNoteDao.count());
-        DBHelper.getInstance().PhoneTableRemove(1);
+        DBHelper.getInstance().PhoneTableRemove("");
         assertEquals(0, phoneNoteDao.count());
 
         phoneNoteDao.deleteAll();
@@ -83,7 +83,7 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         cursor.moveToFirst();
         assertEquals(10, cursor.getInt(0));
         cursor.close();
-        phoneNote.setBmob_phone_id(1L);
+        phoneNote.setBmob_phone_id("");
         phoneNote.setPhone_number(5);
         phoneNoteDao.update(phoneNote);
         Cursor cursor1 = phoneNoteDao.getDatabase().query(PhoneNoteDao.TABLENAME,
@@ -118,14 +118,14 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         List<PhoneNote> list = DBHelper.getInstance().PhoneTableQuery();
         assertEquals(2, list.size());
         assertNotNull(list.get(0));
-        assertEquals(1, list.get(0).getBmob_phone_id().intValue());
+        assertEquals(1, list.get(0).getBmob_phone_id());
         assertEquals("P635A50", list.get(0).getPhone_name());
         assertEquals(10, list.get(0).getPhone_number().intValue());
         assertEquals("MT6735P", list.get(0).getProject_name());
 //        assertEquals("2016-5-25", list.get(0).getPhone_time());
 //        assertEquals("1.png", list.get(0).getPhone_photo());
         assertNotNull(list.get(1));
-        assertEquals(2, list.get(1).getBmob_phone_id().intValue());
+        assertEquals(2, list.get(1).getBmob_phone_id());
         assertEquals("P635A10", list.get(1).getPhone_name());
         assertEquals(8, list.get(1).getPhone_number().intValue());
         assertEquals("MT6735M", list.get(1).getProject_name());
@@ -144,10 +144,10 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         LendPhoneNoteDao lendPhoneNoteDao = DBHelper.getInstance().getLendPhoneNoteDao();
         lendPhoneNoteDao.deleteAll();
 
-        insertLendPhoneNote(lendPhoneNoteDao, 1);//借2台
+        insertLendPhoneNote(lendPhoneNoteDao, "1");//借2台
         assertEquals(1,lendPhoneNoteDao.count());
 
-        DBHelper.getInstance().LendPhoneTableAdd("wuliqing", 2, 1);//借2台
+        DBHelper.getInstance().LendPhoneTableAdd("wuliqing", 2, "");//借2台
         assertEquals(2, lendPhoneNoteDao.count());
 
         lendPhoneNoteDao.deleteAll();
@@ -158,8 +158,8 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         LendPhoneNoteDao lendPhoneNoteDao = DBHelper.getInstance().getLendPhoneNoteDao();
         lendPhoneNoteDao.deleteAll();
 
-        insertLendPhoneNote(lendPhoneNoteDao, 1);
-        insertLendPhoneNote(lendPhoneNoteDao, 2);
+        insertLendPhoneNote(lendPhoneNoteDao, "1");
+        insertLendPhoneNote(lendPhoneNoteDao, "2");
         assertEquals(2,lendPhoneNoteDao.count());
 
         List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder().list();
@@ -179,7 +179,7 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         LendPhoneNoteDao lendPhoneNoteDao = DBHelper.getInstance().getLendPhoneNoteDao();
         lendPhoneNoteDao.deleteAll();
 
-        insertLendPhoneNote(lendPhoneNoteDao, 1);
+        insertLendPhoneNote(lendPhoneNoteDao, "1");
         assertEquals(1,lendPhoneNoteDao.count());
         List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder().build().list();
         assertEquals(1, list.size());
@@ -214,10 +214,10 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         insertPhoneNote(phoneNoteDao);
         assertEquals(1,phoneNoteDao.count());
 
-        insertLendPhoneNote(lendPhoneNoteDao, 1);
+        insertLendPhoneNote(lendPhoneNoteDao, "1");
         assertEquals(1,lendPhoneNoteDao.count());
 
-        List<LendPhoneNote> list = DBHelper.getInstance().LendPhoneTableQuery(1);
+        List<LendPhoneNote> list = DBHelper.getInstance().LendPhoneTableQuery("1");
         assertEquals(1,list.size());
         assertNotNull(list.get(0));
         List<PhoneNote> phoneNotes = phoneNoteDao.queryBuilder().where(PhoneNoteDao.Properties.Bmob_phone_id.
@@ -240,13 +240,13 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         lendPhoneNoteDao.deleteAll();
 
         insertPhoneNote(phoneNoteDao);//存入十台手机
-        insertLendPhoneNote(lendPhoneNoteDao, 1);//借了一台手机
-        insertLendPhoneNote(lendPhoneNoteDao, 1);//借了一台手机
+        insertLendPhoneNote(lendPhoneNoteDao, "1");//借了一台手机
+        insertLendPhoneNote(lendPhoneNoteDao, "1");//借了一台手机
         long lend_number = lendPhoneNoteDao.queryBuilder()
                 .where(LendPhoneNoteDao.Properties.Attach_bmob_phone_id.eq(1)).buildCount().count();
         assertEquals(2,lend_number);
 
-        assertEquals(4, DBHelper.getInstance().LendPhoneNumber(1));
+        assertEquals(4, DBHelper.getInstance().LendPhoneNumber("1"));
 
         phoneNoteDao.deleteAll();
         lendPhoneNoteDao.deleteAll();
@@ -261,9 +261,9 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         insertPhoneNote(phoneNoteDao);//存入十台手机
         insertPhoneNote1(phoneNoteDao);//存入八台手机
 
-        insertLendPhoneNote(lendPhoneNoteDao, 2);//借了2台手机
-        insertLendPhoneNote(lendPhoneNoteDao, 2);//借了2台手机
-        insertLendPhoneNote(lendPhoneNoteDao, 2);//借了2台手机
+        insertLendPhoneNote(lendPhoneNoteDao, "2");//借了2台手机
+        insertLendPhoneNote(lendPhoneNoteDao, "2");//借了2台手机
+        insertLendPhoneNote(lendPhoneNoteDao, "2");//借了2台手机
 
         List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
                 .where(LendPhoneNoteDao.Properties.Attach_bmob_phone_id.eq(2)).build().list();
@@ -282,9 +282,9 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
                 (list.get(0).getLend_phone_number() + list.get(1).getLend_phone_number()
                         + list.get(2).getLend_phone_number());
         assertEquals(2, num);
-        insertLendPhoneNote(lendPhoneNoteDao, 2);//借了2台手机
-        insertLendPhoneNote(lendPhoneNoteDao, 2);//借了2台手机
-        assertEquals(0, DBHelper.getInstance().LeftPhoneNumber(2));
+        insertLendPhoneNote(lendPhoneNoteDao, "2");//借了2台手机
+        insertLendPhoneNote(lendPhoneNoteDao, "2");//借了2台手机
+        assertEquals(0, DBHelper.getInstance().LeftPhoneNumber("2"));
 
         phoneNoteDao.deleteAll();
         lendPhoneNoteDao.deleteAll();
@@ -310,7 +310,7 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         phoneNoteDao.insert(phoneNote1);
     }
 
-    private void insertLendPhoneNote(LendPhoneNoteDao lendPhoneNoteDao, long phone_id) {
+    private void insertLendPhoneNote(LendPhoneNoteDao lendPhoneNoteDao, String phone_id) {
         LendPhoneNote lendPhoneNote = new LendPhoneNote();
         lendPhoneNote.setLend_phone_name("wuliqing");
         lendPhoneNote.setLend_phone_time("2016-6-17");

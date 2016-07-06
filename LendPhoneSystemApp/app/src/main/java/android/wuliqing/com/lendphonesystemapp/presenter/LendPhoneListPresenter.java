@@ -15,8 +15,8 @@ public class LendPhoneListPresenter extends BasePresenter<LendPhoneListView> {
 
     private DataBaseAction mLendPhoneTableAction;
 
-    public LendPhoneListPresenter(long phone_id) {
-        if (phone_id <= 0) {
+    public LendPhoneListPresenter(String phone_id) {
+        if (phone_id == null) {
             throw new IllegalArgumentException();
         }
         mLendPhoneTableAction = new LendPhoneTableAction(phone_id);
