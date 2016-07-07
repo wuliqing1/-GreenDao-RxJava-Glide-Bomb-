@@ -135,4 +135,14 @@ public class PhoneNoteModel implements Parcelable {
         this.project_name = project_name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        PhoneNoteModel other = (PhoneNoteModel) o;
+        if (phone_id.equals(other.getPhone_id())) {
+            return true;
+        } else {
+            return false;
+        }
+//        return super.equals(o);
+    }
 }

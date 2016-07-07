@@ -63,4 +63,5 @@
     <string name="need_permission_msg">需要相应权限才能设置头像!</string>
     <string name="get_permission_error">获取权限失败!</string>
     <string name="get_permission_success">获取权限成功!</string>
+    <string name="delete_network_pic_success">删除网络图片成功!</string>
 </resources>

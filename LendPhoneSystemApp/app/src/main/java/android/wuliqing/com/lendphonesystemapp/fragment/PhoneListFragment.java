@@ -24,6 +24,12 @@ import java.util.List;
 public class PhoneListFragment extends BaseListFragment<PhoneNoteModel> implements PhoneListView {
     private PhoneListPresenter mPhoneListPresenter = new PhoneListPresenter();
     private List<PhoneNoteModel> phoneNoteModels = new ArrayList<>();
+    public static final int PHONE_ADD_ACTION = 1;
+    public static final int PHONE_UPDATE_ACTION = 2;
+    public static final int PHONE_DELETE_ACTION = 3;
+    public static final int PHONE_ALL_ACTION = 0;
+    private int current_action = PHONE_ALL_ACTION;
+    private String phone_id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,24 @@ public class PhoneListFragment extends BaseListFragment<PhoneNoteModel> implemen
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recycler.setRefreshing();
+    }
+
+    public void setPhoneId(String id) {
+        this.phone_id = id;
+    }
+
+    public void setPhoneActionAndUpdate(int action) {
+        current_action = action;
+        updateData();
+    }
+
+    private boolean isPhoneUpAction() {
+        if (current_action == PHONE_ADD_ACTION
+                || current_action == PHONE_UPDATE_ACTION
+                || current_action == PHONE_DELETE_ACTION) {
+            return true;
+        }
+        return false;
     }
 
     public void updateData() {
@@ -56,15 +80,12 @@ public class PhoneListFragment extends BaseListFragment<PhoneNoteModel> implemen
     }
 
     @Override
-    public void onRemoveResult(boolean result) {
-
+    public void onUpdateOnePhoneCompleted() {
+        adapter.notifyDataSetChanged();
+        recycler.onRefreshCompleted();
+        current_action = PHONE_ALL_ACTION;
+        phone_id = null;
     }
-
-    @Override
-    public void onQueryResult(List<PhoneNoteModel> phoneNotes) {
-
-    }
-
 
     @Override
     protected BasePullListAdapter createAdapter() {
@@ -107,6 +128,10 @@ public class PhoneListFragment extends BaseListFragment<PhoneNoteModel> implemen
         if (action == PullRecycler.ACTION_PULL_TO_REFRESH) {
             page = 1;
         }
-        mPhoneListPresenter.loadData();
+        if (isPhoneUpAction()) {
+            mPhoneListPresenter.updatePhoneOneData(adapter, phone_id);
+        } else {
+            mPhoneListPresenter.loadAllPhoneData();
+        }
     }
 }

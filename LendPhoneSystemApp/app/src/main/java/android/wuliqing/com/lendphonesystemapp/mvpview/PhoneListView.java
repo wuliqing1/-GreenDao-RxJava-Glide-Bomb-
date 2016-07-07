@@ -10,8 +10,8 @@ import java.util.List;
 public interface PhoneListView extends MvpView{
     public void onFetchedPhones(List<PhoneNoteModel> phoneNotes);
 
-    public void onRemoveResult(boolean result);
-
-    public void onQueryResult(List<PhoneNoteModel> phoneNotes);
-
+    //    public void onRemoveResult(boolean result);
+//
+//    public void onQueryResult(List<PhoneNoteModel> phoneNotes);
+    public void onUpdateOnePhoneCompleted();
 }

@@ -33,20 +33,8 @@ public class PhoneListPresenterTest extends TestCase {
     }
 
     public void testOnFetchedPhoneList() {
-//        Mockito.doAnswer(new Answer() {
-//            @Override
-//            public Object answer(InvocationOnMock invocation) throws Throwable {
-//                Object[] arguments = invocation.getArguments();
-//                LoadDataListener dataListener = (LoadDataListener)arguments[1];
-//                List<PhoneNote> result = new ArrayList<PhoneNote>();
-//                dataListener.onComplete(result);
-//
-//                return result;
-//            }
-//        }).when(dataSyncTools).loadData(Mockito.anyString(), Mockito.any(LoadDataListener.class));
-
         Mockito.doReturn(null).when(phoneTableAction).query();
-        phoneListPresenter.loadData();
-        Mockito.verify(phoneListPresenter).loadData();
+        phoneListPresenter.loadAllPhoneData();
+        Mockito.verify(phoneListPresenter).loadAllPhoneData();
     }
 }

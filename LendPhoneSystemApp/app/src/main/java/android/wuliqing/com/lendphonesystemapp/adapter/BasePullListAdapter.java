@@ -84,4 +84,8 @@ public abstract class BasePullListAdapter<T> extends CommonAdapter<T> {
             notifyDataSetChanged();
         }
     }
+
+    public void updateOneData(T phone, String id) {
+
+    }
 }

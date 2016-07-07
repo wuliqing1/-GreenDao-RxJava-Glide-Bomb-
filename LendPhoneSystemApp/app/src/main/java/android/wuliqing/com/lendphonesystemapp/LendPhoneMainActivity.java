@@ -1,6 +1,7 @@
 package android.wuliqing.com.lendphonesystemapp;
 
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -29,7 +30,7 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     private static final String TAG = "LendPhoneMainActivity";
     private MainPresenter mainPresenter = new MainPresenter();
     private FragmentManager mFragmentManager;
-    private PhoneListFragment mPhoneListFragment = new PhoneListFragment();
+    private PhoneListFragment mPhoneListFragment;
     private ProgressDialog mProgressDialog;
     private ImageView user_photo_iv;
     private TextView user_name_tv;
@@ -61,8 +62,17 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        final String PHONE_LIST_TAG = "phone_list_tag";
         mFragmentManager = getFragmentManager();
-        mFragmentManager.beginTransaction().add(R.id.fragment_layout_content, mPhoneListFragment).commitAllowingStateLoss();
+        final FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        mPhoneListFragment = (PhoneListFragment) mFragmentManager.findFragmentByTag(PHONE_LIST_TAG);
+        if (mPhoneListFragment == null) {
+            mPhoneListFragment = new PhoneListFragment();
+            fragmentTransaction.add(R.id.fragment_layout_content, mPhoneListFragment, PHONE_LIST_TAG);
+        }
+        fragmentTransaction.commitAllowingStateLoss();
+
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getString(R.string.sync_in_msg));
         initLogin(navigationView);
@@ -101,7 +111,7 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             if (!TextUtils.isEmpty(photo_url)) {
                 Glide.with(this)
                         .load(photo_url)
-//                        .placeholder(R.drawable.ic_account_circle_60pt_2x)
+                        .placeholder(R.drawable.ic_account_circle_60pt_2x)
                         .error(R.drawable.ic_account_circle_60pt_2x)
                         .crossFade()
                         .centerCrop()
@@ -163,7 +173,8 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             boolean is_update = data.getBooleanExtra(EditPhoneActivity.UPDATE_PHONE_RESULT_KEY, false);
             if (is_update) {
 //                doSyncAction();
-                mPhoneListFragment.updateData();
+                mPhoneListFragment.setPhoneId(data.getStringExtra(EditPhoneActivity.EDIT_PHONE_ID_RESULT_KEY));
+                mPhoneListFragment.setPhoneActionAndUpdate(PhoneListFragment.PHONE_ADD_ACTION);
             }
         } else if (requestCode == LoginActivity.LOGIN_REQUEST_CODE && resultCode == RESULT_OK) {
             boolean flag = data.getBooleanExtra(LoginActivity.LOGIN_FLAG_KEY, false);
@@ -178,10 +189,11 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
         } else if (requestCode == EditPhoneActivity.EDIT_PHONE_REQUEST_CODE && resultCode == RESULT_OK) {
             boolean update_flag = data.getBooleanExtra(EditPhoneActivity.UPDATE_PHONE_RESULT_KEY, false);
             boolean delete_flag = data.getBooleanExtra(EditPhoneActivity.DELETE_PHONE_RESULT_KEY, false);
+            mPhoneListFragment.setPhoneId(data.getStringExtra(EditPhoneActivity.EDIT_PHONE_ID_RESULT_KEY));
             if (update_flag) {
-                mPhoneListFragment.updateData();
+                mPhoneListFragment.setPhoneActionAndUpdate(PhoneListFragment.PHONE_UPDATE_ACTION);
             } else if (delete_flag) {
-                mPhoneListFragment.updateData();
+                mPhoneListFragment.setPhoneActionAndUpdate(PhoneListFragment.PHONE_DELETE_ACTION);
             }
         }
     }

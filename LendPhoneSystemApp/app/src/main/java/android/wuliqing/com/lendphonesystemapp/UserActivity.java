@@ -316,7 +316,15 @@ public class UserActivity extends BaseToolBarActivity implements UserView {
     private void handleCrop(int resultCode, Intent result) {
         if (resultCode == RESULT_OK) {
             Uri uri = Crop.getOutput(result);
-            mPhoto.setImageURI(uri);
+            Glide.with(this)
+                    .load(uri)
+                    .placeholder(R.drawable.ic_account_circle_60pt_2x)
+                    .error(R.drawable.ic_account_circle_60pt_2x)
+                    .crossFade()
+                    .centerCrop()
+                    .bitmapTransform(new CropCircleTransformation(this))
+                    .into(mPhoto);
+//            mPhoto.setImageURI(uri);
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }

@@ -1,6 +1,7 @@
 package android.wuliqing.com.lendphonesystemapp.presenter;
 
 import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
+import android.wuliqing.com.lendphonesystemapp.adapter.BasePullListAdapter;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DataBaseAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
 import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNoteHelp;
@@ -24,7 +25,7 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
     private static final String TAG = "PhoneListPresenter";
     private DataBaseAction mDataBaseAction = new PhoneTableAction();
 
-    public void loadData() {
+    public void loadAllPhoneData() {
         queryListInDataBase();
     }
 
@@ -57,6 +58,38 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
                     public void onNext(List<PhoneNoteModel> phoneNoteModels) {
                         if (mView != null) {
                             mView.onFetchedPhones(phoneNoteModels);
+                        }
+                    }
+                });
+    }
+
+    public void updatePhoneOneData(final BasePullListAdapter basePullListAdapter, final String phone_id) {
+        Observable.create(new Observable.OnSubscribe<PhoneNoteModel>() {
+            @Override
+            public void call(Subscriber<? super PhoneNoteModel> subscriber) {
+                PhoneNote phoneNote = (PhoneNote)mDataBaseAction.queryOneDataWithID(phone_id);
+                PhoneNoteModel phoneNoteModel = phoneNote == null ? null
+                        : BmobPhoneNoteHelp.convertPhoneNoteToPhoneNoteModel(phoneNote);//数据转换
+                basePullListAdapter.updateOneData(phoneNoteModel, phone_id);
+                subscriber.onNext(phoneNoteModel);
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<PhoneNoteModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.show(LendPhoneApplication.getAppContext(), "queryListInDataBase " + e.toString());
+                    }
+
+                    @Override
+                    public void onNext(PhoneNoteModel phoneNoteModel) {
+                        if (mView != null) {
+                            mView.onUpdateOnePhoneCompleted();
                         }
                     }
                 });

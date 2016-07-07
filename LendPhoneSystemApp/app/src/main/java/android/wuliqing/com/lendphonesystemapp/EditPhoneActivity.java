@@ -47,6 +47,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     private static final int REQUEST_CODE_EXTERNAL = 8127;
     public static final String UPDATE_PHONE_RESULT_KEY = "update_phone_result_key";
     public static final String DELETE_PHONE_RESULT_KEY = "delete_phone_result_key";
+    public static final String EDIT_PHONE_ID_RESULT_KEY = "edit_phone_id_key";
     public static final String EDIT_PHONE_DATA = "edit_phone_data";
     private PhoneNoteModel phoneNoteModel;
     private EditPhonePresenter mAddPhonePresenter = new EditPhonePresenter();
@@ -238,7 +239,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
                         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                         mProgressDialog.setMessage(getString(R.string.delete_message));
                         mProgressDialog.show();
-                        mAddPhonePresenter.deletePhone(phoneNoteModel.getPhone_id());
+                        mAddPhonePresenter.deletePhone(phoneNoteModel);
                     }
 
                     @Override
@@ -287,7 +288,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
         if (phoneNoteModel != null) {
             mProgressDialog.setMessage(getString(R.string.update_message));
             mProgressDialog.show();
-            mAddPhonePresenter.updatePhone(phoneNote);
+            mAddPhonePresenter.updatePhone(phoneNote, null);
         } else {
             mProgressDialog.show();
             mAddPhonePresenter.addPhone(phoneNote);
@@ -300,9 +301,10 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
         mAddPhonePresenter.addPicToNetWork(this, new UpLoadDataListener<String>() {
             @Override
             public void onComplete(String result) {
+                String old_url = phoneNote.getPhone_photo_url();
                 phoneNote.setPhone_photo_url(result);
                 if (!TextUtils.isEmpty(phoneNote.getBmob_phone_id())) {
-                    mAddPhonePresenter.updatePhone(phoneNote);
+                    mAddPhonePresenter.updatePhone(phoneNote, old_url);
                 } else {
                     mAddPhonePresenter.addPhone(phoneNote);
                 }
@@ -321,7 +323,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     }
 
     @Override
-    public void onResult(boolean result) {
+    public void onResult(boolean result, String id) {
         mProgressDialog.dismiss();
         if (result) {
             if (phoneNoteModel != null) {
@@ -332,6 +334,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
 
             Intent intent = new Intent();
             intent.putExtra(UPDATE_PHONE_RESULT_KEY, true);
+            intent.putExtra(EDIT_PHONE_ID_RESULT_KEY, id);
             setResult(RESULT_OK, intent);
             finish();
         } else {
@@ -340,12 +343,13 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     }
 
     @Override
-    public void onDeleteResult(boolean result) {
+    public void onDeleteResult(boolean result, String id) {
         mProgressDialog.dismiss();
         if (result) {
             ToastUtils.show(this, R.string.delete_phone_success);
             Intent intent = new Intent();
             intent.putExtra(DELETE_PHONE_RESULT_KEY, true);
+            intent.putExtra(EDIT_PHONE_ID_RESULT_KEY, id);
             setResult(RESULT_OK, intent);
             finish();
         }

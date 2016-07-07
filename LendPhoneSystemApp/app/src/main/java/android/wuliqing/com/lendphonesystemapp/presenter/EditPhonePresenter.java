@@ -3,6 +3,7 @@ package android.wuliqing.com.lendphonesystemapp.presenter;
 import android.content.Context;
 import android.text.TextUtils;
 import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
+import android.wuliqing.com.lendphonesystemapp.R;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DataBaseAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
 import android.wuliqing.com.lendphonesystemapp.listeners.DeleteDataListener;
@@ -11,6 +12,7 @@ import android.wuliqing.com.lendphonesystemapp.listeners.UpLoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.listeners.UpdateDataListener;
 import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNoteHelp;
+import android.wuliqing.com.lendphonesystemapp.model.PhoneNoteModel;
 import android.wuliqing.com.lendphonesystemapp.mvpview.AddPhoneView;
 import android.wuliqing.com.lendphonesystemapp.net.BaseHttp;
 import android.wuliqing.com.lendphonesystemapp.net.BmobHttp;
@@ -21,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 import rx.Observable;
 import rx.Subscriber;
@@ -56,16 +60,19 @@ public class EditPhonePresenter extends BasePresenter<AddPhoneView> {
             public void onFailure(int i, String s) {
                 ToastUtils.show(LendPhoneApplication.getAppContext(), s);
                 if (mView != null)
-                    mView.onResult(false);
+                    mView.onResult(false, phoneNote.getBmob_phone_id());
             }
         });
     }
 
-    public void updatePhone(final PhoneNote phoneNote) {
+    public void updatePhone(final PhoneNote phoneNote, final String old_url) {
         mBaseHttp.update(null, null, phoneNote, new UpdateDataListener<BmobPhoneNote>() {
             @Override
             public void onResult(BmobPhoneNote bmobPhoneNote) {
                 if (bmobPhoneNote != null) {
+                    if (!TextUtils.isEmpty(old_url)) {
+                        deleteNetWorkPic(old_url);
+                    }
                     updateLocalDataBase(bmobPhoneNote);
                 }
 //                mView.onResult(result);
@@ -73,16 +80,35 @@ public class EditPhonePresenter extends BasePresenter<AddPhoneView> {
         });
     }
 
-    public void deletePhone(final String phone_id) {
-        if (TextUtils.isEmpty(phone_id)) {
+    public void deletePhone(final PhoneNoteModel phoneNoteModel) {
+        if (TextUtils.isEmpty(phoneNoteModel.getPhone_id())) {
             throw new IllegalArgumentException();
         }
-        mBaseHttp.delete("", "", phone_id, new DeleteDataListener() {
+        mBaseHttp.delete("", "", phoneNoteModel.getPhone_id(), new DeleteDataListener() {
             @Override
             public void onDeleteResult(boolean result) {
                 if (result) {
-                    deleteLocalDataBase(phone_id);
+                    if (!TextUtils.isEmpty(phoneNoteModel.getPic_url())) {
+                        deleteNetWorkPic(phoneNoteModel.getPic_url());
+                    }
+                    deleteLocalDataBase(phoneNoteModel.getPhone_id());
                 }
+            }
+        });
+    }
+
+    private void deleteNetWorkPic(String url) {
+        BmobFile file = new BmobFile();
+        file.setUrl(url);
+        file.delete(LendPhoneApplication.getAppContext(), new DeleteListener() {
+            @Override
+            public void onSuccess() {
+                ToastUtils.show(LendPhoneApplication.getAppContext(), R.string.delete_network_pic_success);
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                ToastUtils.show(LendPhoneApplication.getAppContext(), "deleteNetWorkPic " + s);
             }
         });
     }
@@ -105,12 +131,12 @@ public class EditPhonePresenter extends BasePresenter<AddPhoneView> {
                     @Override
                     public void onError(Throwable e) {
                         ToastUtils.show(LendPhoneApplication.getAppContext(), "updateLocalDataBase" + e.toString());
-                        mView.onDeleteResult(false);
+                        mView.onDeleteResult(false, phone_id);
                     }
 
                     @Override
                     public void onNext(String phoneNote) {
-                        mView.onDeleteResult(true);
+                        mView.onDeleteResult(true, phone_id);
                     }
                 });
     }
@@ -119,7 +145,7 @@ public class EditPhonePresenter extends BasePresenter<AddPhoneView> {
         Observable.create(new Observable.OnSubscribe<PhoneNote>() {
             @Override
             public void call(Subscriber<? super PhoneNote> subscriber) {
-                PhoneNote phoneNote = (PhoneNote)mPhoneTableAction.queryOneDataWithID(bmobPhoneNote.getObjectId());
+                PhoneNote phoneNote = (PhoneNote) mPhoneTableAction.queryOneDataWithID(bmobPhoneNote.getObjectId());
                 BmobPhoneNoteHelp.bmobPhoneNoteCopyToPhoneNote(bmobPhoneNote, phoneNote);
                 mPhoneTableAction.update(phoneNote);
                 subscriber.onNext(phoneNote);
@@ -135,12 +161,12 @@ public class EditPhonePresenter extends BasePresenter<AddPhoneView> {
                     @Override
                     public void onError(Throwable e) {
                         ToastUtils.show(LendPhoneApplication.getAppContext(), "updateLocalDataBase " + e.toString());
-                        mView.onResult(false);
+                        mView.onResult(false, bmobPhoneNote.getObjectId());
                     }
 
                     @Override
                     public void onNext(PhoneNote phoneNote) {
-                        mView.onResult(true);
+                        mView.onResult(true, bmobPhoneNote.getObjectId());
                     }
                 });
     }
@@ -172,7 +198,7 @@ public class EditPhonePresenter extends BasePresenter<AddPhoneView> {
                     @Override
                     public void onNext(Boolean aBoolean) {
                         if (mView != null) {
-                            mView.onResult(aBoolean);
+                            mView.onResult(aBoolean, phoneNote.getBmob_phone_id());
                         }
                     }
                 });

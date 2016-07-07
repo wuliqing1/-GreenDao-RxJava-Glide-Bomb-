@@ -2,6 +2,7 @@ package android.wuliqing.com.lendphonesystemapp.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,12 @@ public abstract class BaseListFragment<T> extends Fragment implements PullRecycl
 //        recycler.enableLoadMore(true);
         recycler.setLayoutManager(getLayoutManager());
         recycler.addItemDecoration(getItemDecoration());
+        recycler.addItemAnimator(getItemAnimator());
         recycler.setAdapter(adapter);
+    }
+
+    protected RecyclerView.ItemAnimator getItemAnimator() {
+        return new DefaultItemAnimator();
     }
 
     protected abstract BasePullListAdapter createAdapter();
@@ -50,5 +56,6 @@ public abstract class BaseListFragment<T> extends Fragment implements PullRecycl
     protected RecyclerView.ItemDecoration getItemDecoration() {
         return new DividerItemDecoration(getActivity(),R.drawable.list_divider);
     }
+
 
 }
