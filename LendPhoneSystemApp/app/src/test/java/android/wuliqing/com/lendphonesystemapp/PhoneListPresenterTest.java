@@ -33,7 +33,7 @@ public class PhoneListPresenterTest extends TestCase {
     }
 
     public void testOnFetchedPhoneList() {
-        Mockito.doReturn(null).when(phoneTableAction).query();
+        Mockito.doReturn(null).when(phoneTableAction).queryAll();
         phoneListPresenter.loadAllPhoneData();
         Mockito.verify(phoneListPresenter).loadAllPhoneData();
     }

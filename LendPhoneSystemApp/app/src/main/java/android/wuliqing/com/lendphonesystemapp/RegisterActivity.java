@@ -171,6 +171,9 @@ public class RegisterActivity extends BaseToolBarActivity implements RegisterVie
             ToastUtils.show(this, getString(R.string.register_success));
             Intent intent = new Intent();
             intent.putExtra(REGISTER_FLAG_KEY, true);
+//            String name = mNameView.getText().toString();
+//            String password = mPasswordView.getText().toString();
+
             setResult(RESULT_OK, intent);
             finishActivity();
         } else {

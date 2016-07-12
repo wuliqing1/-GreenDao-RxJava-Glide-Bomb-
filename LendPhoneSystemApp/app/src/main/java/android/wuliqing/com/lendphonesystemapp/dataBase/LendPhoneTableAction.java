@@ -1,5 +1,7 @@
 package android.wuliqing.com.lendphonesystemapp.dataBase;
 
+import android.text.TextUtils;
+
 import java.util.List;
 
 import zte.phone.greendao.LendPhoneNote;
@@ -10,20 +12,26 @@ import zte.phone.greendao.LendPhoneNoteDao;
  */
 public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
     private LendPhoneNoteDao lendPhoneNoteDao;
-    private String phone_id;
 
-    public LendPhoneTableAction(String phone_id) {
+    public LendPhoneTableAction() {
         lendPhoneNoteDao = DBHelper.getInstance().getLendPhoneNoteDao();
-        this.phone_id = phone_id;
     }
 
     @Override
-    public List<LendPhoneNote> query() {
-        if (phone_id == null) {
+    public List<LendPhoneNote> queryAll() {
+        List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
+                .orderDesc(LendPhoneNoteDao.Properties.Lend_phone_time).build().list();
+        return list;
+    }
+
+    @Override
+    public List<LendPhoneNote> query(String id) {
+        if (TextUtils.isEmpty(id)) {
             throw new IllegalArgumentException();
         }
         List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
-                .where(LendPhoneNoteDao.Properties.Attach_bmob_phone_id.eq(phone_id)).build().list();
+                .where(LendPhoneNoteDao.Properties.Attach_bmob_phone_id.eq(id))
+                .orderDesc(LendPhoneNoteDao.Properties.Lend_phone_time).build().list();
         return list;
     }
 
@@ -71,6 +79,14 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
             throw new IllegalArgumentException();
         }
         lendPhoneNoteDao.insert(note);
+    }
+
+    @Override
+    public void addCollection(List<LendPhoneNote> list) {
+        if (list == null) {
+            throw new IllegalArgumentException();
+        }
+        lendPhoneNoteDao.insertInTx(list);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class LendPhoneListPresenterTest extends TestCase {
 //        MockitoAnnotations.initMocks(this);
         phoneListView = Mockito.mock(LendPhoneListView.class);
         phoneListPresenter = Mockito.spy(new LendPhoneListPresenter("1"));
-        lendPhoneTableAction = Mockito.spy(new LendPhoneTableAction("1"));
+        lendPhoneTableAction = Mockito.spy(new LendPhoneTableAction());
         phoneListPresenter.setDatabaseAction(lendPhoneTableAction);
         phoneListPresenter.attach(phoneListView);
     }
@@ -33,8 +33,8 @@ public class LendPhoneListPresenterTest extends TestCase {
     }
 
     public void testOnFetchedPhoneList() {
-        Mockito.doReturn(null).when(lendPhoneTableAction).query();
-        phoneListPresenter.loadData(1);
-        Mockito.verify(phoneListPresenter).loadData(1);
+        Mockito.doReturn(null).when(lendPhoneTableAction).queryAll();
+        phoneListPresenter.queryDataBaseAll("1");
+        Mockito.verify(phoneListPresenter).queryDataBaseAll("1");
     }
 }

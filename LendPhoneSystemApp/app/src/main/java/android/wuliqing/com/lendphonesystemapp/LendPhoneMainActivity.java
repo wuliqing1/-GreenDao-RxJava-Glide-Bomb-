@@ -1,10 +1,10 @@
 package android.wuliqing.com.lendphonesystemapp;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,6 +19,7 @@ import android.wuliqing.com.lendphonesystemapp.model.MyUser;
 import android.wuliqing.com.lendphonesystemapp.mvpview.MainView;
 import android.wuliqing.com.lendphonesystemapp.presenter.MainPresenter;
 import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
+import android.wuliqing.com.lendphonesystemapp.utils.PreferenceUtil;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import com.bumptech.glide.Glide;
@@ -53,6 +54,17 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (!PreferenceUtil.readBoolean(LendPhoneApplication.getAppContext(),
+                PreferenceUtil.FIRST_RUN_KEY)) {
+            doSyncAction();
+            PreferenceUtil.write(LendPhoneApplication.getAppContext(),
+                    PreferenceUtil.FIRST_RUN_KEY, true);
+        }
+    }
+
+    @Override
     protected void initWidgets() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -64,7 +76,7 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         final String PHONE_LIST_TAG = "phone_list_tag";
-        mFragmentManager = getFragmentManager();
+        mFragmentManager = getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         mPhoneListFragment = (PhoneListFragment) mFragmentManager.findFragmentByTag(PHONE_LIST_TAG);
         if (mPhoneListFragment == null) {
@@ -117,6 +129,8 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
                         .centerCrop()
                         .bitmapTransform(new CropCircleTransformation(this))
                         .into(user_photo_iv);
+            } else {
+                user_photo_iv.setImageResource(R.drawable.ic_account_circle_60pt_2x);
             }
         } else {
             user_name_tv.setText(null);
@@ -195,6 +209,8 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             } else if (delete_flag) {
                 mPhoneListFragment.setPhoneActionAndUpdate(PhoneListFragment.PHONE_DELETE_ACTION);
             }
+        } else if (requestCode == PhoneDetailActivity.PHONE_DETAIL_REQUEST_CODE && resultCode == RESULT_OK) {
+
         }
     }
 
@@ -219,9 +235,10 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     @Override
     public void onSyncResult(boolean result) {
         if (result) {
+            ToastUtils.show(LendPhoneApplication.getAppContext(), R.string.sync_success_msg);
             mPhoneListFragment.updateData();
         } else {
-            ToastUtils.show(this, getString(R.string.sync_error_msg));
+            ToastUtils.show(LendPhoneApplication.getAppContext(), R.string.sync_error_msg);
         }
         mProgressDialog.dismiss();
     }

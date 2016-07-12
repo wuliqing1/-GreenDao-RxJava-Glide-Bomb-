@@ -19,15 +19,11 @@ public class LendPhoneListPresenter extends BasePresenter<LendPhoneListView> {
         if (phone_id == null) {
             throw new IllegalArgumentException();
         }
-        mLendPhoneTableAction = new LendPhoneTableAction(phone_id);
+        mLendPhoneTableAction = new LendPhoneTableAction();
     }
 
-    public void loadData(final long phone_id) {
-        queryDataBaseAll(phone_id);
-    }
-
-    public void queryDataBaseAll(final long phone_id) {
-        List<LendPhoneNote> list = mLendPhoneTableAction.query();//从数据库获取
+    public void queryDataBaseAll(final String phone_id) {
+        List<LendPhoneNote> list = mLendPhoneTableAction.query(phone_id);//从数据库获取
         if (mView != null) {
             mView.onFetchedLendPhones(list);
         }

@@ -4,8 +4,6 @@ import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
 import android.wuliqing.com.lendphonesystemapp.adapter.BasePullListAdapter;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DataBaseAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
-import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNoteHelp;
-import android.wuliqing.com.lendphonesystemapp.model.PhoneNoteModel;
 import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneListView;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
@@ -30,17 +28,17 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
     }
 
     private void queryListInDataBase() {//查询本地数据库
-        Observable.create(new Observable.OnSubscribe<List<PhoneNoteModel>>() {
+        Observable.create(new Observable.OnSubscribe<List<PhoneNote>>() {
             @Override
-            public void call(Subscriber<? super List<PhoneNoteModel>> subscriber) {
-                List<PhoneNote> phoneNotes = mDataBaseAction.query();
-                List<PhoneNoteModel> phoneNoteModels = phoneNotes == null ? null
-                        : BmobPhoneNoteHelp.getConvertPhoneModelData(phoneNotes);//数据转换
-                subscriber.onNext(phoneNoteModels);
+            public void call(Subscriber<? super List<PhoneNote>> subscriber) {
+                List<PhoneNote> phoneNotes = mDataBaseAction.queryAll();
+//                List<PhoneNoteModel> phoneNoteModels = phoneNotes == null ? null
+//                        : BmobPhoneNoteHelp.getConvertPhoneModelData(phoneNotes);//数据转换
+                subscriber.onNext(phoneNotes);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<PhoneNoteModel>>() {
+                .subscribe(new Subscriber<List<PhoneNote>>() {
                     @Override
                     public void onCompleted() {
 
@@ -55,7 +53,7 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
                     }
 
                     @Override
-                    public void onNext(List<PhoneNoteModel> phoneNoteModels) {
+                    public void onNext(List<PhoneNote> phoneNoteModels) {
                         if (mView != null) {
                             mView.onFetchedPhones(phoneNoteModels);
                         }
@@ -64,18 +62,18 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
     }
 
     public void updatePhoneOneData(final BasePullListAdapter basePullListAdapter, final String phone_id) {
-        Observable.create(new Observable.OnSubscribe<PhoneNoteModel>() {
+        Observable.create(new Observable.OnSubscribe<PhoneNote>() {
             @Override
-            public void call(Subscriber<? super PhoneNoteModel> subscriber) {
+            public void call(Subscriber<? super PhoneNote> subscriber) {
                 PhoneNote phoneNote = (PhoneNote)mDataBaseAction.queryOneDataWithID(phone_id);
-                PhoneNoteModel phoneNoteModel = phoneNote == null ? null
-                        : BmobPhoneNoteHelp.convertPhoneNoteToPhoneNoteModel(phoneNote);//数据转换
-                basePullListAdapter.updateOneData(phoneNoteModel, phone_id);
-                subscriber.onNext(phoneNoteModel);
+//                PhoneNoteModel phoneNoteModel = phoneNote == null ? null
+//                        : BmobPhoneNoteHelp.convertPhoneNoteToPhoneNoteModel(phoneNote);//数据转换
+                basePullListAdapter.updateOneData(phoneNote, phone_id);
+                subscriber.onNext(phoneNote);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<PhoneNoteModel>() {
+                .subscribe(new Subscriber<PhoneNote>() {
                     @Override
                     public void onCompleted() {
 
@@ -87,7 +85,7 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
                     }
 
                     @Override
-                    public void onNext(PhoneNoteModel phoneNoteModel) {
+                    public void onNext(PhoneNote phoneNoteModel) {
                         if (mView != null) {
                             mView.onUpdateOnePhoneCompleted();
                         }

@@ -1,11 +1,14 @@
 package android.wuliqing.com.lendphonesystemapp;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -26,9 +29,12 @@ import android.wuliqing.com.lendphonesystemapp.fragment.MyDialogFragment;
 import android.wuliqing.com.lendphonesystemapp.listeners.UpLoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.model.MyUser;
 import android.wuliqing.com.lendphonesystemapp.mvpview.UserView;
+import android.wuliqing.com.lendphonesystemapp.permission.PermissionListener;
+import android.wuliqing.com.lendphonesystemapp.permission.PermissionManager;
 import android.wuliqing.com.lendphonesystemapp.presenter.UserPresenter;
 import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 import android.wuliqing.com.lendphonesystemapp.utils.MyTextUtils;
+import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import com.bumptech.glide.Glide;
 import com.soundcloud.android.crop.Crop;
@@ -43,6 +49,7 @@ import cn.bmob.v3.BmobUser;
  */
 public class UserActivity extends BaseToolBarActivity implements UserView {
     public static final int USER_REQUEST_CODE = 47;
+    private static final int REQUEST_CODE_EXTERNAL = 814;
     public static final String USER_FLAG_KEY = "user_flag_key";
     private ImageView mPhoto;
     private EditText mNameView;
@@ -52,6 +59,7 @@ public class UserActivity extends BaseToolBarActivity implements UserView {
     private View mLoginFormView;
     private UserPresenter mUserPresenter;
     private Uri outUri;
+    private PermissionManager helper;
 
     @Override
     protected void detachPresenter() {
@@ -166,10 +174,11 @@ public class UserActivity extends BaseToolBarActivity implements UserView {
             public void onClickDialogCancel() {
 
             }
-        }).show(getFragmentManager(), "");
+        }).show(getSupportFragmentManager(), "");
     }
 
     private void showPopWindow() {
+        requestPermission();
         final ListPopupWindow listPopupWindow = new ListPopupWindow(this);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 new String[]{getString(R.string.select_capture_title),
@@ -200,6 +209,49 @@ public class UserActivity extends BaseToolBarActivity implements UserView {
         listPopupWindow.setWidth(300);
         listPopupWindow.setAnchorView(mPhoto);
         listPopupWindow.show();
+    }
+
+    public void requestPermission() {
+        helper = PermissionManager.with(this)
+                .addRequestCode(UserActivity.REQUEST_CODE_EXTERNAL)
+                .permissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .setPermissionsListener(new PermissionListener() {
+
+                    @Override
+                    public void onGranted() {
+                        ToastUtils.show(UserActivity.this, getString(R.string.get_permission_success));
+                    }
+
+                    @Override
+                    public void onDenied() {
+                        ToastUtils.show(UserActivity.this, getString(R.string.get_permission_error));
+                    }
+
+                    @Override
+                    public void onShowRationale(String[] permissions) {
+                        //当用户拒绝某权限时并点击`不再提醒`的按钮时，下次应用再请求该权限时，需要给出合适的响应（比如,给个展示对话框来解释应用为什么需要该权限）
+                        Snackbar.make(mPhoto, getString(R.string.need_permission_msg), Snackbar.LENGTH_INDEFINITE)
+                                .setAction("ok", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //必须调用该`setIsPositive(true)`方法
+                                        helper.setIsPositive(true);
+                                        helper.request();
+                                    }
+                                }).show();
+                    }
+                })
+                .request();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_CODE_EXTERNAL:
+                helper.onPermissionResult(permissions, grantResults);
+                break;
+        }
     }
 
     private void save() {

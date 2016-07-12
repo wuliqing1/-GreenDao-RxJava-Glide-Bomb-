@@ -6,8 +6,9 @@ import cn.bmob.v3.BmobObject;
 import zte.phone.greendao.PhoneNote;
 
 public class BmobPhoneNote extends BmobObject {
+    public static final String TABLE_NAME = "BmobPhoneNote";
     private String phone_name;
-    private Integer phone_number;
+    private long phone_number;
     private String project_name;
     private String pic_url;
 
@@ -19,11 +20,11 @@ public class BmobPhoneNote extends BmobObject {
         this.phone_name = phone_name;
     }
 
-    public Integer getPhone_number() {
+    public long getPhone_number() {
         return phone_number;
     }
 
-    public void setPhone_number(Integer phone_number) {
+    public void setPhone_number(long phone_number) {
         this.phone_number = phone_number;
     }
 

@@ -12,10 +12,10 @@ import android.wuliqing.com.lendphonesystemapp.listeners.UpLoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.listeners.UpdateDataListener;
 import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNoteHelp;
-import android.wuliqing.com.lendphonesystemapp.model.PhoneNoteModel;
+import android.wuliqing.com.lendphonesystemapp.model.PhoneNodeWrap;
 import android.wuliqing.com.lendphonesystemapp.mvpview.AddPhoneView;
 import android.wuliqing.com.lendphonesystemapp.net.BaseHttp;
-import android.wuliqing.com.lendphonesystemapp.net.BmobHttp;
+import android.wuliqing.com.lendphonesystemapp.net.BmobPhoneHttp;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import java.io.File;
@@ -38,7 +38,7 @@ import zte.phone.greendao.PhoneNote;
 public class EditPhonePresenter extends BasePresenter<AddPhoneView> {
     private DataBaseAction mPhoneTableAction = new PhoneTableAction();
     private File file = null;
-    private BaseHttp mBaseHttp = new BmobHttp();
+    private BaseHttp mBaseHttp = new BmobPhoneHttp();
 
     public void setHttp(BaseHttp mBaseHttp) {//可以定制网络框架
         this.mBaseHttp = mBaseHttp;
@@ -80,18 +80,18 @@ public class EditPhonePresenter extends BasePresenter<AddPhoneView> {
         });
     }
 
-    public void deletePhone(final PhoneNoteModel phoneNoteModel) {
-        if (TextUtils.isEmpty(phoneNoteModel.getPhone_id())) {
+    public void deletePhone(final PhoneNodeWrap phoneNoteModel) {
+        if (TextUtils.isEmpty(phoneNoteModel.getBmob_phone_id())) {
             throw new IllegalArgumentException();
         }
-        mBaseHttp.delete("", "", phoneNoteModel.getPhone_id(), new DeleteDataListener() {
+        mBaseHttp.delete("", "", phoneNoteModel.getBmob_phone_id(), new DeleteDataListener() {
             @Override
             public void onDeleteResult(boolean result) {
                 if (result) {
-                    if (!TextUtils.isEmpty(phoneNoteModel.getPic_url())) {
-                        deleteNetWorkPic(phoneNoteModel.getPic_url());
+                    if (!TextUtils.isEmpty(phoneNoteModel.getPhone_photo_url())) {
+                        deleteNetWorkPic(phoneNoteModel.getPhone_photo_url());
                     }
-                    deleteLocalDataBase(phoneNoteModel.getPhone_id());
+                    deleteLocalDataBase(phoneNoteModel.getPhone_photo_url());
                 }
             }
         });
@@ -257,7 +257,7 @@ public class EditPhonePresenter extends BasePresenter<AddPhoneView> {
         Observable.create(new Observable.OnSubscribe<List<PhoneNote>>() {
             @Override
             public void call(Subscriber<? super List<PhoneNote>> subscriber) {
-                List<PhoneNote> phoneNotes = mPhoneTableAction.query();
+                List<PhoneNote> phoneNotes = (List<PhoneNote>)mPhoneTableAction.queryAll();
                 subscriber.onNext(phoneNotes);
             }
         }).subscribeOn(Schedulers.io())

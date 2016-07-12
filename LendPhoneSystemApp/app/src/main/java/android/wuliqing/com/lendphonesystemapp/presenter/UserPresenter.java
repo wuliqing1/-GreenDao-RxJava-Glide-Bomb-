@@ -5,7 +5,7 @@ import android.wuliqing.com.lendphonesystemapp.listeners.UpLoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.model.MyUser;
 import android.wuliqing.com.lendphonesystemapp.mvpview.UserView;
 import android.wuliqing.com.lendphonesystemapp.net.BaseHttp;
-import android.wuliqing.com.lendphonesystemapp.net.BmobHttp;
+import android.wuliqing.com.lendphonesystemapp.net.BmobPhoneHttp;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import java.io.File;
@@ -18,7 +18,7 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class UserPresenter extends BasePresenter<UserView> {
     private File file = null;
-    private BaseHttp mBaseHttp = new BmobHttp();
+    private BaseHttp mBaseHttp = new BmobPhoneHttp();
 
     public void setHttp(BaseHttp mBaseHttp) {//可以定制网络框架
         this.mBaseHttp = mBaseHttp;

@@ -21,7 +21,7 @@ import android.widget.ListPopupWindow;
 import android.widget.Toast;
 import android.wuliqing.com.lendphonesystemapp.fragment.MyDialogFragment;
 import android.wuliqing.com.lendphonesystemapp.listeners.UpLoadDataListener;
-import android.wuliqing.com.lendphonesystemapp.model.PhoneNoteModel;
+import android.wuliqing.com.lendphonesystemapp.model.PhoneNodeWrap;
 import android.wuliqing.com.lendphonesystemapp.mvpview.AddPhoneView;
 import android.wuliqing.com.lendphonesystemapp.permission.PermissionListener;
 import android.wuliqing.com.lendphonesystemapp.permission.PermissionManager;
@@ -49,7 +49,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     public static final String DELETE_PHONE_RESULT_KEY = "delete_phone_result_key";
     public static final String EDIT_PHONE_ID_RESULT_KEY = "edit_phone_id_key";
     public static final String EDIT_PHONE_DATA = "edit_phone_data";
-    private PhoneNoteModel phoneNoteModel;
+    private PhoneNodeWrap mPhoneNodeWrap;
     private EditPhonePresenter mAddPhonePresenter = new EditPhonePresenter();
     private ImageView mAdd_phone_photo_view;
     private AutoCompleteTextView mAdd_phone_name_view;
@@ -68,7 +68,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     protected void createPresenter() {
         mAddPhonePresenter.attach(this);
         mAddPhonePresenter.queryPhoneNameAndProjectName();
-        if (phoneNoteModel != null) {
+        if (mPhoneNodeWrap != null) {
 //            mAddPhonePresenter.queryPhoneWithID(phone_id);
             updateUi();
         }
@@ -76,7 +76,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
 
     @Override
     protected void initIntentData(Bundle savedInstanceState) {
-        phoneNoteModel = getIntent().getParcelableExtra(EDIT_PHONE_DATA);
+        mPhoneNodeWrap = getIntent().getParcelableExtra(EDIT_PHONE_DATA);
     }
 
     @Override
@@ -194,7 +194,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     @Override
     protected void setupToolbar() {
         super.setupToolbar();
-        if (phoneNoteModel != null) {
+        if (mPhoneNodeWrap != null) {
             mToolbar.setTitle(R.string.edit_phone_title);
         } else {
             mToolbar.setTitle(R.string.add_phone_title);
@@ -210,7 +210,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem deleteMenu = menu.findItem(R.id.action_delete_phone);
-        if (phoneNoteModel != null) {
+        if (mPhoneNodeWrap != null) {
             deleteMenu.setVisible(true);
         } else {
             deleteMenu.setVisible(false);
@@ -232,21 +232,24 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     }
 
     private void showDeletePhoneDialog() {
-        MyDialogFragment.newInstance("", getString(R.string.phone_delete_dialog_msg, phoneNoteModel.getPhone_name()),
+        if (mPhoneNodeWrap == null) {
+            return;
+        }
+        MyDialogFragment.newInstance("", getString(R.string.phone_delete_dialog_msg, mPhoneNodeWrap.getPhone_name()),
                 new MyDialogFragment.DialogListener() {
                     @Override
                     public void onClickDialogOk() {
                         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                         mProgressDialog.setMessage(getString(R.string.delete_message));
                         mProgressDialog.show();
-                        mAddPhonePresenter.deletePhone(phoneNoteModel);
+                        mAddPhonePresenter.deletePhone(mPhoneNodeWrap);
                     }
 
                     @Override
                     public void onClickDialogCancel() {
 
                     }
-                }).show(getFragmentManager(), "");
+                }).show(getSupportFragmentManager(), "");
     }
 
     private boolean isInvalidString(String phone_name, String phone_number) {
@@ -268,11 +271,11 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
         String project_name = mAdd_phone_project_view.getText().toString();
         if (!isInvalidString(phone_name, phone_number)) {
             phoneNote.setPhone_name(phone_name);
-            phoneNote.setPhone_number(Integer.valueOf(phone_number));
+            phoneNote.setPhone_number(Long.valueOf(phone_number));
             phoneNote.setProject_name(project_name);
-            if (phoneNoteModel != null) {
-                phoneNote.setBmob_phone_id(phoneNoteModel.getPhone_id());
-                phoneNote.setPhone_photo_url(phoneNoteModel.getPic_url());
+            if (mPhoneNodeWrap != null) {
+                phoneNote.setBmob_phone_id(mPhoneNodeWrap.getBmob_phone_id());
+                phoneNote.setPhone_photo_url(mPhoneNodeWrap.getPhone_photo_url());
             }
 
             if (mAddPhonePresenter.getBmobFile() != null && mAddPhonePresenter.getBmobFile().exists()) {
@@ -285,7 +288,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
 
     private void upData(PhoneNote phoneNote) {
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        if (phoneNoteModel != null) {
+        if (mPhoneNodeWrap != null) {
             mProgressDialog.setMessage(getString(R.string.update_message));
             mProgressDialog.show();
             mAddPhonePresenter.updatePhone(phoneNote, null);
@@ -326,7 +329,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     public void onResult(boolean result, String id) {
         mProgressDialog.dismiss();
         if (result) {
-            if (phoneNoteModel != null) {
+            if (mPhoneNodeWrap != null) {
                 ToastUtils.show(this, R.string.update_phone_success);
             } else {
                 ToastUtils.show(this, R.string.add_phone_success);
@@ -368,7 +371,7 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
 
     private void showMyDialog() {
         MyDialogFragment.newInstance("", getResources().getString(R.string.add_phone_alert_dialog), this)
-                .show(getFragmentManager(), "");
+                .show(getSupportFragmentManager(), "");
     }
 
     @Override
@@ -392,17 +395,20 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
     @Override
     public void onQueryPhone(PhoneNote phoneNote) {
 //        if (phoneNote != null) {
-//            updateUi(phoneNote);
+//            updateUi();
 //        }
     }
 
     private void updateUi() {
-        mAdd_phone_name_view.setText(phoneNoteModel.getPhone_name());
-        mAdd_phone_number_view.setText(String.valueOf(phoneNoteModel.getPhone_number()));
-        mAdd_phone_project_view.setText(phoneNoteModel.getProject_name());
-        if (phoneNoteModel.getPic_url() != null) {
+        if (mPhoneNodeWrap == null) {
+            return;
+        }
+        mAdd_phone_name_view.setText(mPhoneNodeWrap.getPhone_name());
+        mAdd_phone_number_view.setText(String.valueOf(mPhoneNodeWrap.getPhone_number()));
+        mAdd_phone_project_view.setText(mPhoneNodeWrap.getProject_name());
+        if (mPhoneNodeWrap.getPhone_photo_url() != null) {
             Glide.with(this)
-                    .load(phoneNoteModel.getPic_url())
+                    .load(mPhoneNodeWrap.getPhone_photo_url())
                     .placeholder(R.drawable.ic_camera_48pt_3x)
                     .error(R.drawable.ic_camera_48pt_3x)
                     .crossFade()

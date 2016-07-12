@@ -102,8 +102,10 @@ public class LoginActivity extends BaseToolBarActivity implements LoginView {
         if (requestCode == RegisterActivity.REGISTER_REQUEST_CODE && resultCode == RESULT_OK) {
             boolean flag = data.getBooleanExtra(RegisterActivity.REGISTER_FLAG_KEY, false);
             if (flag) {
-                setExtraData();
-                finishActivity();
+//                setExtraData();
+//                finishActivity();
+//                showProgress(true);
+//                mLoginPresenter.login(myUser.getUsername(), myUser.getp);
             }
         }
     }

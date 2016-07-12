@@ -2,13 +2,13 @@ package android.wuliqing.com.lendphonesystemapp.model;
 
 
 import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.datatype.BmobFile;
 
 public class BmobLendPhoneNote extends BmobObject {
+    public static final String TABLE_NAME = "BmobLendPhoneNote";
     private String phone_id;
     private String lend_phone_name;
-    private Integer lend_phone_number;
-    private BmobFile bmobFile;
+    private long lend_phone_number;
+    private String photo_url;
 
     public String getPhone_id() {
         return phone_id;
@@ -26,20 +26,19 @@ public class BmobLendPhoneNote extends BmobObject {
         this.lend_phone_name = lend_phone_name;
     }
 
-    public Integer getLend_phone_number() {
+    public long getLend_phone_number() {
         return lend_phone_number;
     }
 
-    public void setLend_phone_number(Integer lend_phone_number) {
+    public void setLend_phone_number(long lend_phone_number) {
         this.lend_phone_number = lend_phone_number;
     }
 
-    public BmobFile getBmobFile() {
-        return bmobFile;
+    public String getPhoto_url() {
+        return photo_url;
     }
 
-    public void setBmobFile(BmobFile bmobFile) {
-        this.bmobFile = bmobFile;
+    public void setPhoto_url(String photo_url) {
+        this.photo_url = photo_url;
     }
-
 }

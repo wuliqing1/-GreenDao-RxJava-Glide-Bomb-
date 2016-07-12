@@ -44,7 +44,8 @@ public abstract class BaseToolBarActivity extends AppCompatActivity {
         createPresenter();
     }
 
-    protected void initIntentData(Bundle savedInstanceState){}
+    protected void initIntentData(Bundle savedInstanceState) {
+    }
 
     @Override
     protected void onDestroy() {
@@ -69,17 +70,19 @@ public abstract class BaseToolBarActivity extends AppCompatActivity {
      */
     protected void setupToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(R.string.app_name);
-        setSupportActionBar(mToolbar);
-        mToolbar.setTitleTextColor(Color.WHITE);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_2x);
-        mToolbar.setNavigationOnClickListener(new OnClickListener() {
+        if (mToolbar != null) {
+            mToolbar.setTitle(R.string.app_name);
+            setSupportActionBar(mToolbar);
+            mToolbar.setTitleTextColor(Color.WHITE);
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_2x);
+            mToolbar.setNavigationOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                finishActivity();
-            }
-        });
+                @Override
+                public void onClick(View v) {
+                    finishActivity();
+                }
+            });
+        }
     }
 
     protected void finishActivity() {

@@ -41,7 +41,7 @@ public class EditPhonePresenterTest extends TestCase {
     public void testQueryPhoneNameAndProjectName() {
         List<PhoneNote> phoneNotes = new ArrayList<>();
         List<String> list = new ArrayList<>();
-        Mockito.doReturn(phoneNotes).when(phoneTableAction).query();
+        Mockito.doReturn(phoneNotes).when(phoneTableAction).queryAll();
         addPhonePresenter.queryPhoneNameAndProjectName();
         Mockito.verify(addPhoneView).onQueryPhoneNameResult(list);
         Mockito.verify(addPhoneView).onQueryProjectNameResult(list);

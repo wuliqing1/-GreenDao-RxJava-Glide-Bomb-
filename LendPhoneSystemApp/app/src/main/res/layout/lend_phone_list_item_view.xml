@@ -13,7 +13,7 @@
         android:layout_margin="5dp">
 
         <ImageView
-            android:id="@+id/phone_icon_view"
+            android:id="@+id/lend_phone_icon_view"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
@@ -21,15 +21,15 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_phone_iphone_48pt_2x" />
 
-        <TextView
-            android:id="@+id/phone_name_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/phone_icon_view"
-            android:layout_centerHorizontal="true"
-            android:text="name"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?colorPrimary" />
+        <!--<TextView-->
+            <!--android:id="@+id/phone_name_view"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/lend_phone_icon_view"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:text="name"-->
+            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+            <!--android:textColor="?colorPrimary" />-->
     </RelativeLayout>
 
     <LinearLayout
@@ -39,45 +39,23 @@
         android:layout_toRightOf="@id/phone_item_left_layout"
         android:orientation="vertical">
 
-        <!--<RelativeLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/phone_name_tv"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/phone_name_title"-->
-                <!--android:textAppearance="@android:style/TextAppearance.Material.Body1" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/phone_name_view"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:layout_toRightOf="@id/phone_name_tv"-->
-                <!--android:text="10"-->
-                <!--android:textAppearance="@android:style/TextAppearance.Material.Body1"-->
-                <!--android:textStyle="bold" />-->
-        <!--</RelativeLayout>-->
-
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/phone_number_tv"
+                android:id="@+id/lend_phone_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/phone_number_title"
+                android:text="@string/lend_phone_name_title"
                 android:textAppearance="@android:style/TextAppearance.Material.Body1" />
 
             <TextView
-                android:id="@+id/phone_number_view"
+                android:id="@+id/lend_phone_name_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/phone_number_tv"
+                android:layout_toRightOf="@id/lend_phone_name_tv"
                 android:text="10"
                 android:textAppearance="@android:style/TextAppearance.Material.Body1"
                 android:textStyle="bold" />
@@ -88,40 +66,62 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/phone_project_tv"
+                android:id="@+id/lend_phone_number_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/phone_project_name_title"
+                android:text="@string/phone_number_lend"
                 android:textAppearance="@android:style/TextAppearance.Material.Body1" />
 
             <TextView
-                android:id="@+id/phone_project_view"
+                android:id="@+id/lend_phone_number_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/phone_project_tv"
-                android:text="wuliqing "
+                android:layout_toRightOf="@id/lend_phone_number_tv"
+                android:text="10"
                 android:textAppearance="@android:style/TextAppearance.Material.Body1"
                 android:textStyle="bold" />
         </RelativeLayout>
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/phone_project_tv"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/phone_project_name_title"-->
+                <!--android:textAppearance="@android:style/TextAppearance.Material.Body1" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/phone_project_view"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_toRightOf="@id/phone_project_tv"-->
+                <!--android:text="wuliqing "-->
+                <!--android:textAppearance="@android:style/TextAppearance.Material.Body1"-->
+                <!--android:textStyle="bold" />-->
+        <!--</RelativeLayout>-->
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/phone_record_time_tv"
+                android:id="@+id/lend_phone_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/phone_record_time"
+                android:text="@string/lend_phone_time_title"
                 android:textAppearance="@android:style/TextAppearance.Material.Body1" />
 
             <TextView
-                android:id="@+id/phone_record_time_view"
+                android:id="@+id/lend_phone_time_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/phone_record_time_tv"
+                android:layout_toRightOf="@id/lend_phone_time_tv"
                 android:text="2010 10-12"
                 android:textAppearance="@android:style/TextAppearance.Material.Body1"
                 android:textStyle="bold" />

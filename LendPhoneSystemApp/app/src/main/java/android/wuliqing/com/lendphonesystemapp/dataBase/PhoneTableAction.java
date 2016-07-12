@@ -16,10 +16,15 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
     }
 
     @Override
-    public List<PhoneNote> query() {
+    public List<PhoneNote> queryAll() {
         List<PhoneNote> list = phoneNoteDao.queryBuilder().orderDesc(PhoneNoteDao.Properties.Phone_time)
                 .build().list();
         return list;
+    }
+
+    @Override
+    public List<PhoneNote> query(String id) {
+        return null;
     }
 
     @Override

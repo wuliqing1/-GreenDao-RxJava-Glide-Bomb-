@@ -41,7 +41,7 @@ public class PhoneDataBaseDaoGenerator {
         note.addStringProperty("phone_name");
         // 与在 Java 中使用驼峰命名法不同，默认数据库中的命名是使用大写和下划线来分割单词的。
         // For example, a property called “creationDate” will become a database column “CREATION_DATE”.
-        note.addIntProperty("phone_number");
+        note.addLongProperty("phone_number");
         note.addStringProperty("project_name");
         note.addStringProperty("phone_time");
         note.addStringProperty("phone_photo_url");
@@ -54,7 +54,8 @@ public class PhoneDataBaseDaoGenerator {
 //        note1.addToOne(note, phone_id);
         note1.addStringProperty("lend_phone_name");
         note1.addStringProperty("lend_phone_time");
-        note1.addIntProperty("lend_phone_number");
+        note1.addStringProperty("lend_phone_photo_url");
+        note1.addLongProperty("lend_phone_number");
     }
 
 }

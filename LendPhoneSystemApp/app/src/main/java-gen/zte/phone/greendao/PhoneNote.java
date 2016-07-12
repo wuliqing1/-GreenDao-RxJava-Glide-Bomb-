@@ -9,7 +9,7 @@ public class PhoneNote {
     private Long id;
     private String bmob_phone_id;
     private String phone_name;
-    private Integer phone_number;
+    private Long phone_number;
     private String project_name;
     private String phone_time;
     private String phone_photo_url;
@@ -21,7 +21,7 @@ public class PhoneNote {
         this.id = id;
     }
 
-    public PhoneNote(Long id, String bmob_phone_id, String phone_name, Integer phone_number, String project_name, String phone_time, String phone_photo_url) {
+    public PhoneNote(Long id, String bmob_phone_id, String phone_name, Long phone_number, String project_name, String phone_time, String phone_photo_url) {
         this.id = id;
         this.bmob_phone_id = bmob_phone_id;
         this.phone_name = phone_name;
@@ -55,11 +55,11 @@ public class PhoneNote {
         this.phone_name = phone_name;
     }
 
-    public Integer getPhone_number() {
+    public Long getPhone_number() {
         return phone_number;
     }
 
-    public void setPhone_number(Integer phone_number) {
+    public void setPhone_number(Long phone_number) {
         this.phone_number = phone_number;
     }
 

@@ -8,58 +8,32 @@ import android.wuliqing.com.lendphonesystemapp.EditPhoneActivity;
 import android.wuliqing.com.lendphonesystemapp.PhoneDetailActivity;
 import android.wuliqing.com.lendphonesystemapp.R;
 import android.wuliqing.com.lendphonesystemapp.adapter.BasePullListAdapter;
-import android.wuliqing.com.lendphonesystemapp.adapter.PhoneListAdapter;
+import android.wuliqing.com.lendphonesystemapp.adapter.LendPhoneListAdapter;
 import android.wuliqing.com.lendphonesystemapp.adapter.recyclerview.OnItemClickListener;
 import android.wuliqing.com.lendphonesystemapp.model.PhoneNodeWrap;
-import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneListView;
-import android.wuliqing.com.lendphonesystemapp.presenter.PhoneListPresenter;
+import android.wuliqing.com.lendphonesystemapp.mvpview.LendPhoneListView;
+import android.wuliqing.com.lendphonesystemapp.presenter.LendPhoneListPresenter;
 import android.wuliqing.com.lendphonesystemapp.widgets.PullRecycler;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import zte.phone.greendao.LendPhoneNote;
 import zte.phone.greendao.PhoneNote;
 
 /**
  * Created by 10172915 on 2016/6/1.
  */
-public class PhoneListFragment extends BaseListFragment<PhoneNote> implements PhoneListView {
-    private PhoneListPresenter mPhoneListPresenter;
-    private List<PhoneNote> phoneNoteModels = new ArrayList<>();
-    public static final int PHONE_ADD_ACTION = 1;
-    public static final int PHONE_UPDATE_ACTION = 2;
-    public static final int PHONE_DELETE_ACTION = 3;
-    public static final int PHONE_ALL_ACTION = 0;
-    private int current_action = PHONE_ALL_ACTION;
+public class LendPhoneListFragment extends BaseListFragment<PhoneNote> implements LendPhoneListView {
+    private LendPhoneListPresenter mLendPhoneListPresenter;
+    private List<LendPhoneNote> lendPhoneNotes = new ArrayList<>();
+    public static final String LEND_PHONE_ID_PARAM = "lend_phone_id_param";
     private String phone_id;
-
-    @Override
-    protected void initParamData() {
-
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recycler.setRefreshing();
-    }
-
-    public void setPhoneId(String id) {
-        this.phone_id = id;
-    }
-
-    public void setPhoneActionAndUpdate(int action) {
-        current_action = action;
-        updateData();
-    }
-
-    private boolean isPhoneUpAction() {
-        if (current_action == PHONE_ADD_ACTION
-                || current_action == PHONE_UPDATE_ACTION
-                || current_action == PHONE_DELETE_ACTION) {
-            return true;
-        }
-        return false;
     }
 
     public void updateData() {
@@ -70,33 +44,25 @@ public class PhoneListFragment extends BaseListFragment<PhoneNote> implements Ph
 
     @Override
     protected void detachPresenter() {
-        mPhoneListPresenter.detach();
+        mLendPhoneListPresenter.detach();
+    }
+
+    @Override
+    protected void initParamData() {
+        phone_id = getArguments().getString(LEND_PHONE_ID_PARAM);
     }
 
     @Override
     protected void createPresenter() {
-        mPhoneListPresenter = new PhoneListPresenter();
-        mPhoneListPresenter.attach(this);
+        mLendPhoneListPresenter = new LendPhoneListPresenter(phone_id);
+        mLendPhoneListPresenter.attach(this);
     }
 
-    @Override
-    public void onFetchedPhones(List<PhoneNote> phoneNotes) {
-        adapter.setData(phoneNotes);
-        recycler.onRefreshCompleted();
-    }
-
-    @Override
-    public void onUpdateOnePhoneCompleted() {
-        adapter.notifyDataSetChanged();
-        recycler.onRefreshCompleted();
-        current_action = PHONE_ALL_ACTION;
-        phone_id = null;
-    }
 
     @Override
     protected BasePullListAdapter createAdapter() {
-        BasePullListAdapter basePullListAdapter = new PhoneListAdapter(getActivity(),
-                R.layout.phone_list_item_view, phoneNoteModels);
+        BasePullListAdapter basePullListAdapter = new LendPhoneListAdapter(getActivity(),
+                R.layout.lend_phone_list_item_view, lendPhoneNotes);
         basePullListAdapter.setOnItemClickListener(new OnItemClickListener<PhoneNote>() {
             @Override
             public void onItemClick(ViewGroup parent, View view, PhoneNote phoneNoteModel, int position) {
@@ -138,10 +104,17 @@ public class PhoneListFragment extends BaseListFragment<PhoneNote> implements Ph
         if (action == PullRecycler.ACTION_PULL_TO_REFRESH) {
             page = 1;
         }
-        if (isPhoneUpAction()) {
-            mPhoneListPresenter.updatePhoneOneData(adapter, phone_id);
-        } else {
-            mPhoneListPresenter.loadAllPhoneData();
-        }
+        mLendPhoneListPresenter.queryDataBaseAll(phone_id);
+    }
+
+    @Override
+    public void onFetchedLendPhones(List<LendPhoneNote> lendPhoneNotes) {
+        adapter.setData(lendPhoneNotes);
+        recycler.onRefreshCompleted();
+    }
+
+    @Override
+    public void onUpdateResult(boolean result) {
+
     }
 }

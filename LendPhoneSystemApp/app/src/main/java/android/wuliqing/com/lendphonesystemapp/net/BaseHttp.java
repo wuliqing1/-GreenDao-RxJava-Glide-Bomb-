@@ -8,8 +8,6 @@ import android.wuliqing.com.lendphonesystemapp.listeners.UpdateDataListener;
 
 import java.io.File;
 
-import zte.phone.greendao.PhoneNote;
-
 /**
  * Created by 10172915 on 2016/6/21.
  */
@@ -20,9 +18,14 @@ public abstract class BaseHttp implements ISender, ILoader, IUpLoader, IQueryer,
     }
 
     @Override
-    public void send(String method, String url, PhoneNote phoneNote, SendDataListener sendDataListener) {
+    public void send(String method, String url, Object phoneNote, SendDataListener sendDataListener) {
 
     }
+
+    //    @Override
+//    public void send(String method, String url, T phoneNote, SendDataListener sendDataListener) {
+//
+//    }
 
     @Override
     public void upLoad(File file, String url, UpLoadDataListener upLoadDataListener) {
@@ -35,7 +38,7 @@ public abstract class BaseHttp implements ISender, ILoader, IUpLoader, IQueryer,
     }
 
     @Override
-    public void update(String method, String url, PhoneNote phoneNote, UpdateDataListener updateDataListener) {
+    public void update(String method, String url, Object phoneNote, UpdateDataListener updateDataListener) {
 
     }
 

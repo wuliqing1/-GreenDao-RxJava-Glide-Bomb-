@@ -56,15 +56,17 @@
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
-
+            android:label="@string/title_activity_login" />
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/action_register"></activity>
-
+            android:label="@string/action_register" />
         <activity
             android:name=".UserActivity"
-            android:label="@string/title_activity_update"></activity>
+            android:label="@string/title_activity_update" />
+        <activity
+            android:name=".PhoneDetailActivity"
+            android:label="@string/lend_phone_title"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

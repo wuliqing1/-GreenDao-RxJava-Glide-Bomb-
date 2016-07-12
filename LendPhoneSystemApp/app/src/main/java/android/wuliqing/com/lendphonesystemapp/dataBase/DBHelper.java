@@ -96,7 +96,7 @@ public class DBHelper {
         return lendPhoneNoteDao;
     }
 
-    public void PhoneTableAdd(String phone_name, int phone_number, String project_name, String url) {
+    public void PhoneTableAdd(String phone_name, long phone_number, String project_name, String url) {
         PhoneNote phoneNote = new PhoneNote();
         phoneNote.setPhone_name(phone_name);
         phoneNote.setPhone_number(phone_number);
@@ -115,10 +115,10 @@ public class DBHelper {
     }
 
     public List<PhoneNote> PhoneTableQuery() {
-        return new PhoneTableAction().query();
+        return new PhoneTableAction().queryAll();
     }
 
-    public void LendPhoneTableAdd(String lend_phone_name, int lend_phone_number, String phone_id) {
+    public void LendPhoneTableAdd(String lend_phone_name, long lend_phone_number, String phone_id) {
         if (phone_id == null) {
             throw new IllegalArgumentException();
         }
@@ -127,19 +127,19 @@ public class DBHelper {
         lendPhoneNote.setLend_phone_number(lend_phone_number);
 //        lendPhoneNote.setLend_phone_time(new Date().toString());
         lendPhoneNote.setAttach_bmob_phone_id(phone_id);
-        new LendPhoneTableAction(phone_id).add(lendPhoneNote);
+        new LendPhoneTableAction().add(lendPhoneNote);
     }
 
     public void LendPhoneTableRemove(String id) {
-        new LendPhoneTableAction("").remove(id);
+        new LendPhoneTableAction().remove(id);
     }
 
     public void LendPhoneTableUpdate(LendPhoneNote lendPhoneNote) {
-        new LendPhoneTableAction("").update(lendPhoneNote);
+        new LendPhoneTableAction().update(lendPhoneNote);
     }
 
     public List<LendPhoneNote> LendPhoneTableQuery(String phone_id) {
-        return new LendPhoneTableAction(phone_id).query();
+        return new LendPhoneTableAction().queryAll();
     }
 
     public String lendPhoneNames(String phone_id) {

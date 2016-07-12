@@ -9,10 +9,10 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
     <!--<style name="AppTheme.NoActionBar">-->
-        <!--<item name="windowActionBar">false</item>-->
-        <!--<item name="windowNoTitle">true</item>-->
-        <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
-        <!--<item name="android:actionMenuTextColor">@android:color/white</item>-->
-        <!--&lt;!&ndash;<item name="android:statusBarColor">@android:color/transparent</item>&ndash;&gt;-->
+    <!--<item name="windowActionBar">false</item>-->
+    <!--<item name="windowNoTitle">true</item>-->
+    <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+    <!--<item name="android:actionMenuTextColor">@android:color/white</item>-->
+    <!--&lt;!&ndash;<item name="android:statusBarColor">@android:color/transparent</item>&ndash;&gt;-->
     <!--</style>-->
 </resources>

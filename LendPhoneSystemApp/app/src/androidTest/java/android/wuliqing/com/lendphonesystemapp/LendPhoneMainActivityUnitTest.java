@@ -1,6 +1,5 @@
 package android.wuliqing.com.lendphonesystemapp;
 
-import android.support.design.widget.FloatingActionButton;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 
@@ -9,12 +8,10 @@ import android.view.View;
  */
 public class LendPhoneMainActivityUnitTest extends ActivityInstrumentationTestCase2<LendPhoneMainActivity> {
     LendPhoneMainActivity lendPhoneMainActivity;
-    FloatingActionButton floatingActionButton;
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         lendPhoneMainActivity = getActivity();
-        floatingActionButton = findViewById(R.id.fab);
     }
 
     @Override
@@ -23,7 +20,6 @@ public class LendPhoneMainActivityUnitTest extends ActivityInstrumentationTestCa
     }
 
     public void testWidgetVisible() {
-        assertEquals(true, floatingActionButton.getVisibility() == View.GONE);
     }
 
     public LendPhoneMainActivityUnitTest() {
