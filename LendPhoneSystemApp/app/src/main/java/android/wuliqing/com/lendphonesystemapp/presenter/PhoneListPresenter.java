@@ -86,9 +86,9 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
 
                     @Override
                     public void onNext(PhoneNote phoneNoteModel) {
-                        if (mView != null) {
-                            mView.onUpdateOnePhoneCompleted();
-                        }
+//                        if (mView != null) {
+//                            mView.onUpdateOnePhoneCompleted();
+//                        }
                     }
                 });
     }

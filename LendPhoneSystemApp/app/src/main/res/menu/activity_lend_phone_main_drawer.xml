@@ -7,9 +7,18 @@
             android:icon="@drawable/ic_home_3x"
             android:title="@string/menu_home_title" />
         <item
-            android:id="@+id/nav_clear"
-            android:icon="@drawable/ic_delete_3x"
-            android:title="@string/menu_clear_title" />
+            android:id="@+id/nav_admin"
+            android:icon="@drawable/ic_android_black_48dp"
+            android:visible="false"
+            android:title="@string/menu_admin_title" />
     </group>
 
+    <item android:title="@string/menu_additional_title">
+        <menu>
+            <item
+                android:id="@+id/nav_clear"
+                android:icon="@drawable/ic_delete_3x"
+                android:title="@string/menu_clear_title" />
+        </menu>
+    </item>
 </menu>

@@ -1,6 +1,5 @@
 package android.wuliqing.com.lendphonesystemapp.presenter;
 
-import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DBHelper;
 import android.wuliqing.com.lendphonesystemapp.listeners.LoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.listeners.UpdateDataListener;
@@ -12,60 +11,51 @@ import android.wuliqing.com.lendphonesystemapp.net.BaseHttp;
 import android.wuliqing.com.lendphonesystemapp.net.BmobLendPhoneHttp;
 import android.wuliqing.com.lendphonesystemapp.net.BmobPhoneHttp;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-
-import org.json.JSONObject;
-
 import java.util.List;
-
-import cn.bmob.v3.BmobRealTimeData;
-import cn.bmob.v3.listener.ValueEventListener;
 
 /**
  * Created by 10172915 on 2016/6/1.
  */
 public class MainPresenter extends BasePresenter<MainView> {
     private BaseHttp mBaseHttp = new BmobPhoneHttp();
-    private BmobRealTimeData rtd;
+//    private BmobRealTimeData rtd;
 
     @Override
     public void attach(MainView view) {
         super.attach(view);
-        rtd = new BmobRealTimeData();
-        rtd.start(LendPhoneApplication.getAppContext(), new ValueEventListener() {
-            @Override
-            public void onConnectCompleted() {
-                if (rtd.isConnected()) {
-                    rtd.subTableUpdate(BmobPhoneNote.TABLE_NAME);
-                }
-            }
-
-            @Override
-            public void onDataChange(JSONObject jsonObject) {
-                if (BmobRealTimeData.ACTION_UPDATETABLE.equals(jsonObject.optString("action"))) {
-                    JSONObject data = jsonObject.optJSONObject("data");
-                    JsonElement element = new JsonParser().parse(data.toString());
-                    Gson gson = new Gson();
-                    BmobPhoneNote bmobPhoneNote = gson.fromJson(element, BmobPhoneNote.class);
-                    BmobPhoneNoteHelp.updatePhoneNoteTable(bmobPhoneNote, new UpdateDataListener() {
-                        @Override
-                        public void onResult(Object result) {
-                            mView.onSyncResult(true);
-                        }
-                    });
-                }
-            }
-        });
+//        rtd = new BmobRealTimeData();
+//        rtd.start(LendPhoneApplication.getAppContext(), new ValueEventListener() {
+//            @Override
+//            public void onConnectCompleted() {
+//                if (rtd.isConnected()) {
+//                    rtd.subTableUpdate(BmobPhoneNote.TABLE_NAME);
+//                }
+//            }
+//
+//            @Override
+//            public void onDataChange(JSONObject jsonObject) {
+//                if (BmobPhoneNote.TABLE_NAME.equals(jsonObject.optString("tableName"))) {
+//                    JSONObject data = jsonObject.optJSONObject("data");
+//                    JsonElement element = new JsonParser().parse(data.toString());
+//                    Gson gson = new Gson();
+//                    BmobPhoneNote bmobPhoneNote = gson.fromJson(element, BmobPhoneNote.class);
+//                    BmobPhoneNoteHelp.updatePhoneNoteTable(bmobPhoneNote, new UpdateDataListener() {
+//                        @Override
+//                        public void onResult(Object result) {
+//                            mView.onSyncResult(true);
+//                        }
+//                    });
+//                }
+//            }
+//        });
     }
 
     @Override
     public void detach() {
         super.detach();
-        if (rtd.isConnected()) {
-            rtd.unsubTableUpdate(BmobPhoneNote.TABLE_NAME);
-        }
+//        if (rtd.isConnected()) {
+//            rtd.unsubTableUpdate(BmobPhoneNote.TABLE_NAME);
+//        }
     }
 
     public void syncLocalDataBaseAndNetWork() {

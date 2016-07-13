@@ -1,7 +1,10 @@
 package android.wuliqing.com.lendphonesystemapp;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.wuliqing.com.lendphonesystemapp.fragment.MyDialogFragment;
 import android.wuliqing.com.lendphonesystemapp.fragment.PhoneListFragment;
 import android.wuliqing.com.lendphonesystemapp.model.MyUser;
 import android.wuliqing.com.lendphonesystemapp.mvpview.MainView;
@@ -29,6 +33,8 @@ import cn.bmob.v3.BmobUser;
 public class LendPhoneMainActivity extends BaseToolBarActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainView {
     private static final String TAG = "LendPhoneMainActivity";
+    public static final String PHONE_NOTE_CHANGE_ACTION = "com.phone.note.change.action";
+    public static final String CUR_USER_CHANGE_ACTION = "com.user.note.change.action";
     private MainPresenter mainPresenter = new MainPresenter();
     private FragmentManager mFragmentManager;
     private PhoneListFragment mPhoneListFragment;
@@ -37,6 +43,18 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     private TextView user_name_tv;
     private TextView user_department;
     private TextView user_position;
+    private NavigationView navigationView;
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (PHONE_NOTE_CHANGE_ACTION.equals(intent.getAction())) {
+                mPhoneListFragment.updateData();
+            } else if (CUR_USER_CHANGE_ACTION.equals(intent.getAction())) {
+                invalidateOptionsMenu();
+            }
+        }
+    };
 
     @Override
     protected void detachPresenter() {
@@ -46,6 +64,10 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     @Override
     protected void createPresenter() {
         mainPresenter.attach(this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(PHONE_NOTE_CHANGE_ACTION);
+        filter.addAction(CUR_USER_CHANGE_ACTION);
+        registerReceiver(broadcastReceiver, filter);
     }
 
     @Override
@@ -58,10 +80,30 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
         super.onResume();
         if (!PreferenceUtil.readBoolean(LendPhoneApplication.getAppContext(),
                 PreferenceUtil.FIRST_RUN_KEY)) {
-            doSyncAction();
+            syncNetWorkDataDialog();
             PreferenceUtil.write(LendPhoneApplication.getAppContext(),
                     PreferenceUtil.FIRST_RUN_KEY, true);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
+
+    private void syncNetWorkDataDialog() {
+        MyDialogFragment.newInstance("", getString(R.string.sync_dialog_msg), new MyDialogFragment.DialogListener() {
+            @Override
+            public void onClickDialogOk() {
+                doSyncAction();
+            }
+
+            @Override
+            public void onClickDialogCancel() {
+
+            }
+        }).show(getSupportFragmentManager(), "");
     }
 
     @Override
@@ -72,7 +114,7 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         final String PHONE_LIST_TAG = "phone_list_tag";
@@ -158,6 +200,25 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem adminMenu = navigationView.getMenu().findItem(R.id.nav_admin);
+        MenuItem addMenu = menu.findItem(R.id.action_add_phone);
+        if (adminMenu != null) {
+            MyUser myUser = BmobUser.getCurrentUser(this, MyUser.class);
+            if (myUser != null) {
+                if (myUser.isAdmin()) {
+                    adminMenu.setVisible(true);
+                    addMenu.setVisible(true);
+                } else {
+                    adminMenu.setVisible(false);
+                    addMenu.setVisible(false);
+                }
+            }
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -170,7 +231,7 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             startActivityForResult(intent, EditPhoneActivity.ADD_PHONE_REQUEST_CODE);
             return true;
         } else if (id == R.id.action_sync_phone) {
-            doSyncAction();
+            syncNetWorkDataDialog();
         }
 
         return super.onOptionsItemSelected(item);
@@ -184,12 +245,13 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == EditPhoneActivity.ADD_PHONE_REQUEST_CODE && resultCode == RESULT_OK) {
-            boolean is_update = data.getBooleanExtra(EditPhoneActivity.UPDATE_PHONE_RESULT_KEY, false);
-            if (is_update) {
+//            boolean is_update = data.getBooleanExtra(EditPhoneActivity.UPDATE_PHONE_RESULT_KEY, false);
+//            if (is_update) {
 //                doSyncAction();
-                mPhoneListFragment.setPhoneId(data.getStringExtra(EditPhoneActivity.EDIT_PHONE_ID_RESULT_KEY));
-                mPhoneListFragment.setPhoneActionAndUpdate(PhoneListFragment.PHONE_ADD_ACTION);
-            }
+//                mPhoneListFragment.setPhoneId(data.getStringExtra(EditPhoneActivity.EDIT_PHONE_ID_RESULT_KEY));
+//                mPhoneListFragment.setPhoneActionAndUpdate(PhoneListFragment.PHONE_ADD_ACTION);
+//                mPhoneListFragment.updateData();
+//            }
         } else if (requestCode == LoginActivity.LOGIN_REQUEST_CODE && resultCode == RESULT_OK) {
             boolean flag = data.getBooleanExtra(LoginActivity.LOGIN_FLAG_KEY, false);
             if (flag) {
@@ -201,14 +263,14 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
                 updateUserData();
             }
         } else if (requestCode == EditPhoneActivity.EDIT_PHONE_REQUEST_CODE && resultCode == RESULT_OK) {
-            boolean update_flag = data.getBooleanExtra(EditPhoneActivity.UPDATE_PHONE_RESULT_KEY, false);
-            boolean delete_flag = data.getBooleanExtra(EditPhoneActivity.DELETE_PHONE_RESULT_KEY, false);
-            mPhoneListFragment.setPhoneId(data.getStringExtra(EditPhoneActivity.EDIT_PHONE_ID_RESULT_KEY));
-            if (update_flag) {
-                mPhoneListFragment.setPhoneActionAndUpdate(PhoneListFragment.PHONE_UPDATE_ACTION);
-            } else if (delete_flag) {
-                mPhoneListFragment.setPhoneActionAndUpdate(PhoneListFragment.PHONE_DELETE_ACTION);
-            }
+//            boolean update_flag = data.getBooleanExtra(EditPhoneActivity.UPDATE_PHONE_RESULT_KEY, false);
+//            boolean delete_flag = data.getBooleanExtra(EditPhoneActivity.DELETE_PHONE_RESULT_KEY, false);
+//            mPhoneListFragment.setPhoneId(data.getStringExtra(EditPhoneActivity.EDIT_PHONE_ID_RESULT_KEY));
+//            if (update_flag) {
+//                mPhoneListFragment.setPhoneActionAndUpdate(PhoneListFragment.PHONE_UPDATE_ACTION);
+//            } else if (delete_flag) {
+//                mPhoneListFragment.setPhoneActionAndUpdate(PhoneListFragment.PHONE_DELETE_ACTION);
+//            }
         } else if (requestCode == PhoneDetailActivity.PHONE_DETAIL_REQUEST_CODE && resultCode == RESULT_OK) {
 
         }
@@ -223,8 +285,10 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
         if (id == R.id.nav_home) {
             mFragmentManager.beginTransaction().replace(R.id.fragment_layout_content, mPhoneListFragment).commit();
         } else if (id == R.id.nav_clear) {
-//            mainPresenter.clearDataBase();
-//            ToastUtils.show(this, R.string.clear_database_success);
+            mainPresenter.clearDataBase();
+            ToastUtils.show(this, R.string.clear_database_success);
+        } else if (id == R.id.nav_admin) {
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

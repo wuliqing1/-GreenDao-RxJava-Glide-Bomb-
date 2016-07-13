@@ -48,4 +48,27 @@ public class BmobLendPhoneHttp extends BaseHttp {
             }
         });
     }
+
+    @Override
+    public void queryWithColumn(String method, String url, String[] columns, String[] values, final LoadDataListener loadDataListener) {
+        if (columns == null || values == null || columns.length != values.length) {
+            throw new IllegalArgumentException();
+        }
+        BmobQuery<BmobLendPhoneNote> query = new BmobQuery<>();
+        for (int i = 0; i < columns.length; i++) {
+            query.addWhereEqualTo(columns[i], values[i]);
+        }
+
+        query.findObjects(LendPhoneApplication.getAppContext(), new FindListener<BmobLendPhoneNote>() {
+            @Override
+            public void onSuccess(List<BmobLendPhoneNote> list) {
+                loadDataListener.onComplete(list);
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                ToastUtils.show(LendPhoneApplication.getAppContext(), "queryWithColumn:" + s);
+            }
+        });
+    }
 }

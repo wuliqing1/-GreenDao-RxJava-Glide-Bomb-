@@ -16,6 +16,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         final MyUser myUser = new MyUser();
         myUser.setUsername(name);
         myUser.setPassword(password);
+        myUser.setAdmin(false);
         myUser.login(LendPhoneApplication.getAppContext(), new SaveListener() {
 
             @Override

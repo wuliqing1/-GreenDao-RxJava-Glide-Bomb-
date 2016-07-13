@@ -13,6 +13,7 @@ public class LendPhoneNote {
     private String lend_phone_time;
     private String lend_phone_photo_url;
     private Long lend_phone_number;
+    private Long lend_phone_status;
 
     public LendPhoneNote() {
     }
@@ -21,7 +22,7 @@ public class LendPhoneNote {
         this.id = id;
     }
 
-    public LendPhoneNote(Long id, String bmob_lend_phone_id, String attach_bmob_phone_id, String lend_phone_name, String lend_phone_time, String lend_phone_photo_url, Long lend_phone_number) {
+    public LendPhoneNote(Long id, String bmob_lend_phone_id, String attach_bmob_phone_id, String lend_phone_name, String lend_phone_time, String lend_phone_photo_url, Long lend_phone_number, Long lend_phone_status) {
         this.id = id;
         this.bmob_lend_phone_id = bmob_lend_phone_id;
         this.attach_bmob_phone_id = attach_bmob_phone_id;
@@ -29,6 +30,7 @@ public class LendPhoneNote {
         this.lend_phone_time = lend_phone_time;
         this.lend_phone_photo_url = lend_phone_photo_url;
         this.lend_phone_number = lend_phone_number;
+        this.lend_phone_status = lend_phone_status;
     }
 
     public Long getId() {
@@ -85,6 +87,14 @@ public class LendPhoneNote {
 
     public void setLend_phone_number(Long lend_phone_number) {
         this.lend_phone_number = lend_phone_number;
+    }
+
+    public Long getLend_phone_status() {
+        return lend_phone_status;
+    }
+
+    public void setLend_phone_status(Long lend_phone_status) {
+        this.lend_phone_status = lend_phone_status;
     }
 
 }

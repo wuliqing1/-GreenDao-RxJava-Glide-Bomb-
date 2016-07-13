@@ -30,6 +30,7 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Long> {
         public final static Property Lend_phone_time = new Property(4, String.class, "lend_phone_time", false, "LEND_PHONE_TIME");
         public final static Property Lend_phone_photo_url = new Property(5, String.class, "lend_phone_photo_url", false, "LEND_PHONE_PHOTO_URL");
         public final static Property Lend_phone_number = new Property(6, Long.class, "lend_phone_number", false, "LEND_PHONE_NUMBER");
+        public final static Property Lend_phone_status = new Property(7, Long.class, "lend_phone_status", false, "LEND_PHONE_STATUS");
     };
 
 
@@ -51,7 +52,8 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Long> {
                 "\"LEND_PHONE_NAME\" TEXT," + // 3: lend_phone_name
                 "\"LEND_PHONE_TIME\" TEXT," + // 4: lend_phone_time
                 "\"LEND_PHONE_PHOTO_URL\" TEXT," + // 5: lend_phone_photo_url
-                "\"LEND_PHONE_NUMBER\" INTEGER);"); // 6: lend_phone_number
+                "\"LEND_PHONE_NUMBER\" INTEGER," + // 6: lend_phone_number
+                "\"LEND_PHONE_STATUS\" INTEGER);"); // 7: lend_phone_status
     }
 
     /** Drops the underlying database table. */
@@ -99,6 +101,11 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Long> {
         if (lend_phone_number != null) {
             stmt.bindLong(7, lend_phone_number);
         }
+ 
+        Long lend_phone_status = entity.getLend_phone_status();
+        if (lend_phone_status != null) {
+            stmt.bindLong(8, lend_phone_status);
+        }
     }
 
     /** @inheritdoc */
@@ -117,7 +124,8 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // lend_phone_name
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // lend_phone_time
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // lend_phone_photo_url
-            cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6) // lend_phone_number
+            cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6), // lend_phone_number
+            cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7) // lend_phone_status
         );
         return entity;
     }
@@ -132,6 +140,7 @@ public class LendPhoneNoteDao extends AbstractDao<LendPhoneNote, Long> {
         entity.setLend_phone_time(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setLend_phone_photo_url(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setLend_phone_number(cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6));
+        entity.setLend_phone_status(cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7));
      }
     
     /** @inheritdoc */

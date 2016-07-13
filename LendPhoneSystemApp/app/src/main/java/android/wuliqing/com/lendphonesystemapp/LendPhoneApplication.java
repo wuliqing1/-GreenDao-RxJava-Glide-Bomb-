@@ -2,6 +2,7 @@ package android.wuliqing.com.lendphonesystemapp;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DBHelper;
 
 import com.squareup.leakcanary.LeakCanary;
@@ -43,6 +44,8 @@ public class LendPhoneApplication extends Application {
         //第二：默认初始化
 //        Bmob.initialize(this, APPID);
 
+        Intent intent = new Intent(this, SyncDataListenerService.class);
+        startService(intent);
     }
 
     public static Context getAppContext() {

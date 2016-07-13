@@ -1,16 +1,12 @@
 package android.wuliqing.com.lendphonesystemapp.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.wuliqing.com.lendphonesystemapp.EditPhoneActivity;
-import android.wuliqing.com.lendphonesystemapp.PhoneDetailActivity;
 import android.wuliqing.com.lendphonesystemapp.R;
 import android.wuliqing.com.lendphonesystemapp.adapter.BasePullListAdapter;
 import android.wuliqing.com.lendphonesystemapp.adapter.LendPhoneListAdapter;
 import android.wuliqing.com.lendphonesystemapp.adapter.recyclerview.OnItemClickListener;
-import android.wuliqing.com.lendphonesystemapp.model.PhoneNodeWrap;
 import android.wuliqing.com.lendphonesystemapp.mvpview.LendPhoneListView;
 import android.wuliqing.com.lendphonesystemapp.presenter.LendPhoneListPresenter;
 import android.wuliqing.com.lendphonesystemapp.widgets.PullRecycler;
@@ -63,18 +59,18 @@ public class LendPhoneListFragment extends BaseListFragment<PhoneNote> implement
     protected BasePullListAdapter createAdapter() {
         BasePullListAdapter basePullListAdapter = new LendPhoneListAdapter(getActivity(),
                 R.layout.lend_phone_list_item_view, lendPhoneNotes);
-        basePullListAdapter.setOnItemClickListener(new OnItemClickListener<PhoneNote>() {
+        basePullListAdapter.setOnItemClickListener(new OnItemClickListener<LendPhoneNote>() {
             @Override
-            public void onItemClick(ViewGroup parent, View view, PhoneNote phoneNoteModel, int position) {
-                Intent intent = new Intent(getActivity(), PhoneDetailActivity.class);
-                PhoneNodeWrap mPhoneNodeWrap = new PhoneNodeWrap(phoneNoteModel);
-                intent.putExtra(PhoneDetailActivity.PHONE_DETAIL_DATA, mPhoneNodeWrap);
-                startActivityForResult(intent, PhoneDetailActivity.PHONE_DETAIL_REQUEST_CODE);
+            public void onItemClick(ViewGroup parent, View view, LendPhoneNote phoneNoteModel, int position) {
+//                Intent intent = new Intent(getActivity(), PhoneDetailActivity.class);
+//                PhoneNodeWrap mPhoneNodeWrap = new PhoneNodeWrap(phoneNoteModel);
+//                intent.putExtra(PhoneDetailActivity.PHONE_DETAIL_DATA, mPhoneNodeWrap);
+//                startActivityForResult(intent, PhoneDetailActivity.PHONE_DETAIL_REQUEST_CODE);
             }
 
             @Override
-            public boolean onItemLongClick(ViewGroup parent, View view, PhoneNote phoneNoteModel, int position) {
-                showEditPhoneDialog(phoneNoteModel);
+            public boolean onItemLongClick(ViewGroup parent, View view, LendPhoneNote phoneNoteModel, int position) {
+//                showEditPhoneDialog(phoneNoteModel);
                 return true;
             }
         });
@@ -86,10 +82,10 @@ public class LendPhoneListFragment extends BaseListFragment<PhoneNote> implement
                 new MyDialogFragment.DialogListener() {
                     @Override
                     public void onClickDialogOk() {
-                        Intent intent = new Intent(getActivity(), EditPhoneActivity.class);
-                        PhoneNodeWrap mPhoneNodeWrap = new PhoneNodeWrap(phoneNoteModel);
-                        intent.putExtra(EditPhoneActivity.EDIT_PHONE_DATA, mPhoneNodeWrap);
-                        getActivity().startActivityForResult(intent, EditPhoneActivity.EDIT_PHONE_REQUEST_CODE);
+//                        Intent intent = new Intent(getActivity(), EditPhoneActivity.class);
+//                        PhoneNodeWrap mPhoneNodeWrap = new PhoneNodeWrap(phoneNoteModel);
+//                        intent.putExtra(EditPhoneActivity.EDIT_PHONE_DATA, mPhoneNodeWrap);
+//                        getActivity().startActivityForResult(intent, EditPhoneActivity.EDIT_PHONE_REQUEST_CODE);
                     }
 
                     @Override
@@ -113,8 +109,4 @@ public class LendPhoneListFragment extends BaseListFragment<PhoneNote> implement
         recycler.onRefreshCompleted();
     }
 
-    @Override
-    public void onUpdateResult(boolean result) {
-
-    }
 }

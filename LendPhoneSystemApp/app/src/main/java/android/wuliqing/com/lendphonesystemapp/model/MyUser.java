@@ -3,10 +3,12 @@ package android.wuliqing.com.lendphonesystemapp.model;
 import cn.bmob.v3.BmobUser;
 
 public class MyUser extends BmobUser {
+    public static final String TABLE_NAME = "_User";
     private static final long serialVersionUID = 1L;
     private String photo_url;
     private String department;
     private String position;
+    private boolean isAdmin;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -34,5 +36,13 @@ public class MyUser extends BmobUser {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }

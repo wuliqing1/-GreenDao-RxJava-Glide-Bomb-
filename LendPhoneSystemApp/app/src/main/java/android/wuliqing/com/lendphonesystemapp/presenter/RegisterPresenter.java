@@ -16,6 +16,7 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
         final MyUser myUser = new MyUser();
         myUser.setUsername(name);
         myUser.setPassword(password);
+        myUser.setAdmin(false);
         myUser.signUp(LendPhoneApplication.getAppContext(), new SaveListener() {
 
             @Override

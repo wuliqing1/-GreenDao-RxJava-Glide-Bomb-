@@ -56,6 +56,7 @@ public class PhoneDataBaseDaoGenerator {
         note1.addStringProperty("lend_phone_time");
         note1.addStringProperty("lend_phone_photo_url");
         note1.addLongProperty("lend_phone_number");
+        note1.addLongProperty("lend_phone_status");
     }
 
 }

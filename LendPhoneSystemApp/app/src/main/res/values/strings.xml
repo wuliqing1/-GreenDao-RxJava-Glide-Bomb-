@@ -26,16 +26,19 @@
     <string name="up_data_message">正在上传...</string>
     <string name="update_message">正在更新...</string>
     <string name="delete_message">正在删除...</string>
-    <string name="menu_clear_title">清除数据</string>
+    <string name="menu_clear_title">清除本地数据</string>
     <string name="menu_home_title">主界面</string>
+    <string name="menu_admin_title">管理员</string>
+    <string name="menu_additional_title">附加功能</string>
     <string name="phone_number_left">剩余数量:</string>
-    <string name="phone_number_lend">借走数量:</string>
+    <string name="phone_number_lend">申请数量:</string>
     <string name="phone_names_lend">借走人员:</string>
     <string name="phone_name_title">手机名称:</string>
     <string name="phone_number_title">手机数量:</string>
     <string name="lend_phone_name_title">借手机者:</string>
-    <string name="lend_phone_time_title">借走时间:</string>
+    <string name="lend_phone_time_title">申请时间:</string>
     <string name="phone_project_name_title">项目名称:</string>
+    <string name="lend_phone_status_title">申请状态:</string>
     <string name="phone_record_time">入库时间:</string>
     <string name="phone_edit_dialog_msg">确定对 <xliff:g id="name">%s</xliff:g> 手机进行编辑或删除?</string>
     <string name="phone_delete_dialog_msg">确定删除 <xliff:g id="name">%s</xliff:g> 手机吗？</string>
@@ -72,9 +75,12 @@
     <string name="delete_network_pic_success">删除网络图片成功!</string>
 
     <string name="lend_phone_title"><xliff:g id="name">%s</xliff:g> 手机详情</string>
-    <string name="lend_phone_success_msg">手机被借走了,抓紧噢~</string>
+    <string name="lend_phone_success_msg">申请成功,耐心等候管理员处理.</string>
     <string name="login_prompt_msg">请登录您的账户!</string>
-    <string name="input_lend_phone_number_title">借几部?(剩余<xliff:g id="name">%s</xliff:g>部)</string>
+    <string name="input_lend_phone_number_title">申请几部?(剩余<xliff:g id="name">%s</xliff:g>部)</string>
     <string name="input_number_big_msg">借的太多，库存不够!</string>
     <string name="lend_phone_ing_msg">正在处理...</string>
+    <string name="apply_ing_status">申请中..</string>
+    <string name="apply_suc_status">到手</string>
+    <string name="sync_dialog_msg">同步服务器数据,确定?</string>
 </resources>

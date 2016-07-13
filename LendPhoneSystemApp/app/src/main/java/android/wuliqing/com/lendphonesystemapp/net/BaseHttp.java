@@ -47,4 +47,8 @@ public abstract class BaseHttp implements ISender, ILoader, IUpLoader, IQueryer,
 
     }
 
+    @Override
+    public void queryWithColumn(String method, String url, String[] columns, String[] values, LoadDataListener loadDataListener) {
+
+    }
 }

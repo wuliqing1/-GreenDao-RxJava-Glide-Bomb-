@@ -43,27 +43,27 @@ public class PhoneListAdapter extends BasePullListAdapter<PhoneNote> {
         }
     }
 
-    @Override
-    public void updateOneData(PhoneNote phone, String phone_id) {//异步
-        List<PhoneNote> phoneNoteModels = mDatas;
-        if (phoneNoteModels != null && phoneNoteModels.size() > 0) {
-            if (phone == null) {
-                for (int i = 0; i < phoneNoteModels.size(); i++) {//删除操作：删除数据中多余的
-                    if (phoneNoteModels.get(i).getBmob_phone_id().equals(phone_id)) {
-                        phoneNoteModels.remove(i);
-                        break;
-                    }
-                }
-            } else {
-                if (!phoneNoteModels.contains(phone)) {//添加操作：数据中不存在
-                    phoneNoteModels.add(0, phone);
-                } else {//更新操作：数据中已存在
-                    phoneNoteModels.remove(phone);
-                    phoneNoteModels.add(0, phone);
-                }
-            }
-        } else {
-            phoneNoteModels.add(phone);
-        }
-    }
+//    @Override
+//    public void updateOneData(PhoneNote phone, String phone_id) {//异步
+//        List<PhoneNote> phoneNoteModels = mDatas;
+//        if (phoneNoteModels != null && phoneNoteModels.size() > 0) {
+//            if (phone == null) {
+//                for (int i = 0; i < phoneNoteModels.size(); i++) {//删除操作：删除数据中多余的
+//                    if (phoneNoteModels.get(i).getBmob_phone_id().equals(phone_id)) {
+//                        phoneNoteModels.remove(i);
+//                        break;
+//                    }
+//                }
+//            } else {
+//                if (!phoneNoteModels.contains(phone)) {//添加操作：数据中不存在
+//                    phoneNoteModels.add(0, phone);
+//                } else {//更新操作：数据中已存在
+//                    phoneNoteModels.remove(phone);
+//                    phoneNoteModels.add(0, phone);
+//                }
+//            }
+//        } else {
+//            phoneNoteModels.add(phone);
+//        }
+//    }
 }

@@ -10,5 +10,5 @@ import zte.phone.greendao.LendPhoneNote;
 public interface LendPhoneListView extends MvpView {
     public void onFetchedLendPhones(List<LendPhoneNote> lendPhoneNotes);
 
-    public void onUpdateResult(boolean result);
+//    public void onUpdateResult(boolean result);
 }

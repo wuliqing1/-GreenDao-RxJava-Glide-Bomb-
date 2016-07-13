@@ -45,6 +45,7 @@ public class UserPresenter extends BasePresenter<UserView> {
             myUser.setPhoto_url(photoUrl);
             myUser.setDepartment(department);
             myUser.setPosition(position);
+            myUser.setAdmin(bmobUser.isAdmin());
             myUser.update(LendPhoneApplication.getAppContext(), bmobUser.getObjectId(), new UpdateListener() {
 
                 @Override

@@ -3,6 +3,7 @@ package android.wuliqing.com.lendphonesystemapp.adapter;
 import android.content.Context;
 import android.widget.ImageView;
 import android.wuliqing.com.lendphonesystemapp.R;
+import android.wuliqing.com.lendphonesystemapp.model.BmobLendPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 
 import com.bumptech.glide.Glide;
@@ -37,6 +38,11 @@ public class LendPhoneListAdapter extends BasePullListAdapter<LendPhoneNote> {
             ((ImageView) holder.getView(R.id.lend_phone_icon_view)).setImageResource(R.drawable.ic_account_circle_60pt_2x);
         }
         holder.setText(R.id.lend_phone_time_view, lendPhoneNote.getLend_phone_time());
+        if (lendPhoneNote.getLend_phone_status() == BmobLendPhoneNote.APPLY_ING_STATUS) {
+            holder.setText(R.id.lend_status_view, mContext.getString(R.string.apply_ing_status));
+        } else if (lendPhoneNote.getLend_phone_status() == BmobLendPhoneNote.APPLY_SUCCESS_STATUS) {
+            holder.setText(R.id.lend_status_view, mContext.getString(R.string.apply_suc_status));
+        }
     }
 
     @Override

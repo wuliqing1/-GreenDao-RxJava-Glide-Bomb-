@@ -22,14 +22,14 @@
             android:src="@drawable/ic_phone_iphone_48pt_2x" />
 
         <!--<TextView-->
-            <!--android:id="@+id/phone_name_view"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@id/lend_phone_icon_view"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:text="name"-->
-            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
-            <!--android:textColor="?colorPrimary" />-->
+        <!--android:id="@+id/phone_name_view"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/lend_phone_icon_view"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:text="name"-->
+        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+        <!--android:textColor="?colorPrimary" />-->
     </RelativeLayout>
 
     <LinearLayout
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lend_phone_name_title"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1" />
+                android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
                 android:id="@+id/lend_phone_name_view"
@@ -57,7 +57,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/lend_phone_name_tv"
                 android:text="10"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
                 android:textStyle="bold" />
         </RelativeLayout>
 
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_number_lend"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1" />
+                android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
                 android:id="@+id/lend_phone_number_view"
@@ -79,31 +79,9 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/lend_phone_number_tv"
                 android:text="10"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
                 android:textStyle="bold" />
         </RelativeLayout>
-
-        <!--<RelativeLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/phone_project_tv"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/phone_project_name_title"-->
-                <!--android:textAppearance="@android:style/TextAppearance.Material.Body1" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/phone_project_view"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:layout_toRightOf="@id/phone_project_tv"-->
-                <!--android:text="wuliqing "-->
-                <!--android:textAppearance="@android:style/TextAppearance.Material.Body1"-->
-                <!--android:textStyle="bold" />-->
-        <!--</RelativeLayout>-->
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -114,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lend_phone_time_title"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1" />
+                android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
                 android:id="@+id/lend_phone_time_view"
@@ -123,9 +101,38 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/lend_phone_time_tv"
                 android:text="2010 10-12"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lend_status_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lend_phone_status_title"
+                android:textAppearance="@android:style/TextAppearance.Material.Small" />
+
+            <TextView
+                android:id="@+id/lend_status_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/lend_status_tv"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
                 android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>
 
+    <!--<TextView-->
+        <!--android:id="@+id/lend_status_tv"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:textColor="@color/colorPrimary" />-->
 </RelativeLayout>

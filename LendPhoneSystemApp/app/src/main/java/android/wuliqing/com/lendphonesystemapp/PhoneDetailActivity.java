@@ -1,5 +1,9 @@
 package android.wuliqing.com.lendphonesystemapp;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -13,7 +17,6 @@ import android.wuliqing.com.lendphonesystemapp.fragment.LendPhoneListFragment;
 import android.wuliqing.com.lendphonesystemapp.model.BmobLendPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.model.MyUser;
 import android.wuliqing.com.lendphonesystemapp.model.PhoneDetailNote;
-import android.wuliqing.com.lendphonesystemapp.model.PhoneNodeWrap;
 import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneDetailView;
 import android.wuliqing.com.lendphonesystemapp.presenter.PhoneDetailPresenter;
 import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
@@ -25,9 +28,12 @@ import cn.bmob.v3.BmobUser;
 import zte.phone.greendao.LendPhoneNote;
 
 public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDetailView {
-    public static final String PHONE_DETAIL_DATA = "phone_detail_data";
+    //    public static final String PHONE_DETAIL_DATA = "phone_detail_data";
+    public static final String PHONE_DETAIL_ID_KEY = "phone_id_key";
     public static final int PHONE_DETAIL_REQUEST_CODE = 98;
-    private PhoneNodeWrap mPhoneNodeWrap;
+    public static final String LEND_PHONE_NOTE_CHANGE_ACTION = "com.lend.phone.note.change.action";
+    //    private PhoneNodeWrap mPhoneNodeWrap;
+    private String phone_id;
     private PhoneDetailPresenter mPhoneDetailPresenter;
     private FragmentManager mFragmentManager;
     private LendPhoneListFragment mLendPhoneListFragment;
@@ -38,10 +44,20 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
     private TextView phone_detail_names_lend_view;
     private TextView phone_detail_record_time_view;
     private MyUser myUser;
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (LEND_PHONE_NOTE_CHANGE_ACTION.equals(intent.getAction())) {
+                mPhoneDetailPresenter.doPhoneDetailHeadData(phone_id);
+                mLendPhoneListFragment.updateData();
+            }
+        }
+    };
 
     @Override
     protected void initIntentData(Bundle savedInstanceState) {
-        mPhoneNodeWrap = getIntent().getParcelableExtra(PHONE_DETAIL_DATA);
+//        mPhoneNodeWrap = getIntent().getParcelableExtra(PHONE_DETAIL_DATA);
+        phone_id = getIntent().getStringExtra(PHONE_DETAIL_ID_KEY);
     }
 
     @Override
@@ -53,14 +69,22 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
     protected void createPresenter() {
         mPhoneDetailPresenter = new PhoneDetailPresenter();
         mPhoneDetailPresenter.attach(this);
-        mPhoneDetailPresenter.queryLocalDataBase(mPhoneNodeWrap);
+        mPhoneDetailPresenter.doPhoneDetailHeadData(phone_id);
         myUser = BmobUser.getCurrentUser(this, MyUser.class);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(LEND_PHONE_NOTE_CHANGE_ACTION);
+        registerReceiver(broadcastReceiver, filter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     @Override
@@ -71,9 +95,6 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
     @Override
     protected void setupToolbar() {
         super.setupToolbar();
-        if (mToolbar != null) {
-            mToolbar.setTitle(getString(R.string.lend_phone_title, mPhoneNodeWrap.getPhone_name()));
-        }
     }
 
     @Override
@@ -99,7 +120,7 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
         final FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         mLendPhoneListFragment = (LendPhoneListFragment) mFragmentManager.findFragmentByTag(PHONE_LIST_TAG);
         Bundle bundle = new Bundle();
-        bundle.putString(LendPhoneListFragment.LEND_PHONE_ID_PARAM, mPhoneNodeWrap.getBmob_phone_id());
+        bundle.putString(LendPhoneListFragment.LEND_PHONE_ID_PARAM, phone_id);
 
         if (mLendPhoneListFragment == null) {
             mLendPhoneListFragment = new LendPhoneListFragment();
@@ -126,8 +147,9 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
                     BmobLendPhoneNote bmobLendPhoneNote = new BmobLendPhoneNote();
                     bmobLendPhoneNote.setLend_phone_name(myUser.getUsername());
                     bmobLendPhoneNote.setLend_phone_number(lend_num);
-                    bmobLendPhoneNote.setPhone_id(mPhoneNodeWrap.getBmob_phone_id());
+                    bmobLendPhoneNote.setPhone_id(phone_id);
                     bmobLendPhoneNote.setPhoto_url(myUser.getPhoto_url());
+                    bmobLendPhoneNote.setStatus(BmobLendPhoneNote.APPLY_ING_STATUS);
                     mPhoneDetailPresenter.lendPhone(bmobLendPhoneNote);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
@@ -145,11 +167,6 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
         phone_detail_number_lend_view = (TextView) findViewById(R.id.phone_detail_number_lend_view);
         phone_detail_names_lend_view = (TextView) findViewById(R.id.phone_detail_names_lend_view);
         phone_detail_record_time_view = (TextView) findViewById(R.id.phone_detail_record_time_view);
-        if (mPhoneNodeWrap != null) {
-            phone_detail_name_view.setText(mPhoneNodeWrap.getPhone_name());
-            phone_detail_record_time_view.setText(mPhoneNodeWrap.getPhone_time());
-            updatePhoto(mPhoneNodeWrap.getPhone_photo_url());
-        }
         mPhonePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,7 +180,7 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
     private void updatePhoto(String url) {
         if (!TextUtils.isEmpty(url)) {
             Glide.with(this)
-                    .load(mPhoneNodeWrap.getPhone_photo_url())
+                    .load(url)
                     .placeholder(R.drawable.ic_phone_iphone_48pt_2x)
                     .error(R.drawable.ic_phone_iphone_48pt_2x)
                     .crossFade()
@@ -181,13 +198,16 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
             phone_detail_number_lend_view.setText(String.valueOf(phoneDetailNote.getLend_number()));
             phone_detail_names_lend_view.setText(phoneDetailNote.getLend_names());
             phone_detail_record_time_view.setText(phoneDetailNote.getDate());
+            if (mToolbar != null) {
+                mToolbar.setTitle(getString(R.string.lend_phone_title, phoneDetailNote.getPhone_name()));
+            }
             updatePhoto(phoneDetailNote.getPic_url());
         }
     }
 
     @Override
     public void onLendPhoneResult(LendPhoneNote result) {
-        mPhoneDetailPresenter.queryLocalDataBase(mPhoneNodeWrap);
+//        mPhoneDetailPresenter.doPhoneDetailHeadData(phone_id);
         ToastUtils.show(this, R.string.lend_phone_success_msg);
     }
 
@@ -197,10 +217,4 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
         mLendPhoneListFragment.updateData();
     }
 
-    @Override
-    public void onSyncPhoneResult(boolean result) {
-        if (result) {
-
-        }
-    }
 }

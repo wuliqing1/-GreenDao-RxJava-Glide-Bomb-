@@ -11,5 +11,5 @@ public interface PhoneDetailView extends MvpView {
     public void onLendPhoneResult(LendPhoneNote result);
 
     public void onQueryPhoneResult(PhoneDetailNote result);
-    public void onSyncPhoneResult(boolean result);
+//    public void onSyncPhoneResult(boolean result);
 }

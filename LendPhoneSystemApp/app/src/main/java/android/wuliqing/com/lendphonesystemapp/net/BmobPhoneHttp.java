@@ -102,7 +102,12 @@ public class BmobPhoneHttp extends BaseHttp {
         });
     }
 
-//    BmobQuery<GameScore> query = new BmobQuery<GameScore>();
+    @Override
+    public void queryWithColumn(String method, String url, String[] columns, String[] values, LoadDataListener loadDataListener) {
+
+    }
+
+    //    BmobQuery<GameScore> query = new BmobQuery<GameScore>();
 ////查询playerName叫“比目”的数据
 //    query.addWhereEqualTo("playerName", "比目");
 ////返回50条数据，如果不加上这条语句，默认返回10条数据

@@ -5,10 +5,13 @@ import cn.bmob.v3.BmobObject;
 
 public class BmobLendPhoneNote extends BmobObject {
     public static final String TABLE_NAME = "BmobLendPhoneNote";
+    public static final long APPLY_ING_STATUS = 1;
+    public static final long APPLY_SUCCESS_STATUS = 2;
     private String phone_id;
     private String lend_phone_name;
     private long lend_phone_number;
     private String photo_url;
+    private long status;//1:申请中... 2:申请成功
 
     public String getPhone_id() {
         return phone_id;
@@ -40,5 +43,13 @@ public class BmobLendPhoneNote extends BmobObject {
 
     public void setPhoto_url(String photo_url) {
         this.photo_url = photo_url;
+    }
+
+    public long getStatus() {
+        return status;
+    }
+
+    public void setStatus(long status) {
+        this.status = status;
     }
 }
