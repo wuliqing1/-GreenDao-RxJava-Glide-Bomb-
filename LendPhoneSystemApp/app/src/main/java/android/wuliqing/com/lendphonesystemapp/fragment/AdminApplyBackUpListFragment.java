@@ -94,8 +94,7 @@ public class AdminApplyBackUpListFragment extends BaseListFragment<LendPhoneNote
     }
 
     private void showApplyBackUpDialog(final AdminPhoneDetailNote adminPhoneDetailNote) {
-        MyDialogFragment.newInstance("", getString(R.string.admin_agree_dialog_msg, adminPhoneDetailNote.getPhone_name()
-                , adminPhoneDetailNote.getLendPhoneNote().getLend_phone_name()),
+        MyDialogFragment.newInstance("", getString(R.string.apply_backup_dialog_msg, adminPhoneDetailNote.getPhone_name()),
                 new MyDialogFragment.DialogListener() {
                     @Override
                     public void onClickDialogOk() {

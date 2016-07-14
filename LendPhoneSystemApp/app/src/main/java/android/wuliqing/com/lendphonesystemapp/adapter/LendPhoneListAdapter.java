@@ -42,6 +42,8 @@ public class LendPhoneListAdapter extends BasePullListAdapter<LendPhoneNote> {
             holder.setText(R.id.lend_status_view, mContext.getString(R.string.apply_ing_status));
         } else if (lendPhoneNote.getLend_phone_status() == BmobLendPhoneNote.APPLY_SUCCESS_STATUS) {
             holder.setText(R.id.lend_status_view, mContext.getString(R.string.apply_suc_status));
+        } else if (lendPhoneNote.getLend_phone_status() == BmobLendPhoneNote.APPLY_BACK_ING_STATUS) {
+            holder.setText(R.id.lend_status_view, mContext.getString(R.string.backup_ing_title));
         }
     }
 
