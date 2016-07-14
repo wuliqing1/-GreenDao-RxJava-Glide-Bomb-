@@ -1,14 +1,13 @@
 package android.wuliqing.com.lendphonesystemapp.presenter;
 
 import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
-import android.wuliqing.com.lendphonesystemapp.dataBase.DBHelper;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DataBaseAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.LendPhoneTableAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
 import android.wuliqing.com.lendphonesystemapp.listeners.UpdateDataListener;
 import android.wuliqing.com.lendphonesystemapp.model.AdminPhoneDetailNote;
 import android.wuliqing.com.lendphonesystemapp.model.BmobLendPhoneNote;
-import android.wuliqing.com.lendphonesystemapp.mvpview.MyPhoneListView;
+import android.wuliqing.com.lendphonesystemapp.mvpview.AdminApplyPhoneListView;
 import android.wuliqing.com.lendphonesystemapp.net.BaseHttp;
 import android.wuliqing.com.lendphonesystemapp.net.BmobLendPhoneHttp;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
@@ -27,27 +26,23 @@ import zte.phone.greendao.PhoneNote;
 /**
  * Created by 10172915 on 2016/5/27.
  */
-public class MyPhoneListPresenter extends BasePresenter<MyPhoneListView> {
+public class AdminApplyPhoneListPresenter extends BasePresenter<AdminApplyPhoneListView> {
     private DataBaseAction mLendPhoneTableAction;
     private DataBaseAction mPhoneTableAction;
     private BaseHttp mBaseHttp = new BmobLendPhoneHttp();
 
 
-    public MyPhoneListPresenter() {
+    public AdminApplyPhoneListPresenter() {
         mLendPhoneTableAction = new LendPhoneTableAction();
         mPhoneTableAction = new PhoneTableAction();
     }
 
-    public void queryMyPhoneDataBaseAll(final String user_name) {
+    public void queryApplyDataBaseAll() {
         Observable.create(new Observable.OnSubscribe<List<AdminPhoneDetailNote>>() {
             @Override
             public void call(Subscriber<? super List<AdminPhoneDetailNote>> subscriber) {
-                List<LendPhoneNote> list = DBHelper.getInstance().getLendPhoneNoteDao().queryBuilder()
-                        .where(LendPhoneNoteDao.Properties.Lend_phone_name.eq(user_name))
-                        .whereOr(LendPhoneNoteDao.Properties.Lend_phone_status.eq(BmobLendPhoneNote.APPLY_SUCCESS_STATUS)
-                                , LendPhoneNoteDao.Properties.Lend_phone_status.eq(BmobLendPhoneNote.APPLY_BACK_ING_STATUS))
-                        .orderDesc(LendPhoneNoteDao.Properties.Lend_phone_time).build().list();
-
+                List<LendPhoneNote> list = mLendPhoneTableAction
+                        .queryWithColumn(LendPhoneNoteDao.Properties.Lend_phone_status, BmobLendPhoneNote.APPLY_ING_STATUS);
                 List<AdminPhoneDetailNote> adminPhoneDetailNotes = new ArrayList<AdminPhoneDetailNote>();
                 for (int i = 0; i < list.size(); i++) {
                     LendPhoneNote lendPhoneNote = list.get(i);
@@ -86,9 +81,9 @@ public class MyPhoneListPresenter extends BasePresenter<MyPhoneListView> {
 
     }
 
-    public void backUpPhoneApply(final AdminPhoneDetailNote adminPhoneDetailNote) {
+    public void agreePhoneApply(final AdminPhoneDetailNote adminPhoneDetailNote) {
         LendPhoneNote lendPhoneNote = adminPhoneDetailNote.getLendPhoneNote();
-        lendPhoneNote.setLend_phone_status(BmobLendPhoneNote.APPLY_BACK_ING_STATUS);
+        lendPhoneNote.setLend_phone_status(BmobLendPhoneNote.APPLY_SUCCESS_STATUS);
         mBaseHttp.update("", "", lendPhoneNote, new UpdateDataListener<Boolean>() {
             @Override
             public void onResult(Boolean result) {

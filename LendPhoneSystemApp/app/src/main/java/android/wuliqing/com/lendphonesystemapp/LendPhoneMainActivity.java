@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.wuliqing.com.lendphonesystemapp.fragment.AdminPhoneListFragment;
 import android.wuliqing.com.lendphonesystemapp.fragment.MyDialogFragment;
 import android.wuliqing.com.lendphonesystemapp.fragment.MyPhoneListFragment;
 import android.wuliqing.com.lendphonesystemapp.fragment.PhoneListFragment;
@@ -41,7 +40,6 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     private MainPresenter mainPresenter = new MainPresenter();
     private FragmentManager mFragmentManager;
     private PhoneListFragment mPhoneListFragment;
-    private AdminPhoneListFragment mAdminPhoneListFragment;
     private MyPhoneListFragment mMyPhoneListFragment;
     private ProgressDialog mProgressDialog;
     private ImageView user_photo_iv;
@@ -58,9 +56,6 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             } else if (CUR_USER_CHANGE_ACTION.equals(intent.getAction())) {
                 invalidateOptionsMenu();
             }
-//            else if (PhoneDetailActivity.LEND_PHONE_NOTE_CHANGE_ACTION.equals(intent.getAction())) {
-//
-//            }
         }
     };
 
@@ -75,7 +70,6 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
         IntentFilter filter = new IntentFilter();
         filter.addAction(PHONE_NOTE_CHANGE_ACTION);
         filter.addAction(CUR_USER_CHANGE_ACTION);
-//        filter.addAction(PhoneDetailActivity.LEND_PHONE_NOTE_CHANGE_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
     }
 
@@ -135,19 +129,14 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
 
     private void initFragments() {
         final String PHONE_LIST_TAG = "phone_list_tag";
-        final String ADMIN_PHONE_LIST_TAG = "admin_phone_list_tag";
         final String MY_PHONE_LIST_TAG = "my_phone_list_tag";
         mFragmentManager = getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         mPhoneListFragment = (PhoneListFragment) mFragmentManager.findFragmentByTag(PHONE_LIST_TAG);
-        mAdminPhoneListFragment = (AdminPhoneListFragment) mFragmentManager.findFragmentByTag(ADMIN_PHONE_LIST_TAG);
         mMyPhoneListFragment = (MyPhoneListFragment) mFragmentManager.findFragmentByTag(MY_PHONE_LIST_TAG);
         if (mPhoneListFragment == null) {
             mPhoneListFragment = new PhoneListFragment();
             fragmentTransaction.add(R.id.fragment_layout_content, mPhoneListFragment, PHONE_LIST_TAG);
-        }
-        if (mAdminPhoneListFragment == null) {
-            mAdminPhoneListFragment = new AdminPhoneListFragment();
         }
         if (mMyPhoneListFragment == null) {
             mMyPhoneListFragment = new MyPhoneListFragment();
@@ -318,7 +307,8 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             mainPresenter.clearDataBase();
             ToastUtils.show(this, R.string.clear_database_success);
         } else if (id == R.id.nav_admin) {
-            mFragmentManager.beginTransaction().replace(R.id.fragment_layout_content, mAdminPhoneListFragment).commit();
+            Intent intent = new Intent(this, AdminWorkActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_user) {
             mFragmentManager.beginTransaction().replace(R.id.fragment_layout_content, mMyPhoneListFragment).commit();
         }

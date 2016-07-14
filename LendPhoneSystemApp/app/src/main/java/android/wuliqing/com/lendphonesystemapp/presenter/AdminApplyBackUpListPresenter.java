@@ -4,10 +4,10 @@ import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DataBaseAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.LendPhoneTableAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
-import android.wuliqing.com.lendphonesystemapp.listeners.UpdateDataListener;
+import android.wuliqing.com.lendphonesystemapp.listeners.DeleteDataListener;
 import android.wuliqing.com.lendphonesystemapp.model.AdminPhoneDetailNote;
 import android.wuliqing.com.lendphonesystemapp.model.BmobLendPhoneNote;
-import android.wuliqing.com.lendphonesystemapp.mvpview.AdminPhoneListView;
+import android.wuliqing.com.lendphonesystemapp.mvpview.AdminApplyBackUpListView;
 import android.wuliqing.com.lendphonesystemapp.net.BaseHttp;
 import android.wuliqing.com.lendphonesystemapp.net.BmobLendPhoneHttp;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
@@ -26,13 +26,13 @@ import zte.phone.greendao.PhoneNote;
 /**
  * Created by 10172915 on 2016/5/27.
  */
-public class AdminPhoneListPresenter extends BasePresenter<AdminPhoneListView> {
+public class AdminApplyBackUpListPresenter extends BasePresenter<AdminApplyBackUpListView> {
     private DataBaseAction mLendPhoneTableAction;
     private DataBaseAction mPhoneTableAction;
     private BaseHttp mBaseHttp = new BmobLendPhoneHttp();
 
 
-    public AdminPhoneListPresenter() {
+    public AdminApplyBackUpListPresenter() {
         mLendPhoneTableAction = new LendPhoneTableAction();
         mPhoneTableAction = new PhoneTableAction();
     }
@@ -42,7 +42,7 @@ public class AdminPhoneListPresenter extends BasePresenter<AdminPhoneListView> {
             @Override
             public void call(Subscriber<? super List<AdminPhoneDetailNote>> subscriber) {
                 List<LendPhoneNote> list = mLendPhoneTableAction
-                        .queryWithColumn(LendPhoneNoteDao.Properties.Lend_phone_status, BmobLendPhoneNote.APPLY_ING_STATUS);
+                        .queryWithColumn(LendPhoneNoteDao.Properties.Lend_phone_status, BmobLendPhoneNote.APPLY_BACK_ING_STATUS);
                 List<AdminPhoneDetailNote> adminPhoneDetailNotes = new ArrayList<AdminPhoneDetailNote>();
                 for (int i = 0; i < list.size(); i++) {
                     LendPhoneNote lendPhoneNote = list.get(i);
@@ -81,13 +81,12 @@ public class AdminPhoneListPresenter extends BasePresenter<AdminPhoneListView> {
 
     }
 
-    public void agreePhoneApply(final AdminPhoneDetailNote adminPhoneDetailNote) {
+    public void agreeBackUpApply(final AdminPhoneDetailNote adminPhoneDetailNote) {
         LendPhoneNote lendPhoneNote = adminPhoneDetailNote.getLendPhoneNote();
-        lendPhoneNote.setLend_phone_status(BmobLendPhoneNote.APPLY_SUCCESS_STATUS);
-        mBaseHttp.update("", "", lendPhoneNote, new UpdateDataListener<Boolean>() {
+        mBaseHttp.delete("", "", lendPhoneNote.getBmob_lend_phone_id(), new DeleteDataListener() {
             @Override
-            public void onResult(Boolean result) {
-                mView.onAgreeResult(result);
+            public void onDeleteResult(boolean result) {
+                mView.onBackUpResult(result);
             }
         });
     }

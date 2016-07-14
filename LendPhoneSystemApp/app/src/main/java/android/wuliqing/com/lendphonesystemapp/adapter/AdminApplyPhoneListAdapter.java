@@ -13,9 +13,9 @@ import java.util.List;
 /**
  * Created by 10172915 on 2016/6/1.
  */
-public class AdminPhoneListAdapter extends BasePullListAdapter<AdminPhoneDetailNote> {
+public class AdminApplyPhoneListAdapter extends BasePullListAdapter<AdminPhoneDetailNote> {
 
-    public AdminPhoneListAdapter(Context context, int layoutId, List<AdminPhoneDetailNote> datas) {
+    public AdminApplyPhoneListAdapter(Context context, int layoutId, List<AdminPhoneDetailNote> datas) {
         super(context, layoutId, datas);
     }
 

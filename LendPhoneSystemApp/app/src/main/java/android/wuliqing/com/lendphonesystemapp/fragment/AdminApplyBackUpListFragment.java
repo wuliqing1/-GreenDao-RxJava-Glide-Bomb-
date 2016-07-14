@@ -5,34 +5,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.wuliqing.com.lendphonesystemapp.PhoneDetailActivity;
 import android.wuliqing.com.lendphonesystemapp.R;
+import android.wuliqing.com.lendphonesystemapp.adapter.AdminApplyBackUpListAdapter;
 import android.wuliqing.com.lendphonesystemapp.adapter.BasePullListAdapter;
-import android.wuliqing.com.lendphonesystemapp.adapter.MyPhoneListAdapter;
 import android.wuliqing.com.lendphonesystemapp.adapter.recyclerview.OnItemClickListener;
 import android.wuliqing.com.lendphonesystemapp.model.AdminPhoneDetailNote;
-import android.wuliqing.com.lendphonesystemapp.model.BmobLendPhoneNote;
-import android.wuliqing.com.lendphonesystemapp.model.MyUser;
-import android.wuliqing.com.lendphonesystemapp.mvpview.MyPhoneListView;
-import android.wuliqing.com.lendphonesystemapp.presenter.MyPhoneListPresenter;
+import android.wuliqing.com.lendphonesystemapp.mvpview.AdminApplyBackUpListView;
+import android.wuliqing.com.lendphonesystemapp.presenter.AdminApplyBackUpListPresenter;
 import android.wuliqing.com.lendphonesystemapp.widgets.PullRecycler;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bmob.v3.BmobUser;
 import zte.phone.greendao.LendPhoneNote;
 
 /**
  * Created by 10172915 on 2016/6/1.
  */
-public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> implements MyPhoneListView {
-    private MyPhoneListPresenter mMyPhoneListPresenter;
-    private List<AdminPhoneDetailNote> myPhoneDetailNotes = new ArrayList<>();
+public class AdminApplyBackUpListFragment extends BaseListFragment<LendPhoneNote> implements AdminApplyBackUpListView {
+    private AdminApplyBackUpListPresenter mAdminPhoneListPresenter;
+    private List<AdminPhoneDetailNote> adminPhoneDetailNotes = new ArrayList<>();
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -41,13 +37,6 @@ public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> impleme
             }
         }
     };
-    private MyUser myUser;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        myUser = BmobUser.getCurrentUser(getActivity(), MyUser.class);
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -69,7 +58,7 @@ public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> impleme
 
     @Override
     protected void detachPresenter() {
-        mMyPhoneListPresenter.detach();
+        mAdminPhoneListPresenter.detach();
     }
 
     @Override
@@ -78,8 +67,8 @@ public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> impleme
 
     @Override
     protected void createPresenter() {
-        mMyPhoneListPresenter = new MyPhoneListPresenter();
-        mMyPhoneListPresenter.attach(this);
+        mAdminPhoneListPresenter = new AdminApplyBackUpListPresenter();
+        mAdminPhoneListPresenter.attach(this);
         IntentFilter filter = new IntentFilter();
         filter.addAction(PhoneDetailActivity.LEND_PHONE_NOTE_CHANGE_ACTION);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(broadcastReceiver, filter);
@@ -88,14 +77,12 @@ public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> impleme
 
     @Override
     protected BasePullListAdapter createAdapter() {
-        BasePullListAdapter basePullListAdapter = new MyPhoneListAdapter(getActivity(),
-                R.layout.my_phone_list_item_view, myPhoneDetailNotes);
+        BasePullListAdapter basePullListAdapter = new AdminApplyBackUpListAdapter(getActivity(),
+                R.layout.admin_apply_phone_list_item_view, adminPhoneDetailNotes);
         basePullListAdapter.setOnItemClickListener(new OnItemClickListener<AdminPhoneDetailNote>() {
             @Override
             public void onItemClick(ViewGroup parent, View view, AdminPhoneDetailNote adminPhoneDetailNote, int position) {
-                if (adminPhoneDetailNote.getLendPhoneNote().getLend_phone_status() == BmobLendPhoneNote.APPLY_SUCCESS_STATUS) {
-                    showBackUpApplyPhoneDialog(adminPhoneDetailNote);
-                }
+                showApplyBackUpDialog(adminPhoneDetailNote);
             }
 
             @Override
@@ -106,12 +93,13 @@ public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> impleme
         return basePullListAdapter;
     }
 
-    private void showBackUpApplyPhoneDialog(final AdminPhoneDetailNote adminPhoneDetailNote) {
-        MyDialogFragment.newInstance("", getString(R.string.apply_backup_dialog_msg, adminPhoneDetailNote.getPhone_name()),
+    private void showApplyBackUpDialog(final AdminPhoneDetailNote adminPhoneDetailNote) {
+        MyDialogFragment.newInstance("", getString(R.string.admin_agree_dialog_msg, adminPhoneDetailNote.getPhone_name()
+                , adminPhoneDetailNote.getLendPhoneNote().getLend_phone_name()),
                 new MyDialogFragment.DialogListener() {
                     @Override
                     public void onClickDialogOk() {
-                        mMyPhoneListPresenter.backUpPhoneApply(adminPhoneDetailNote);
+                        mAdminPhoneListPresenter.agreeBackUpApply(adminPhoneDetailNote);
                     }
 
                     @Override
@@ -126,10 +114,7 @@ public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> impleme
         if (action == PullRecycler.ACTION_PULL_TO_REFRESH) {
             page = 1;
         }
-        if (myUser != null) {
-            mMyPhoneListPresenter.queryMyPhoneDataBaseAll(myUser.getUsername());
-        }
-
+        mAdminPhoneListPresenter.queryApplyDataBaseAll();
     }
 
     @Override
@@ -139,7 +124,7 @@ public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> impleme
     }
 
     @Override
-    public void onAgreeResult(boolean result) {
+    public void onBackUpResult(boolean result) {
 
     }
 

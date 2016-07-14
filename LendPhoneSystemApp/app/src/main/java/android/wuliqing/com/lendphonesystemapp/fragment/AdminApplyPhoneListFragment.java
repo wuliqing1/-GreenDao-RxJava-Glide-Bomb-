@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.wuliqing.com.lendphonesystemapp.PhoneDetailActivity;
 import android.wuliqing.com.lendphonesystemapp.R;
-import android.wuliqing.com.lendphonesystemapp.adapter.AdminPhoneListAdapter;
+import android.wuliqing.com.lendphonesystemapp.adapter.AdminApplyPhoneListAdapter;
 import android.wuliqing.com.lendphonesystemapp.adapter.BasePullListAdapter;
 import android.wuliqing.com.lendphonesystemapp.adapter.recyclerview.OnItemClickListener;
 import android.wuliqing.com.lendphonesystemapp.model.AdminPhoneDetailNote;
-import android.wuliqing.com.lendphonesystemapp.mvpview.AdminPhoneListView;
-import android.wuliqing.com.lendphonesystemapp.presenter.AdminPhoneListPresenter;
+import android.wuliqing.com.lendphonesystemapp.mvpview.AdminApplyPhoneListView;
+import android.wuliqing.com.lendphonesystemapp.presenter.AdminApplyPhoneListPresenter;
 import android.wuliqing.com.lendphonesystemapp.widgets.PullRecycler;
 
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ import zte.phone.greendao.LendPhoneNote;
 /**
  * Created by 10172915 on 2016/6/1.
  */
-public class AdminPhoneListFragment extends BaseListFragment<LendPhoneNote> implements AdminPhoneListView {
-    private AdminPhoneListPresenter mAdminPhoneListPresenter;
+public class AdminApplyPhoneListFragment extends BaseListFragment<LendPhoneNote> implements AdminApplyPhoneListView {
+    private AdminApplyPhoneListPresenter mAdminPhoneListPresenter;
     private List<AdminPhoneDetailNote> adminPhoneDetailNotes = new ArrayList<>();
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -67,7 +67,7 @@ public class AdminPhoneListFragment extends BaseListFragment<LendPhoneNote> impl
 
     @Override
     protected void createPresenter() {
-        mAdminPhoneListPresenter = new AdminPhoneListPresenter();
+        mAdminPhoneListPresenter = new AdminApplyPhoneListPresenter();
         mAdminPhoneListPresenter.attach(this);
         IntentFilter filter = new IntentFilter();
         filter.addAction(PhoneDetailActivity.LEND_PHONE_NOTE_CHANGE_ACTION);
@@ -77,8 +77,8 @@ public class AdminPhoneListFragment extends BaseListFragment<LendPhoneNote> impl
 
     @Override
     protected BasePullListAdapter createAdapter() {
-        BasePullListAdapter basePullListAdapter = new AdminPhoneListAdapter(getActivity(),
-                R.layout.admin_phone_list_item_view, adminPhoneDetailNotes);
+        BasePullListAdapter basePullListAdapter = new AdminApplyPhoneListAdapter(getActivity(),
+                R.layout.admin_apply_phone_list_item_view, adminPhoneDetailNotes);
         basePullListAdapter.setOnItemClickListener(new OnItemClickListener<AdminPhoneDetailNote>() {
             @Override
             public void onItemClick(ViewGroup parent, View view, AdminPhoneDetailNote adminPhoneDetailNote, int position) {

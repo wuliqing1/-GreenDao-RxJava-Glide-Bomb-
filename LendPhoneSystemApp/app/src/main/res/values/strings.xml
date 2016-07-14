@@ -43,6 +43,7 @@
     <string name="phone_record_time">入库时间:</string>
     <string name="phone_edit_dialog_msg">确定对 <xliff:g id="name">%s</xliff:g> 手机进行编辑或删除?</string>
     <string name="admin_agree_dialog_msg">同意将 <xliff:g id="name">%s</xliff:g> 手机,借给 <xliff:g id="name">%s</xliff:g> 同学吗?</string>
+    <string name="apply_backup_dialog_msg">同意将 <xliff:g id="name">%s</xliff:g> 手机归还吗?</string>
     <string name="phone_delete_dialog_msg">确定删除 <xliff:g id="name">%s</xliff:g> 手机吗？</string>
     <string name="edit_phone_title">编辑手机</string>
     <string name="none">无</string>
@@ -85,5 +86,10 @@
     <string name="apply_ing_status">申请中..</string>
     <string name="apply_suc_status">到手</string>
     <string name="click_to_agree_title">点击同意</string>
+    <string name="click_to_backup_title">点击归还</string>
+    <string name="backup_ing_title">归还中...</string>
     <string name="sync_dialog_msg">同步服务器数据,确定?</string>
+
+    <string name="admin_apply_phone_tab">申请手机</string>
+    <string name="admin_apply_backup_tab">归还手机</string>
 </resources>

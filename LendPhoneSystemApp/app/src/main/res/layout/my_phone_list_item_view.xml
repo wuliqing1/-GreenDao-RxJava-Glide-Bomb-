@@ -13,7 +13,7 @@
         android:layout_margin="5dp">
 
         <ImageView
-            android:id="@+id/admin_phone_icon_view"
+            android:id="@+id/my_phone_icon_view"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
@@ -22,10 +22,10 @@
             android:src="@drawable/ic_phone_iphone_48pt_2x" />
 
         <TextView
-            android:id="@+id/admin_phone_name_view"
+            android:id="@+id/my_phone_name_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/admin_phone_icon_view"
+            android:layout_below="@id/my_phone_icon_view"
             android:layout_centerHorizontal="true"
             android:text="name"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -44,18 +44,18 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/admin_lend_phone_name_tv"
+                android:id="@+id/my_phone_lend_phone_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lend_phone_name_title"
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
-                android:id="@+id/admin_lend_phone_name_view"
+                android:id="@+id/my_phone_lend_phone_name_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/admin_lend_phone_name_tv"
+                android:layout_toRightOf="@id/my_phone_lend_phone_name_tv"
                 android:text="10"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
                 android:textStyle="bold" />
@@ -66,18 +66,18 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/admin_phone_number_tv"
+                android:id="@+id/my_phone_number_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_number_lend"
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
-                android:id="@+id/admin_phone_number_view"
+                android:id="@+id/my_phone_number_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/admin_phone_number_tv"
+                android:layout_toRightOf="@id/my_phone_number_tv"
                 android:text="10"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
                 android:textStyle="bold" />
@@ -88,18 +88,18 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/admin_phone_time_tv"
+                android:id="@+id/my_phone_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lend_phone_time_title"
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
-                android:id="@+id/admin_phone_time_view"
+                android:id="@+id/my_phone_time_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/admin_phone_time_tv"
+                android:layout_toRightOf="@id/my_phone_time_tv"
                 android:text="2010 10-12"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
                 android:textStyle="bold" />
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/admin_status_tv"
+                android:id="@+id/my_phone_status_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -118,15 +118,15 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
-                android:id="@+id/admin_status_view"
+                android:id="@+id/my_phone_status_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/admin_status_tv"
+                android:layout_toRightOf="@id/my_phone_status_tv"
                 android:background="@color/colorPrimary"
                 android:padding="2dp"
-                android:text="@string/click_to_agree_title"
+                android:text="@string/click_to_backup_title"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
