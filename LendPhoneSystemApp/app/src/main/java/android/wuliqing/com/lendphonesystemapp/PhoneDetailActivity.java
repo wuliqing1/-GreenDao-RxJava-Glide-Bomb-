@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +21,7 @@ import android.wuliqing.com.lendphonesystemapp.model.MyUser;
 import android.wuliqing.com.lendphonesystemapp.model.PhoneDetailNote;
 import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneDetailView;
 import android.wuliqing.com.lendphonesystemapp.presenter.PhoneDetailPresenter;
+import android.wuliqing.com.lendphonesystemapp.swipeBack.SwipeBackActivity;
 import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
@@ -28,7 +30,7 @@ import com.bumptech.glide.Glide;
 import cn.bmob.v3.BmobUser;
 import zte.phone.greendao.LendPhoneNote;
 
-public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDetailView {
+public class PhoneDetailActivity extends SwipeBackActivity implements PhoneDetailView {
     //    public static final String PHONE_DETAIL_DATA = "phone_detail_data";
     public static final String PHONE_DETAIL_ID_KEY = "phone_id_key";
     public static final int PHONE_DETAIL_REQUEST_CODE = 98;
@@ -71,10 +73,20 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
         mPhoneDetailPresenter = new PhoneDetailPresenter();
         mPhoneDetailPresenter.attach(this);
         mPhoneDetailPresenter.doPhoneDetailHeadData(phone_id);
+
         myUser = BmobUser.getCurrentUser(this, MyUser.class);
+
         IntentFilter filter = new IntentFilter();
         filter.addAction(LEND_PHONE_NOTE_CHANGE_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
+    }
+
+    private void vibrate(long duration) {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        long[] pattern = {
+                0, duration
+        };
+        vibrator.vibrate(pattern, -1);
     }
 
     @Override
@@ -218,4 +230,7 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
         mLendPhoneListFragment.updateData();
     }
 
+    @Override
+    protected void initSwipeLayout() {
+    }
 }

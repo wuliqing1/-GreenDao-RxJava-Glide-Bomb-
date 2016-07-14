@@ -15,12 +15,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.wuliqing.com.lendphonesystemapp.mvpview.RegisterView;
 import android.wuliqing.com.lendphonesystemapp.presenter.RegisterPresenter;
+import android.wuliqing.com.lendphonesystemapp.swipeBack.SwipeBackActivity;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class RegisterActivity extends BaseToolBarActivity implements RegisterView {
+public class RegisterActivity extends SwipeBackActivity implements RegisterView {
     public static final int REGISTER_REQUEST_CODE = 46;
     public static final String REGISTER_FLAG_KEY = "register_flag_key";
     private EditText mNameView;
@@ -179,6 +180,11 @@ public class RegisterActivity extends BaseToolBarActivity implements RegisterVie
         } else {
             showProgress(false);
         }
+    }
+
+    @Override
+    protected void initSwipeLayout() {
+
     }
 }
 

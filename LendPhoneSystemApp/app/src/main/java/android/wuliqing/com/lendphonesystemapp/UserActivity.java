@@ -32,6 +32,7 @@ import android.wuliqing.com.lendphonesystemapp.mvpview.UserView;
 import android.wuliqing.com.lendphonesystemapp.permission.PermissionListener;
 import android.wuliqing.com.lendphonesystemapp.permission.PermissionManager;
 import android.wuliqing.com.lendphonesystemapp.presenter.UserPresenter;
+import android.wuliqing.com.lendphonesystemapp.swipeBack.SwipeBackActivity;
 import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 import android.wuliqing.com.lendphonesystemapp.utils.MyTextUtils;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
@@ -47,7 +48,7 @@ import cn.bmob.v3.BmobUser;
 /**
  * A login screen that offers login via email/password.
  */
-public class UserActivity extends BaseToolBarActivity implements UserView {
+public class UserActivity extends SwipeBackActivity implements UserView {
     public static final int USER_REQUEST_CODE = 47;
     private static final int REQUEST_CODE_EXTERNAL = 814;
     public static final String USER_FLAG_KEY = "user_flag_key";
@@ -396,6 +397,11 @@ public class UserActivity extends BaseToolBarActivity implements UserView {
         intent.putExtra(USER_FLAG_KEY, true);
         setResult(RESULT_OK, intent);
         finishActivity();
+    }
+
+    @Override
+    protected void initSwipeLayout() {
+
     }
 }
 

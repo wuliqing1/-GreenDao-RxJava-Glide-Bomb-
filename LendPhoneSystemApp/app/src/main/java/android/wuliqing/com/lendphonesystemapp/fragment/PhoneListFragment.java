@@ -10,6 +10,7 @@ import android.wuliqing.com.lendphonesystemapp.R;
 import android.wuliqing.com.lendphonesystemapp.adapter.BasePullListAdapter;
 import android.wuliqing.com.lendphonesystemapp.adapter.PhoneListAdapter;
 import android.wuliqing.com.lendphonesystemapp.adapter.recyclerview.OnItemClickListener;
+import android.wuliqing.com.lendphonesystemapp.model.MyUser;
 import android.wuliqing.com.lendphonesystemapp.mvpview.PhoneListView;
 import android.wuliqing.com.lendphonesystemapp.presenter.PhoneListPresenter;
 import android.wuliqing.com.lendphonesystemapp.widgets.PullRecycler;
@@ -17,6 +18,7 @@ import android.wuliqing.com.lendphonesystemapp.widgets.PullRecycler;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobUser;
 import zte.phone.greendao.PhoneNote;
 
 /**
@@ -107,7 +109,10 @@ public class PhoneListFragment extends BaseListFragment<PhoneNote> implements Ph
 
             @Override
             public boolean onItemLongClick(ViewGroup parent, View view, PhoneNote phoneNoteModel, int position) {
-                showEditPhoneDialog(phoneNoteModel);
+                MyUser myUser = BmobUser.getCurrentUser(getActivity(), MyUser.class);
+                if (myUser != null && myUser.isAdmin()) {
+                    showEditPhoneDialog(phoneNoteModel);
+                }
                 return true;
             }
         });

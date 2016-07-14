@@ -17,11 +17,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.wuliqing.com.lendphonesystemapp.mvpview.LoginView;
 import android.wuliqing.com.lendphonesystemapp.presenter.LoginPresenter;
+import android.wuliqing.com.lendphonesystemapp.swipeBack.SwipeBackActivity;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends BaseToolBarActivity implements LoginView {
+public class LoginActivity extends SwipeBackActivity implements LoginView {
     public static final int LOGIN_REQUEST_CODE = 45;
     public static final String LOGIN_FLAG_KEY = "login_flag_key";
     private EditText mNameView;
@@ -194,6 +195,11 @@ public class LoginActivity extends BaseToolBarActivity implements LoginView {
         Intent intent = new Intent();
         intent.putExtra(LOGIN_FLAG_KEY, true);
         setResult(RESULT_OK, intent);
+    }
+
+    @Override
+    protected void initSwipeLayout() {
+
     }
 }
 

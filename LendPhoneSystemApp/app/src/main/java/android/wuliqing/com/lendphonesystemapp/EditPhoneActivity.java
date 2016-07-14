@@ -25,6 +25,7 @@ import android.wuliqing.com.lendphonesystemapp.mvpview.AddPhoneView;
 import android.wuliqing.com.lendphonesystemapp.permission.PermissionListener;
 import android.wuliqing.com.lendphonesystemapp.permission.PermissionManager;
 import android.wuliqing.com.lendphonesystemapp.presenter.EditPhonePresenter;
+import android.wuliqing.com.lendphonesystemapp.swipeBack.SwipeBackActivity;
 import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 import android.wuliqing.com.lendphonesystemapp.utils.MyTextUtils;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
@@ -40,7 +41,7 @@ import java.util.List;
 
 import zte.phone.greendao.PhoneNote;
 
-public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneView, MyDialogFragment.DialogListener {
+public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView, MyDialogFragment.DialogListener {
     public static final int ADD_PHONE_REQUEST_CODE = 222;
     public static final int EDIT_PHONE_REQUEST_CODE = 223;
     private static final int REQUEST_CODE_EXTERNAL = 8127;
@@ -489,4 +490,8 @@ public class EditPhoneActivity extends BaseToolBarActivity implements AddPhoneVi
         }
     }
 
+    @Override
+    protected void initSwipeLayout() {
+
+    }
 }

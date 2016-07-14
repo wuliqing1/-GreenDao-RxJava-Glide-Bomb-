@@ -191,8 +191,8 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             user_department.setText(null);
             user_position.setText(null);
             user_photo_iv.setImageResource(R.drawable.ic_account_circle_60pt_2x);
-            invalidateOptionsMenu();
         }
+        invalidateOptionsMenu();
     }
 
     @Override

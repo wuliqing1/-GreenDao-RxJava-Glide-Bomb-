@@ -5,8 +5,9 @@ import android.support.v4.view.ViewPager;
 import android.wuliqing.com.lendphonesystemapp.adapter.AdminFragmentPagerAdapter;
 import android.wuliqing.com.lendphonesystemapp.fragment.AdminApplyBackUpListFragment;
 import android.wuliqing.com.lendphonesystemapp.fragment.AdminApplyPhoneListFragment;
+import android.wuliqing.com.lendphonesystemapp.swipeBack.SwipeBackActivity;
 
-public class AdminWorkActivity extends BaseToolBarActivity {
+public class AdminWorkActivity extends SwipeBackActivity {
     private AdminFragmentPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
@@ -46,4 +47,8 @@ public class AdminWorkActivity extends BaseToolBarActivity {
         tabLayout.setupWithViewPager(mViewPager);
     }
 
+    @Override
+    protected void initSwipeLayout() {
+
+    }
 }
