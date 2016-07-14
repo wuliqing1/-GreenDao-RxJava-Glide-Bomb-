@@ -7,10 +7,14 @@
             android:icon="@drawable/ic_home_3x"
             android:title="@string/menu_home_title" />
         <item
+            android:id="@+id/nav_user"
+            android:icon="@drawable/ic_my_phone_icon"
+            android:title="@string/menu_my_phone_title" />
+        <item
             android:id="@+id/nav_admin"
             android:icon="@drawable/ic_android_black_48dp"
-            android:visible="false"
-            android:title="@string/menu_admin_title" />
+            android:title="@string/menu_admin_title"
+            android:visible="false" />
     </group>
 
     <item android:title="@string/menu_additional_title">

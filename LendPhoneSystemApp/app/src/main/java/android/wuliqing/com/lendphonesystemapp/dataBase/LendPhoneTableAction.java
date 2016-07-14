@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import java.util.List;
 
+import de.greenrobot.dao.Property;
 import zte.phone.greendao.LendPhoneNote;
 import zte.phone.greendao.LendPhoneNoteDao;
 
@@ -31,6 +32,14 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
         }
         List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
                 .where(LendPhoneNoteDao.Properties.Attach_bmob_phone_id.eq(id))
+                .orderDesc(LendPhoneNoteDao.Properties.Lend_phone_time).build().list();
+        return list;
+    }
+
+    @Override
+    public List<LendPhoneNote> queryWithColumn(Property property, Object column) {
+        List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
+                .where(property.eq(column))
                 .orderDesc(LendPhoneNoteDao.Properties.Lend_phone_time).build().list();
         return list;
     }

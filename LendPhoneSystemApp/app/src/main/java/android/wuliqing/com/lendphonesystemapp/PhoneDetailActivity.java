@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -73,7 +74,7 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
         myUser = BmobUser.getCurrentUser(this, MyUser.class);
         IntentFilter filter = new IntentFilter();
         filter.addAction(LEND_PHONE_NOTE_CHANGE_ACTION);
-        registerReceiver(broadcastReceiver, filter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
     }
 
     @Override
@@ -84,7 +85,7 @@ public class PhoneDetailActivity extends BaseToolBarActivity implements PhoneDet
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(broadcastReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
     }
 
     @Override

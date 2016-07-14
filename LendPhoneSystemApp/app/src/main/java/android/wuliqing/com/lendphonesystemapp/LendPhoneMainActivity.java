@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,7 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.wuliqing.com.lendphonesystemapp.fragment.AdminPhoneListFragment;
 import android.wuliqing.com.lendphonesystemapp.fragment.MyDialogFragment;
+import android.wuliqing.com.lendphonesystemapp.fragment.MyPhoneListFragment;
 import android.wuliqing.com.lendphonesystemapp.fragment.PhoneListFragment;
 import android.wuliqing.com.lendphonesystemapp.model.MyUser;
 import android.wuliqing.com.lendphonesystemapp.mvpview.MainView;
@@ -38,6 +41,8 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     private MainPresenter mainPresenter = new MainPresenter();
     private FragmentManager mFragmentManager;
     private PhoneListFragment mPhoneListFragment;
+    private AdminPhoneListFragment mAdminPhoneListFragment;
+    private MyPhoneListFragment mMyPhoneListFragment;
     private ProgressDialog mProgressDialog;
     private ImageView user_photo_iv;
     private TextView user_name_tv;
@@ -53,6 +58,9 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             } else if (CUR_USER_CHANGE_ACTION.equals(intent.getAction())) {
                 invalidateOptionsMenu();
             }
+//            else if (PhoneDetailActivity.LEND_PHONE_NOTE_CHANGE_ACTION.equals(intent.getAction())) {
+//
+//            }
         }
     };
 
@@ -67,7 +75,8 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
         IntentFilter filter = new IntentFilter();
         filter.addAction(PHONE_NOTE_CHANGE_ACTION);
         filter.addAction(CUR_USER_CHANGE_ACTION);
-        registerReceiver(broadcastReceiver, filter);
+//        filter.addAction(PhoneDetailActivity.LEND_PHONE_NOTE_CHANGE_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
     }
 
     @Override
@@ -89,7 +98,7 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(broadcastReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
     }
 
     private void syncNetWorkDataDialog() {
@@ -117,19 +126,33 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        final String PHONE_LIST_TAG = "phone_list_tag";
-        mFragmentManager = getSupportFragmentManager();
-        final FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-        mPhoneListFragment = (PhoneListFragment) mFragmentManager.findFragmentByTag(PHONE_LIST_TAG);
-        if (mPhoneListFragment == null) {
-            mPhoneListFragment = new PhoneListFragment();
-            fragmentTransaction.add(R.id.fragment_layout_content, mPhoneListFragment, PHONE_LIST_TAG);
-        }
-        fragmentTransaction.commitAllowingStateLoss();
+        initFragments();
 
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getString(R.string.sync_in_msg));
         initLogin(navigationView);
+    }
+
+    private void initFragments() {
+        final String PHONE_LIST_TAG = "phone_list_tag";
+        final String ADMIN_PHONE_LIST_TAG = "admin_phone_list_tag";
+        final String MY_PHONE_LIST_TAG = "my_phone_list_tag";
+        mFragmentManager = getSupportFragmentManager();
+        final FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        mPhoneListFragment = (PhoneListFragment) mFragmentManager.findFragmentByTag(PHONE_LIST_TAG);
+        mAdminPhoneListFragment = (AdminPhoneListFragment) mFragmentManager.findFragmentByTag(ADMIN_PHONE_LIST_TAG);
+        mMyPhoneListFragment = (MyPhoneListFragment) mFragmentManager.findFragmentByTag(MY_PHONE_LIST_TAG);
+        if (mPhoneListFragment == null) {
+            mPhoneListFragment = new PhoneListFragment();
+            fragmentTransaction.add(R.id.fragment_layout_content, mPhoneListFragment, PHONE_LIST_TAG);
+        }
+        if (mAdminPhoneListFragment == null) {
+            mAdminPhoneListFragment = new AdminPhoneListFragment();
+        }
+        if (mMyPhoneListFragment == null) {
+            mMyPhoneListFragment = new MyPhoneListFragment();
+        }
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     private void initLogin(NavigationView navigationView) {
@@ -179,6 +202,7 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             user_department.setText(null);
             user_position.setText(null);
             user_photo_iv.setImageResource(R.drawable.ic_account_circle_60pt_2x);
+            invalidateOptionsMenu();
         }
     }
 
@@ -203,6 +227,7 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem adminMenu = navigationView.getMenu().findItem(R.id.nav_admin);
         MenuItem addMenu = menu.findItem(R.id.action_add_phone);
+        MenuItem userMenu = navigationView.getMenu().findItem(R.id.nav_user);
         if (adminMenu != null) {
             MyUser myUser = BmobUser.getCurrentUser(this, MyUser.class);
             if (myUser != null) {
@@ -213,6 +238,11 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
                     adminMenu.setVisible(false);
                     addMenu.setVisible(false);
                 }
+                userMenu.setVisible(true);
+            } else {
+                adminMenu.setVisible(false);
+                addMenu.setVisible(false);
+                userMenu.setVisible(false);
             }
         }
         return super.onPrepareOptionsMenu(menu);
@@ -288,7 +318,9 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             mainPresenter.clearDataBase();
             ToastUtils.show(this, R.string.clear_database_success);
         } else if (id == R.id.nav_admin) {
-
+            mFragmentManager.beginTransaction().replace(R.id.fragment_layout_content, mAdminPhoneListFragment).commit();
+        } else if (id == R.id.nav_user) {
+            mFragmentManager.beginTransaction().replace(R.id.fragment_layout_content, mMyPhoneListFragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

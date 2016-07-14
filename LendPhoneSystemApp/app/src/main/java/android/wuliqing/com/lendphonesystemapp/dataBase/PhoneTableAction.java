@@ -2,6 +2,7 @@ package android.wuliqing.com.lendphonesystemapp.dataBase;
 
 import java.util.List;
 
+import de.greenrobot.dao.Property;
 import zte.phone.greendao.PhoneNote;
 import zte.phone.greendao.PhoneNoteDao;
 
@@ -25,6 +26,13 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
     @Override
     public List<PhoneNote> query(String id) {
         return null;
+    }
+
+    @Override
+    public List<PhoneNote> queryWithColumn(Property property, Object column) {
+        List<PhoneNote> list = phoneNoteDao.queryBuilder().where(property.eq(column))
+                .orderAsc(PhoneNoteDao.Properties.Phone_time).build().list();
+        return list;
     }
 
     @Override

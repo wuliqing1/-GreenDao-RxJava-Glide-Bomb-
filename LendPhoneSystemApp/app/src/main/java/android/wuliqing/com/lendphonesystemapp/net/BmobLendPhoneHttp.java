@@ -3,6 +3,7 @@ package android.wuliqing.com.lendphonesystemapp.net;
 import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
 import android.wuliqing.com.lendphonesystemapp.listeners.LoadDataListener;
 import android.wuliqing.com.lendphonesystemapp.listeners.SendDataListener;
+import android.wuliqing.com.lendphonesystemapp.listeners.UpdateDataListener;
 import android.wuliqing.com.lendphonesystemapp.model.BmobLendPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
@@ -11,6 +12,8 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
+import zte.phone.greendao.LendPhoneNote;
 
 /**
  * Created by 10172915 on 2016/7/11.
@@ -70,5 +73,23 @@ public class BmobLendPhoneHttp extends BaseHttp {
                 ToastUtils.show(LendPhoneApplication.getAppContext(), "queryWithColumn:" + s);
             }
         });
+    }
+
+    @Override
+    public void update(String method, String url, Object obj, final UpdateDataListener updateDataListener) {
+        LendPhoneNote lendPhoneNote = (LendPhoneNote)obj;
+        final BmobLendPhoneNote bmobLendPhoneNote = BmobLendPhoneNote.transformLendPhoneNote(lendPhoneNote);
+        bmobLendPhoneNote.update(LendPhoneApplication.getAppContext(),
+                lendPhoneNote.getBmob_lend_phone_id(), new UpdateListener() {
+                    @Override
+                    public void onSuccess() {
+                        updateDataListener.onResult(true);
+                    }
+
+                    @Override
+                    public void onFailure(int i, String s) {
+                        ToastUtils.show(LendPhoneApplication.getAppContext(), "update:" + s);
+                    }
+                });
     }
 }

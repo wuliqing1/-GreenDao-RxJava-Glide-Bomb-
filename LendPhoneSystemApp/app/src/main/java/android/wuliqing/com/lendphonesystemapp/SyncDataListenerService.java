@@ -3,6 +3,7 @@ package android.wuliqing.com.lendphonesystemapp;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.wuliqing.com.lendphonesystemapp.listeners.UpdateDataListener;
 import android.wuliqing.com.lendphonesystemapp.model.BmobLendPhoneNote;
@@ -69,7 +70,7 @@ public class SyncDataListenerService extends Service {
                             if (result) {
                                 //发送广播
                                 Intent intent = new Intent(LendPhoneMainActivity.PHONE_NOTE_CHANGE_ACTION);
-                                sendBroadcast(intent);
+                                LocalBroadcastManager.getInstance(SyncDataListenerService.this).sendBroadcast(intent);
                             }
                         }
                     });
@@ -84,7 +85,7 @@ public class SyncDataListenerService extends Service {
                             if (result != null) {
                                 //发送广播
                                 Intent intent = new Intent(PhoneDetailActivity.LEND_PHONE_NOTE_CHANGE_ACTION);
-                                sendBroadcast(intent);
+                                LocalBroadcastManager.getInstance(SyncDataListenerService.this).sendBroadcast(intent);
                             }
                         }
                     });
@@ -101,7 +102,7 @@ public class SyncDataListenerService extends Service {
                                 if (result != null) {
                                     //发送广播
                                     Intent intent = new Intent(PhoneDetailActivity.LEND_PHONE_NOTE_CHANGE_ACTION);
-                                    sendBroadcast(intent);
+                                    LocalBroadcastManager.getInstance(SyncDataListenerService.this).sendBroadcast(intent);
                                 }
                             }
                         });
@@ -127,7 +128,7 @@ public class SyncDataListenerService extends Service {
                 public void onSuccess() {
                     //发送广播
                     Intent intent = new Intent(LendPhoneMainActivity.CUR_USER_CHANGE_ACTION);
-                    sendBroadcast(intent);
+                    LocalBroadcastManager.getInstance(SyncDataListenerService.this).sendBroadcast(intent);
                 }
 
                 @Override
