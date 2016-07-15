@@ -26,6 +26,7 @@ import android.wuliqing.com.lendphonesystemapp.mvpview.MainView;
 import android.wuliqing.com.lendphonesystemapp.presenter.MainPresenter;
 import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 import android.wuliqing.com.lendphonesystemapp.utils.PreferenceUtil;
+import android.wuliqing.com.lendphonesystemapp.utils.ProgressDialogHelper;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import com.bumptech.glide.Glide;
@@ -122,8 +123,8 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
 
         initFragments();
 
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage(getString(R.string.sync_in_msg));
+        mProgressDialog = ProgressDialogHelper.initProgressDialog(ProgressDialog.STYLE_SPINNER, this,
+                getString(R.string.sync_in_msg));
         initLogin(navigationView);
     }
 

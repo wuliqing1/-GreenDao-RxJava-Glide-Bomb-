@@ -25,6 +25,9 @@
     <string name="load_more_message">正在加载...</string>
     <string name="up_data_message">正在上传...</string>
     <string name="update_message">正在更新...</string>
+    <string name="apply_message">正在申请...</string>
+    <string name="agree_message">正在处理...</string>
+    <string name="backup_message">正在归还...</string>
     <string name="delete_message">正在删除...</string>
     <string name="menu_clear_title">清除本地数据</string>
     <string name="menu_home_title">主界面</string>

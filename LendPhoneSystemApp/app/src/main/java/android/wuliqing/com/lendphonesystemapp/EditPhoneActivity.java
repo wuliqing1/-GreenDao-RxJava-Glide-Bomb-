@@ -28,6 +28,7 @@ import android.wuliqing.com.lendphonesystemapp.presenter.EditPhonePresenter;
 import android.wuliqing.com.lendphonesystemapp.swipeBack.SwipeBackActivity;
 import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 import android.wuliqing.com.lendphonesystemapp.utils.MyTextUtils;
+import android.wuliqing.com.lendphonesystemapp.utils.ProgressDialogHelper;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import com.bumptech.glide.Glide;
@@ -185,14 +186,8 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
     }
 
     private void initProgressDialog() {
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);// 设置水平进度条
-        mProgressDialog.setCancelable(false);// 设置是否可以通过点击Back键取消
-        mProgressDialog.setCanceledOnTouchOutside(false);// 设置在点击Dialog外是否取消Dialog进度条
-//        mProgressDialog.setIcon(R.drawable.ic_launcher);// 设置提示的title的图标，默认是没有的
-//        mProgressDialog.setTitle("提示");
-        mProgressDialog.setMax(100);
-        mProgressDialog.setMessage(getResources().getString(R.string.up_data_message));
+        mProgressDialog = ProgressDialogHelper.initProgressDialog(ProgressDialog.STYLE_HORIZONTAL, this,
+                getString(R.string.up_data_message));
     }
 
     @Override

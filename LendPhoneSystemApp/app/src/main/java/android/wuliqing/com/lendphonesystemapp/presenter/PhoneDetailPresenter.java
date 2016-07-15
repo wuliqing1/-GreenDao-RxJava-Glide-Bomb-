@@ -101,13 +101,16 @@ public class PhoneDetailPresenter extends BasePresenter<PhoneDetailView> {
             public void onSuccess(BmobLendPhoneNote obj) {
 //                insertLocalLendDataBase(obj);
                 if (mView != null) {
-                    mView.onLendPhoneResult(null);
+                    mView.onLendPhoneResult(obj);
                 }
             }
 
             @Override
             public void onFailure(int i, String s) {
                 ToastUtils.show(LendPhoneApplication.getAppContext(), "lendPhone " + s);
+                if (mView != null) {
+                    mView.onLendPhoneResult(null);
+                }
             }
         });
     }

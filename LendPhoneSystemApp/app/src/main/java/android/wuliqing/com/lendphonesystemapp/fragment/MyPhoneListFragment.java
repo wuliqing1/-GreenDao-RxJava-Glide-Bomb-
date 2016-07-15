@@ -1,5 +1,6 @@
 package android.wuliqing.com.lendphonesystemapp.fragment;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.wuliqing.com.lendphonesystemapp.model.BmobLendPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.model.MyUser;
 import android.wuliqing.com.lendphonesystemapp.mvpview.MyPhoneListView;
 import android.wuliqing.com.lendphonesystemapp.presenter.MyPhoneListPresenter;
+import android.wuliqing.com.lendphonesystemapp.utils.ProgressDialogHelper;
 import android.wuliqing.com.lendphonesystemapp.widgets.PullRecycler;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> impleme
         }
     };
     private MyUser myUser;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +55,8 @@ public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> impleme
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mProgressDialog = ProgressDialogHelper.initProgressDialog(ProgressDialog.STYLE_SPINNER, getActivity(),
+                getString(R.string.backup_message));
         recycler.setRefreshing();
     }
 
@@ -111,6 +116,7 @@ public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> impleme
                 new MyDialogFragment.DialogListener() {
                     @Override
                     public void onClickDialogOk() {
+                        mProgressDialog.show();
                         mMyPhoneListPresenter.backUpPhoneApply(adminPhoneDetailNote);
                     }
 
@@ -140,7 +146,9 @@ public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> impleme
 
     @Override
     public void onAgreeResult(boolean result) {
-
+        if (mProgressDialog.isShowing() && !getActivity().isFinishing()) {
+            mProgressDialog.dismiss();
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package android.wuliqing.com.lendphonesystemapp.fragment;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.wuliqing.com.lendphonesystemapp.adapter.recyclerview.OnItemClickL
 import android.wuliqing.com.lendphonesystemapp.model.AdminPhoneDetailNote;
 import android.wuliqing.com.lendphonesystemapp.mvpview.AdminApplyPhoneListView;
 import android.wuliqing.com.lendphonesystemapp.presenter.AdminApplyPhoneListPresenter;
+import android.wuliqing.com.lendphonesystemapp.utils.ProgressDialogHelper;
 import android.wuliqing.com.lendphonesystemapp.widgets.PullRecycler;
 
 import java.util.ArrayList;
@@ -37,10 +39,13 @@ public class AdminApplyPhoneListFragment extends BaseListFragment<LendPhoneNote>
             }
         }
     };
+    private ProgressDialog mProgressDialog;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mProgressDialog = ProgressDialogHelper.initProgressDialog(ProgressDialog.STYLE_SPINNER, getActivity(),
+                getString(R.string.agree_message));
         recycler.setRefreshing();
     }
 
@@ -99,6 +104,7 @@ public class AdminApplyPhoneListFragment extends BaseListFragment<LendPhoneNote>
                 new MyDialogFragment.DialogListener() {
                     @Override
                     public void onClickDialogOk() {
+                        mProgressDialog.show();
                         mAdminPhoneListPresenter.agreePhoneApply(adminPhoneDetailNote);
                     }
 
@@ -125,7 +131,9 @@ public class AdminApplyPhoneListFragment extends BaseListFragment<LendPhoneNote>
 
     @Override
     public void onAgreeResult(boolean result) {
-
+        if (mProgressDialog.isShowing() && !getActivity().isFinishing()) {
+            mProgressDialog.dismiss();
+        }
     }
 
 }
