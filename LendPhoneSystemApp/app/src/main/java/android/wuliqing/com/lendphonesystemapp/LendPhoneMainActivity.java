@@ -32,6 +32,10 @@ import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.BmobUpdateListener;
+import cn.bmob.v3.update.BmobUpdateAgent;
+import cn.bmob.v3.update.UpdateResponse;
+import cn.bmob.v3.update.UpdateStatus;
 
 public class LendPhoneMainActivity extends BaseToolBarActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainView {
@@ -72,6 +76,28 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
         filter.addAction(PHONE_NOTE_CHANGE_ACTION);
         filter.addAction(CUR_USER_CHANGE_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, filter);
+//        BmobUpdateAgent.initAppVersion(this);
+        BmobUpdateAgent.setUpdateOnlyWifi(false);
+        BmobUpdateAgent.setUpdateListener(new BmobUpdateListener() {
+
+            @Override
+            public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
+                // TODO Auto-generated method stub
+                if (updateStatus == UpdateStatus.Yes) {//版本有更新
+
+                } else if (updateStatus == UpdateStatus.No) {
+                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_no_msg);
+                } else if (updateStatus == UpdateStatus.EmptyField) {//此提示只是提醒开发者关注那些必填项，测试成功后，无需对用户提示
+                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_EmptyField_msg);
+                } else if (updateStatus == UpdateStatus.IGNORED) {
+                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_IGNORED_msg);
+                } else if (updateStatus == UpdateStatus.ErrorSizeFormat) {
+                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_ErrorSizeFormat_msg);
+                } else if (updateStatus == UpdateStatus.TimeOut) {
+                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_TimeOut_msg);
+                }
+            }
+        });
     }
 
     @Override
@@ -327,6 +353,8 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             startActivity(intent);
         } else if (id == R.id.nav_user) {
             mFragmentManager.beginTransaction().replace(R.id.fragment_layout_content, mMyPhoneListFragment).commit();
+        } else if (id == R.id.nav_update) {
+            BmobUpdateAgent.update(this);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

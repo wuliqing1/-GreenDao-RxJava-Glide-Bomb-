@@ -29,6 +29,7 @@
     <string name="backup_message">正在归还&#8230;</string>
     <string name="delete_message">正在删除&#8230;</string>
     <string name="menu_clear_title">清除本地数据</string>
+    <string name="menu_app_update">应用更新</string>
     <string name="menu_home_title">主界面</string>
     <string name="menu_my_phone_title">我的手机</string>
     <string name="menu_admin_title">管理员</string>

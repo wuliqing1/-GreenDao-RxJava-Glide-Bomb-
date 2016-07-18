@@ -51,7 +51,7 @@ public abstract class BaseToolBarActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         detachPresenter();
-        LendPhoneApplication.getRefWatcher().watch(this);
+//        LendPhoneApplication.getRefWatcher().watch(this);
     }
 
     protected abstract void detachPresenter();

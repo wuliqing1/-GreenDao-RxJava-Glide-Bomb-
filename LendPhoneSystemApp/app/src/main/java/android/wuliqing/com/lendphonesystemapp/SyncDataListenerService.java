@@ -10,6 +10,7 @@ import android.wuliqing.com.lendphonesystemapp.model.BmobLendPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNote;
 import android.wuliqing.com.lendphonesystemapp.model.BmobPhoneNoteHelp;
 import android.wuliqing.com.lendphonesystemapp.model.MyUser;
+import android.wuliqing.com.lendphonesystemapp.utils.LogHelper;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import com.google.gson.Gson;
@@ -24,6 +25,7 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.ValueEventListener;
 
 public class SyncDataListenerService extends Service {
+    private static final String TAG = "SyncDataListenerService";
     private BmobRealTimeData rtd;
 
     public SyncDataListenerService() {
@@ -64,17 +66,20 @@ public class SyncDataListenerService extends Service {
                     JsonElement element = new JsonParser().parse(data.toString());
                     Gson gson = new Gson();
                     BmobPhoneNote bmobPhoneNote = gson.fromJson(element, BmobPhoneNote.class);
+                    LogHelper.logD(TAG, "onDataChange BmobPhoneNote");
                     BmobPhoneNoteHelp.updatePhoneNoteTable(bmobPhoneNote, new UpdateDataListener<Boolean>() {
                         @Override
                         public void onResult(Boolean result) {
                             if (result) {
                                 //发送广播
+                                LogHelper.logD(TAG, "onDataChange send broadcast 1");
                                 Intent intent = new Intent(LendPhoneMainActivity.PHONE_NOTE_CHANGE_ACTION);
                                 LocalBroadcastManager.getInstance(SyncDataListenerService.this).sendBroadcast(intent);
                             }
                         }
                     });
                 } else if (BmobLendPhoneNote.TABLE_NAME.equals(jsonObject.optString("tableName"))) {
+                    LogHelper.logD(TAG, "onDataChange BmobLendPhoneNote");
                     JSONObject data = jsonObject.optJSONObject("data");
                     JsonElement element = new JsonParser().parse(data.toString());
                     Gson gson = new Gson();
@@ -84,12 +89,14 @@ public class SyncDataListenerService extends Service {
                         public void onResult(Object result) {
                             if (result != null) {
                                 //发送广播
+                                LogHelper.logD(TAG, "onDataChange send broadcast 2");
                                 Intent intent = new Intent(PhoneDetailActivity.LEND_PHONE_NOTE_CHANGE_ACTION);
                                 LocalBroadcastManager.getInstance(SyncDataListenerService.this).sendBroadcast(intent);
                             }
                         }
                     });
                 } else if (MyUser.TABLE_NAME.equals(jsonObject.optString("tableName"))) {
+                    LogHelper.logD(TAG, "onDataChange MyUser");
                     JSONObject data = jsonObject.optJSONObject("data");
                     JsonElement element = new JsonParser().parse(data.toString());
                     Gson gson = new Gson();
@@ -101,6 +108,7 @@ public class SyncDataListenerService extends Service {
                             public void onResult(Object result) {
                                 if (result != null) {
                                     //发送广播
+                                    LogHelper.logD(TAG, "onDataChange send broadcast 3");
                                     Intent intent = new Intent(PhoneDetailActivity.LEND_PHONE_NOTE_CHANGE_ACTION);
                                     LocalBroadcastManager.getInstance(SyncDataListenerService.this).sendBroadcast(intent);
                                 }

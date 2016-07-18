@@ -23,6 +23,11 @@
                 android:id="@+id/nav_clear"
                 android:icon="@drawable/ic_delete_3x"
                 android:title="@string/menu_clear_title" />
+            <item
+                android:id="@+id/nav_update"
+                android:icon="@drawable/ic_system_update_3x"
+                android:title="@string/menu_app_update" />
+
         </menu>
     </item>
 </menu>
