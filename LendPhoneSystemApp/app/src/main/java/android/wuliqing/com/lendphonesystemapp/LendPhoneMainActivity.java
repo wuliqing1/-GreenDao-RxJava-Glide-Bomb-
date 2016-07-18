@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.wuliqing.com.lendphonesystemapp.fragment.MyDialogFragment;
 import android.wuliqing.com.lendphonesystemapp.fragment.MyPhoneListFragment;
 import android.wuliqing.com.lendphonesystemapp.fragment.PhoneListFragment;
@@ -32,10 +33,10 @@ import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.BmobUpdateListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
 import cn.bmob.v3.update.UpdateResponse;
-import cn.bmob.v3.update.UpdateStatus;
 
 public class LendPhoneMainActivity extends BaseToolBarActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainView {
@@ -52,6 +53,7 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     private TextView user_department;
     private TextView user_position;
     private NavigationView navigationView;
+    private UpdateResponse ur;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -82,20 +84,26 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
 
             @Override
             public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
-                // TODO Auto-generated method stub
-                if (updateStatus == UpdateStatus.Yes) {//版本有更新
-
-                } else if (updateStatus == UpdateStatus.No) {
-                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_no_msg);
-                } else if (updateStatus == UpdateStatus.EmptyField) {//此提示只是提醒开发者关注那些必填项，测试成功后，无需对用户提示
-                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_EmptyField_msg);
-                } else if (updateStatus == UpdateStatus.IGNORED) {
-                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_IGNORED_msg);
-                } else if (updateStatus == UpdateStatus.ErrorSizeFormat) {
-                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_ErrorSizeFormat_msg);
-                } else if (updateStatus == UpdateStatus.TimeOut) {
-                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_TimeOut_msg);
+//                // TODO Auto-generated method stub
+                BmobException e = updateInfo.getException();
+                if (e != null) {
+                    Toast.makeText(LendPhoneMainActivity.this, "检测更新返回：" + e.getMessage() + "(" + e.getErrorCode() + ")", Toast.LENGTH_SHORT).show();
+                } else {
+                    ur = updateInfo;
                 }
+//                if (updateStatus == UpdateStatus.Yes) {//版本有更新
+//
+//                } else if (updateStatus == UpdateStatus.No) {
+//                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_no_msg);
+//                } else if (updateStatus == UpdateStatus.EmptyField) {//此提示只是提醒开发者关注那些必填项，测试成功后，无需对用户提示
+//                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_EmptyField_msg);
+//                } else if (updateStatus == UpdateStatus.IGNORED) {
+//                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_IGNORED_msg);
+//                } else if (updateStatus == UpdateStatus.ErrorSizeFormat) {
+//                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_ErrorSizeFormat_msg);
+//                } else if (updateStatus == UpdateStatus.TimeOut) {
+//                    ToastUtils.show(LendPhoneMainActivity.this, R.string.UpdateStatus_TimeOut_msg);
+//                }
             }
         });
     }
