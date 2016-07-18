@@ -92,7 +92,7 @@ public class EditPhonePresenter extends BasePresenter<AddPhoneView> {
                         deleteNetWorkPic(phoneNoteModel.getPhone_photo_url());
                     }
 //                    deleteLocalDataBase(phoneNoteModel.getBmob_phone_id());
-                    mView.onDeleteResult(true, phoneNoteModel.getBmob_phone_id());
+                    mView.onDeleteResult(result, phoneNoteModel.getBmob_phone_id());
                 }
             }
         });

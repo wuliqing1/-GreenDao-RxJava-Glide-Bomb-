@@ -14,6 +14,7 @@
         <include layout="@layout/toolbar_view" />
 
         <ImageView
+            android:contentDescription="@string/app_name"
             android:id="@+id/add_phone_photo_view"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -46,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/add_phone_number_title"
-                android:inputType="number"
+                android:inputType="phone"
                 android:maxLines="1"
                 android:singleLine="true" />
 

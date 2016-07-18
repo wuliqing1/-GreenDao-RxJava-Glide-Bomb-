@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.wuliqing.com.lendphonesystemapp.R;
 
 
@@ -22,7 +21,7 @@ public class InputDialogFragment extends DialogFragment {
     public static InputDialogFragment newInstance(int id, String title, String hint) {
         InputDialogFragment fragment = new InputDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, id);
+        args.putInt(ARG_PARAM1, 0);
         args.putString(ARG_PARAM2, title);
         args.putString(ARG_PARAM3,hint);
         fragment.setArguments(args);
@@ -45,9 +44,12 @@ public class InputDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View v = getActivity().getLayoutInflater().inflate(R.layout.fragment_input_dialog, null);
-        final TextView title = (TextView) v.findViewById(R.id.input_dialog_title);
-        title.setText(title_string);
+//        final TextView title = (TextView) v.findViewById(R.id.input_dialog_title);
+//        title.setText(title_string);
         final EditText text = (EditText) v.findViewById(R.id.input_dialog_edit);
+//        if (!TextUtils.isEmpty(title_string)) {
+//            text.setHint(title_string);
+//        }
         if (!TextUtils.isEmpty(hint_string)) {
             text.setText(hint_string);
             text.setSelection(hint_string.length());
@@ -89,7 +91,7 @@ public class InputDialogFragment extends DialogFragment {
         mListener = listener;
     }
     public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(String text, int id);
+        void onFragmentInteraction(String text, int id);
     }
 
 }

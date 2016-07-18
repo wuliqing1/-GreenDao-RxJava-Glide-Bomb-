@@ -11,8 +11,8 @@ import java.util.List;
  * Created by 10172915 on 2016/7/14.
  */
 public class AdminFragmentPagerAdapter extends FragmentPagerAdapter {
-    private List<Fragment> fragments = new ArrayList<>();
-    private List<String> titles = new ArrayList<>();
+    private final List<Fragment> fragments = new ArrayList<>();
+    private final List<String> titles = new ArrayList<>();
 
     public AdminFragmentPagerAdapter(FragmentManager fm) {
         super(fm);

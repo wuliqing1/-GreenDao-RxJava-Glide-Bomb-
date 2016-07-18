@@ -18,9 +18,8 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
 
     @Override
     public List<PhoneNote> queryAll() {
-        List<PhoneNote> list = phoneNoteDao.queryBuilder().orderDesc(PhoneNoteDao.Properties.Phone_time)
+        return phoneNoteDao.queryBuilder().orderDesc(PhoneNoteDao.Properties.Phone_time)
                 .build().list();
-        return list;
     }
 
     @Override
@@ -30,9 +29,8 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
 
     @Override
     public List<PhoneNote> queryWithColumn(Property property, Object column) {
-        List<PhoneNote> list = phoneNoteDao.queryBuilder().where(property.eq(column))
+        return phoneNoteDao.queryBuilder().where(property.eq(column))
                 .orderAsc(PhoneNoteDao.Properties.Phone_time).build().list();
-        return list;
     }
 
     @Override
@@ -64,9 +62,8 @@ public class PhoneTableAction implements DataBaseAction<PhoneNote> {
             throw new IllegalArgumentException();
         }
         //需要优化，目前只支持phone_name字段查询
-        List<PhoneNote> list = phoneNoteDao.queryBuilder().where(PhoneNoteDao.Properties.Phone_name.like(key))
+        return phoneNoteDao.queryBuilder().where(PhoneNoteDao.Properties.Phone_name.like(key))
                 .orderAsc(PhoneNoteDao.Properties.Phone_time).build().list();
-        return list;
     }
 
     @Override

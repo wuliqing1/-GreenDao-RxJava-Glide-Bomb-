@@ -54,7 +54,7 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
     public static final String EDIT_PHONE_ID = "edit_phone_id";
     private String mPhone_id;
     private PhoneNote mPhoneNote;
-    private EditPhonePresenter mAddPhonePresenter = new EditPhonePresenter();
+    private final EditPhonePresenter mAddPhonePresenter = new EditPhonePresenter();
     private ImageView mAdd_phone_photo_view;
     private AutoCompleteTextView mAdd_phone_name_view;
     private EditText mAdd_phone_number_view;
@@ -345,7 +345,7 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
     }
 
     @Override
-    public void onDeleteResult(boolean result, String id) {
+    public void onDeleteResult(boolean result,String id) {
         mProgressDialog.dismiss();
         if (result) {
             ToastUtils.show(this, R.string.delete_phone_success);

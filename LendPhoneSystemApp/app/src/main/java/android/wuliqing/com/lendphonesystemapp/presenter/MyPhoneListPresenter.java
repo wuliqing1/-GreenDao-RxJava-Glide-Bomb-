@@ -3,7 +3,6 @@ package android.wuliqing.com.lendphonesystemapp.presenter;
 import android.wuliqing.com.lendphonesystemapp.LendPhoneApplication;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DBHelper;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DataBaseAction;
-import android.wuliqing.com.lendphonesystemapp.dataBase.LendPhoneTableAction;
 import android.wuliqing.com.lendphonesystemapp.dataBase.PhoneTableAction;
 import android.wuliqing.com.lendphonesystemapp.listeners.UpdateDataListener;
 import android.wuliqing.com.lendphonesystemapp.model.AdminPhoneDetailNote;
@@ -28,13 +27,13 @@ import zte.phone.greendao.PhoneNote;
  * Created by 10172915 on 2016/5/27.
  */
 public class MyPhoneListPresenter extends BasePresenter<MyPhoneListView> {
-    private DataBaseAction mLendPhoneTableAction;
+//    private DataBaseAction mLendPhoneTableAction;
     private DataBaseAction mPhoneTableAction;
     private BaseHttp mBaseHttp = new BmobLendPhoneHttp();
 
 
     public MyPhoneListPresenter() {
-        mLendPhoneTableAction = new LendPhoneTableAction();
+//        mLendPhoneTableAction = new LendPhoneTableAction();
         mPhoneTableAction = new PhoneTableAction();
     }
 

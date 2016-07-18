@@ -19,7 +19,7 @@ import zte.phone.greendao.PhoneNoteDao;
  */
 public class DBHelper {
     private static DBHelper instance;
-    private static Context mContext;
+//    private static Context mContext;
 
     private static DaoMaster daoMaster;
     private static DaoSession daoSession;
@@ -61,7 +61,7 @@ public class DBHelper {
     }
 
     public static void init(Context context) {
-        mContext = context;
+        Context mContext = context;
         instance = new DBHelper();
         // 数据库对象
         DaoSession daoSession = getDaoSession(mContext);

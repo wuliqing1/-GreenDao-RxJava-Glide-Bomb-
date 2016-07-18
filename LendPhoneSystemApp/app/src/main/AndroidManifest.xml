@@ -66,9 +66,11 @@
         <activity
             android:name=".PhoneDetailActivity"
             android:label="@string/lend_phone_title" />
+        <activity android:name=".SelectPhotoActivity" />
 
         <service
             android:name=".SyncDataListenerService"
+            android:permission="com.zte.sync.data.service"
             android:enabled="true"
             android:exported="true" />
 

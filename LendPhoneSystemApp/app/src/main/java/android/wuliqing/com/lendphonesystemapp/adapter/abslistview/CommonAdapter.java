@@ -10,12 +10,12 @@ import android.wuliqing.com.lendphonesystemapp.adapter.ViewHolder;
 import java.util.List;
 
 public abstract class CommonAdapter<T> extends BaseAdapter {
-    protected Context mContext;
-    protected List<T> mDatas;
-    protected LayoutInflater mInflater;
-    private int layoutId;
+    final Context mContext;
+    final List<T> mDatas;
+    private final LayoutInflater mInflater;
+    private final int layoutId;
 
-    public CommonAdapter(Context context, int layoutId, List<T> datas) {
+    CommonAdapter(Context context, int layoutId, List<T> datas) {
         this.mContext = context;
         mInflater = LayoutInflater.from(context);
         this.mDatas = datas;

@@ -91,8 +91,7 @@ public class RecyclerAdapterWithHF extends RecyclerView.Adapter<RecyclerView.Vie
         // if our position is one of our items (this comes from
         // getItemViewType(int position) below)
         if (type != TYPE_HEADER && type != TYPE_FOOTER) {
-            ViewHolder vh = onCreateViewHolderHF(viewGroup, type);
-            return vh;
+            return onCreateViewHolderHF(viewGroup, type);
             // else we have a header/footer
         } else {
             // create a new framelayout, or inflate from a resource
@@ -304,11 +303,11 @@ public class RecyclerAdapterWithHF extends RecyclerView.Adapter<RecyclerView.Vie
 
     }
 
-    public static interface OnItemClickListener {
+    public interface OnItemClickListener {
         void onItemClick(RecyclerAdapterWithHF adapter, ViewHolder vh, int position);
     }
 
-    public static interface OnItemLongClickListener {
+    public interface OnItemLongClickListener {
         void onItemLongClick(RecyclerAdapterWithHF adapter, ViewHolder vh, int position);
     }
 

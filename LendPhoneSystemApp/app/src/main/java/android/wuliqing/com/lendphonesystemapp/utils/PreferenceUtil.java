@@ -10,19 +10,19 @@ public class PreferenceUtil {
     public static void write(Context context, String key, String value) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 LEND_PHONE_PRE, Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString(key, value).commit();
+        sharedPreferences.edit().putString(key, value).apply();
     }
 
     public static void write(Context context, String key, int value) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 LEND_PHONE_PRE, Context.MODE_PRIVATE);
-        sharedPreferences.edit().putInt(key, value).commit();
+        sharedPreferences.edit().putInt(key, value).apply();
     }
 
     public static void write(Context context, String key, Boolean value) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 LEND_PHONE_PRE, Context.MODE_PRIVATE);
-        sharedPreferences.edit().putBoolean(key, value).commit();
+        sharedPreferences.edit().putBoolean(key, value).apply();
     }
 
     public static String readString(Context context, String key) {
@@ -46,7 +46,7 @@ public class PreferenceUtil {
     public static void remove(Context context, String key) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 LEND_PHONE_PRE, Context.MODE_PRIVATE);
-        sharedPreferences.edit().remove(key).commit();
+        sharedPreferences.edit().remove(key).apply();
     }
 
 }

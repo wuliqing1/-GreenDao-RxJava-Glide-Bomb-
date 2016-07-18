@@ -20,7 +20,7 @@ public class LendPhoneApplication extends Application {
     /**
      * SDK初始化也可以放到Application中
      */
-    public static String APPID = "6c41a1b4c6d84bc87434ae20eee6002e";
+    public static final String APPID = "6c41a1b4c6d84bc87434ae20eee6002e";
     @Override
     public void onCreate() {
         super.onCreate();

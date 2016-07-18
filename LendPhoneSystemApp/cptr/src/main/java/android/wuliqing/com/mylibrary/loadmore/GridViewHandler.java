@@ -90,8 +90,6 @@ public class GridViewHandler implements ViewHandler {
         }
     }
 
-    ;
-
     /**
      * 滚动到底部自动加载更多数据
      */

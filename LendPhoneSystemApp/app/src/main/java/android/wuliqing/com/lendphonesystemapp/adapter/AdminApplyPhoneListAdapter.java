@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class AdminApplyPhoneListAdapter extends BasePullListAdapter<AdminPhoneDetailNote> {
 
-    public AdminApplyPhoneListAdapter(Context context, int layoutId, List<AdminPhoneDetailNote> datas) {
-        super(context, layoutId, datas);
+    public AdminApplyPhoneListAdapter(Context context, List<AdminPhoneDetailNote> datas) {
+        super(context, R.layout.admin_apply_phone_list_item_view, datas);
     }
 
     @Override

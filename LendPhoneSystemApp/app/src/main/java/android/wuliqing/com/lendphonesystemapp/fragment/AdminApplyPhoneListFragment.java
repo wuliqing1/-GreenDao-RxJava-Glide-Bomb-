@@ -30,8 +30,8 @@ import zte.phone.greendao.LendPhoneNote;
  */
 public class AdminApplyPhoneListFragment extends BaseListFragment<LendPhoneNote> implements AdminApplyPhoneListView {
     private AdminApplyPhoneListPresenter mAdminPhoneListPresenter;
-    private List<AdminPhoneDetailNote> adminPhoneDetailNotes = new ArrayList<>();
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    private final List<AdminPhoneDetailNote> adminPhoneDetailNotes = new ArrayList<>();
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (PhoneDetailActivity.LEND_PHONE_NOTE_CHANGE_ACTION.equals(intent.getAction())) {
@@ -49,7 +49,7 @@ public class AdminApplyPhoneListFragment extends BaseListFragment<LendPhoneNote>
         recycler.setRefreshing();
     }
 
-    public void updateData() {
+    private void updateData() {
         if (recycler != null) {
             recycler.setRefreshing();
         }
@@ -83,7 +83,7 @@ public class AdminApplyPhoneListFragment extends BaseListFragment<LendPhoneNote>
     @Override
     protected BasePullListAdapter createAdapter() {
         BasePullListAdapter basePullListAdapter = new AdminApplyPhoneListAdapter(getActivity(),
-                R.layout.admin_apply_phone_list_item_view, adminPhoneDetailNotes);
+                adminPhoneDetailNotes);
         basePullListAdapter.setOnItemClickListener(new OnItemClickListener<AdminPhoneDetailNote>() {
             @Override
             public void onItemClick(ViewGroup parent, View view, AdminPhoneDetailNote adminPhoneDetailNote, int position) {

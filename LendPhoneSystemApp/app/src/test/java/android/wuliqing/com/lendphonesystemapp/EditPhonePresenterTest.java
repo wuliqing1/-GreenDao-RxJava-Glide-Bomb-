@@ -29,7 +29,7 @@ public class EditPhonePresenterTest extends TestCase {
         phoneTableAction = Mockito.spy(new PhoneTableAction());
         phoneNote = Mockito.spy(new PhoneNote());
         addPhonePresenter.attach(addPhoneView);
-        addPhonePresenter.setDataBaseAction(phoneTableAction);
+//        addPhonePresenter.setDataBaseAction(phoneTableAction);
     }
 
     @Override

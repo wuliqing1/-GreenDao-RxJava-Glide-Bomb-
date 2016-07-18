@@ -68,7 +68,7 @@ public class PermissionManager {
         List<String> rationales = map.get("rationale");
         if (deniedPermissions.size() > 0) {
             // 第一次点击deny才调用，mIsPositive是为了防止点确认解释框后调request()递归调onShowRationale
-            if (rationales.size() > 0 && mIsPositive == false) {
+            if (rationales.size() > 0 && !mIsPositive) {
                 if (mListener != null ) {
                     mListener.onShowRationale(rationales.toArray(new String[rationales.size()]));
                 }

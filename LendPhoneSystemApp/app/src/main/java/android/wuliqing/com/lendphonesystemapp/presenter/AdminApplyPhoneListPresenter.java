@@ -27,9 +27,9 @@ import zte.phone.greendao.PhoneNote;
  * Created by 10172915 on 2016/5/27.
  */
 public class AdminApplyPhoneListPresenter extends BasePresenter<AdminApplyPhoneListView> {
-    private DataBaseAction mLendPhoneTableAction;
-    private DataBaseAction mPhoneTableAction;
-    private BaseHttp mBaseHttp = new BmobLendPhoneHttp();
+    private final DataBaseAction mLendPhoneTableAction;
+    private final DataBaseAction mPhoneTableAction;
+    private final BaseHttp mBaseHttp = new BmobLendPhoneHttp();
 
 
     public AdminApplyPhoneListPresenter() {

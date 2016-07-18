@@ -17,8 +17,8 @@ import zte.phone.greendao.LendPhoneNote;
  */
 public class LendPhoneListAdapter extends BasePullListAdapter<LendPhoneNote> {
 
-    public LendPhoneListAdapter(Context context, int layoutId, List<LendPhoneNote> datas) {
-        super(context, layoutId, datas);
+    public LendPhoneListAdapter(Context context, List<LendPhoneNote> datas) {
+        super(context, R.layout.lend_phone_list_item_view, datas);
     }
 
     @Override

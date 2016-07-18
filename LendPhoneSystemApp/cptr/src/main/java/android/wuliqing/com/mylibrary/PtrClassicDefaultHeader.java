@@ -15,11 +15,12 @@ import android.wuliqing.com.mylibrary.indicator.PtrIndicator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler {
 
     private final static String KEY_SharedPreferences = "cube_ptr_classic_last_update";
-    private static SimpleDateFormat sDataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static SimpleDateFormat sDataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
     private int mRotateAniTime = 150;
     private RotateAnimation mFlipAnimation;
     private RotateAnimation mReverseFlipAnimation;
@@ -52,6 +53,7 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
         TypedArray arr = getContext().obtainStyledAttributes(attrs, R.styleable.PtrClassicHeader, 0, 0);
         if (arr != null) {
             mRotateAniTime = arr.getInt(R.styleable.PtrClassicHeader_ptr_rotate_ani_time, mRotateAniTime);
+            arr.recycle();
         }
         buildAnimation();
         View header = LayoutInflater.from(getContext()).inflate(R.layout.cube_ptr_classic_default_header, this);
@@ -166,7 +168,7 @@ public class PtrClassicDefaultHeader extends FrameLayout implements PtrUIHandler
         SharedPreferences sharedPreferences = getContext().getSharedPreferences(KEY_SharedPreferences, 0);
         if (!TextUtils.isEmpty(mLastUpdateTimeKey)) {
             mLastUpdateTime = new Date().getTime();
-            sharedPreferences.edit().putLong(mLastUpdateTimeKey, mLastUpdateTime).commit();
+            sharedPreferences.edit().putLong(mLastUpdateTimeKey, mLastUpdateTime).apply();
         }
     }
 

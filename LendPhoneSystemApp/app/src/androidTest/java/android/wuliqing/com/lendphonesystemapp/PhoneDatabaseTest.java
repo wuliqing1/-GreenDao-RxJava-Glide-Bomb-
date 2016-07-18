@@ -1,7 +1,6 @@
 package android.wuliqing.com.lendphonesystemapp;
 
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.test.AndroidTestCase;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DBHelper;
 
@@ -74,7 +73,7 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         phoneNoteDao.deleteAll();
 
         PhoneNote phoneNote = new PhoneNote();
-        phoneNote.setPhone_number(10);
+        phoneNote.setPhone_number(10L);
         phoneNoteDao.insert(phoneNote);
         Cursor cursor = phoneNoteDao.getDatabase().query(PhoneNoteDao.TABLENAME,
                 new String[]{PhoneNoteDao.Properties.Phone_number.columnName}, null, null, null, null, null);
@@ -84,7 +83,7 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         assertEquals(10, cursor.getInt(0));
         cursor.close();
         phoneNote.setBmob_phone_id("");
-        phoneNote.setPhone_number(5);
+        phoneNote.setPhone_number(5L);
         phoneNoteDao.update(phoneNote);
         Cursor cursor1 = phoneNoteDao.getDatabase().query(PhoneNoteDao.TABLENAME,
                 new String[]{PhoneNoteDao.Properties.Phone_number.columnName}, null, null, null, null, null);
@@ -118,14 +117,14 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         List<PhoneNote> list = DBHelper.getInstance().PhoneTableQuery();
         assertEquals(2, list.size());
         assertNotNull(list.get(0));
-        assertEquals(1, list.get(0).getBmob_phone_id());
+        assertEquals("1", list.get(0).getBmob_phone_id());
         assertEquals("P635A50", list.get(0).getPhone_name());
         assertEquals(10, list.get(0).getPhone_number().intValue());
         assertEquals("MT6735P", list.get(0).getProject_name());
 //        assertEquals("2016-5-25", list.get(0).getPhone_time());
 //        assertEquals("1.png", list.get(0).getPhone_photo());
         assertNotNull(list.get(1));
-        assertEquals(2, list.get(1).getBmob_phone_id());
+        assertEquals("2", list.get(1).getBmob_phone_id());
         assertEquals("P635A10", list.get(1).getPhone_name());
         assertEquals(8, list.get(1).getPhone_number().intValue());
         assertEquals("MT6735M", list.get(1).getProject_name());
@@ -184,7 +183,7 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder().build().list();
         assertEquals(1, list.size());
         assertNotNull(list.get(0));
-        list.get(0).setLend_phone_number(2);
+        list.get(0).setLend_phone_number(2L);
         lendPhoneNoteDao.update(list.get(0));
         Cursor cursor = lendPhoneNoteDao.getDatabase().query(LendPhoneNoteDao.TABLENAME,
                 new String[]{LendPhoneNoteDao.Properties.Lend_phone_number.columnName},null,null,null,null,null);
@@ -293,20 +292,20 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
     private void insertPhoneNote(PhoneNoteDao phoneNoteDao) {
         PhoneNote phoneNote = new PhoneNote();
         phoneNote.setPhone_name("P635A50");
-        phoneNote.setPhone_number(10);
+        phoneNote.setPhone_number(10L);
         phoneNote.setProject_name("MT6735P");
         phoneNote.setPhone_time("2016-6-17");
-        Drawable drawable = mContext.getResources().getDrawable(R.mipmap.ic_launcher);
+//        Drawable drawable = mContext.getResources().getDrawable(R.mipmap.ic_launcher);
         phoneNoteDao.insert(phoneNote);
     }
 
     private void insertPhoneNote1(PhoneNoteDao phoneNoteDao) {
         PhoneNote phoneNote1 = new PhoneNote();
         phoneNote1.setPhone_name("P635A10");
-        phoneNote1.setPhone_number(8);
+        phoneNote1.setPhone_number(8L);
         phoneNote1.setProject_name("MT6735M");
         phoneNote1.setPhone_time("2016-6-17");
-        Drawable drawable = mContext.getResources().getDrawable(R.mipmap.ic_launcher);
+//        Drawable drawable = mContext.getResources().getDrawable(R.mipmap.ic_launcher);
         phoneNoteDao.insert(phoneNote1);
     }
 
@@ -314,7 +313,7 @@ public class PhoneDatabaseTest extends AndroidTestCase {//AbstractDaoSessionTest
         LendPhoneNote lendPhoneNote = new LendPhoneNote();
         lendPhoneNote.setLend_phone_name("wuliqing");
         lendPhoneNote.setLend_phone_time("2016-6-17");
-        lendPhoneNote.setLend_phone_number(2);
+        lendPhoneNote.setLend_phone_number(2L);
         lendPhoneNote.setAttach_bmob_phone_id(phone_id);
         lendPhoneNoteDao.insert(lendPhoneNote);
     }

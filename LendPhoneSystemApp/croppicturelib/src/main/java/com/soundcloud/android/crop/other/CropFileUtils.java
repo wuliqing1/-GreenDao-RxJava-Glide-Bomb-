@@ -72,7 +72,9 @@ public class CropFileUtils {
             int column_index = cursor
                     .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
-            return cursor.getString(column_index);
+            String path = cursor.getString(column_index);
+            cursor.close();
+            return path;
         }
         return uri.getPath();
     }

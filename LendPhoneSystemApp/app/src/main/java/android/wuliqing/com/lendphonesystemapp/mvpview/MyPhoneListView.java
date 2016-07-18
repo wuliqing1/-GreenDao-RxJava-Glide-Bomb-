@@ -8,7 +8,7 @@ import java.util.List;
  * Created by 10172915 on 2016/5/27.
  */
 public interface MyPhoneListView extends MvpView {
-    public void onFetchedLendPhones(List<AdminPhoneDetailNote> adminPhoneDetailNotes);
+    void onFetchedLendPhones(List<AdminPhoneDetailNote> adminPhoneDetailNotes);
 
-    public void onAgreeResult(boolean result);
+    void onAgreeResult(boolean result);
 }

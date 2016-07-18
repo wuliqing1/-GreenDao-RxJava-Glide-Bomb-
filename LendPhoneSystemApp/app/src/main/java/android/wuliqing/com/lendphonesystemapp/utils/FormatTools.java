@@ -33,8 +33,7 @@ public class FormatTools {
 
     // 将byte[]转换成InputStream
     public InputStream Byte2InputStream(byte[] b) {
-        ByteArrayInputStream bais = new ByteArrayInputStream(b);
-        return bais;
+        return new ByteArrayInputStream(b);
     }
 
     // 将InputStream转换成byte[]
@@ -57,16 +56,14 @@ public class FormatTools {
     public InputStream Bitmap2InputStream(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        InputStream is = new ByteArrayInputStream(baos.toByteArray());
-        return is;
+        return new ByteArrayInputStream(baos.toByteArray());
     }
 
     // 将Bitmap转换成InputStream
     public InputStream Bitmap2InputStream(Bitmap bm, int quality) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.PNG, quality, baos);
-        InputStream is = new ByteArrayInputStream(baos.toByteArray());
-        return is;
+        return new ByteArrayInputStream(baos.toByteArray());
     }
 
     // 将InputStream转换成Bitmap
@@ -131,7 +128,6 @@ public class FormatTools {
     // Bitmap转换成Drawable
     public Drawable bitmap2Drawable(Bitmap bitmap) {
         BitmapDrawable bd = new BitmapDrawable(bitmap);
-        Drawable d = (Drawable) bd;
-        return d;
+        return (Drawable) bd;
     }
 }

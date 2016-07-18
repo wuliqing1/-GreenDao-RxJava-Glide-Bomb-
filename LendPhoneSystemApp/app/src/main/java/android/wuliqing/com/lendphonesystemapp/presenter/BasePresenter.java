@@ -33,7 +33,7 @@ import android.wuliqing.com.lendphonesystemapp.mvpview.MvpView;
  * @author wuliqing
  */
 public abstract class BasePresenter<T extends MvpView> {
-    protected T mView;
+    T mView;
 
     public void attach(T view) {
         mView = view;

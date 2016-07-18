@@ -137,7 +137,7 @@ public class SwipeRefreshHelper {
         return isLoading;
     }
 
-    public static interface OnSwipeRefreshListener {
-        public void onfresh();
+    public interface OnSwipeRefreshListener {
+        void onfresh();
     }
 }

@@ -26,10 +26,11 @@ import zte.phone.greendao.PhoneNote;
 /**
  * Created by 10172915 on 2016/5/27.
  */
+@SuppressWarnings("unchecked")
 public class AdminApplyBackUpListPresenter extends BasePresenter<AdminApplyBackUpListView> {
-    private DataBaseAction mLendPhoneTableAction;
-    private DataBaseAction mPhoneTableAction;
-    private BaseHttp mBaseHttp = new BmobLendPhoneHttp();
+    private final DataBaseAction mLendPhoneTableAction;
+    private final DataBaseAction mPhoneTableAction;
+    private final BaseHttp mBaseHttp = new BmobLendPhoneHttp();
 
 
     public AdminApplyBackUpListPresenter() {
@@ -39,6 +40,7 @@ public class AdminApplyBackUpListPresenter extends BasePresenter<AdminApplyBackU
 
     public void queryApplyDataBaseAll() {
         Observable.create(new Observable.OnSubscribe<List<AdminPhoneDetailNote>>() {
+            @SuppressWarnings("unchecked")
             @Override
             public void call(Subscriber<? super List<AdminPhoneDetailNote>> subscriber) {
                 List<LendPhoneNote> list = mLendPhoneTableAction

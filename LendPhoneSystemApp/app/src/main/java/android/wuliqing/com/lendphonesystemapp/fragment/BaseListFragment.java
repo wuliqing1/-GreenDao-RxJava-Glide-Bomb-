@@ -20,9 +20,9 @@ import android.wuliqing.com.lendphonesystemapp.widgets.layoutmanager.MyLinearLay
  * Powered by www.stay4it.com
  */
 public abstract class BaseListFragment<T> extends Fragment implements PullRecycler.OnRecyclerRefreshListener {
-    protected BasePullListAdapter adapter;
-    protected PullRecycler recycler;
-    protected int page = 1;
+    BasePullListAdapter adapter;
+    PullRecycler recycler;
+    int page = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

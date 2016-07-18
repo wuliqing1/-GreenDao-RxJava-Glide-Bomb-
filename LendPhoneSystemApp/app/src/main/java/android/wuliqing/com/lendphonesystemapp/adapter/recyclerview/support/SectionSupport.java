@@ -4,9 +4,9 @@ package android.wuliqing.com.lendphonesystemapp.adapter.recyclerview.support;
  * Created by zhy on 16/4/9.
  */
 public interface SectionSupport<T> {
-    public int sectionHeaderLayoutId();
+    int sectionHeaderLayoutId();
 
-    public int sectionTitleTextViewId();
+    int sectionTitleTextViewId();
 
-    public String getTitle(T t);
+    String getTitle(T t);
 }

@@ -6,8 +6,8 @@ import android.view.View.OnClickListener;
 
 public interface ViewHandler {
 
-	public boolean handleSetAdapter(View contentView, ILoadViewMoreFactory.ILoadMoreView loadMoreView, OnClickListener onClickLoadMoreListener);
+	boolean handleSetAdapter(View contentView, ILoadViewMoreFactory.ILoadMoreView loadMoreView, OnClickListener onClickLoadMoreListener);
 
-	public void setOnScrollBottomListener(View contentView, OnScrollBottomListener onScrollBottomListener);
+	void setOnScrollBottomListener(View contentView, OnScrollBottomListener onScrollBottomListener);
 
 }

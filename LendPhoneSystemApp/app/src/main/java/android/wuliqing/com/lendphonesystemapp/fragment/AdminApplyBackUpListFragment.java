@@ -28,10 +28,11 @@ import zte.phone.greendao.LendPhoneNote;
 /**
  * Created by 10172915 on 2016/6/1.
  */
+@SuppressWarnings("ALL")
 public class AdminApplyBackUpListFragment extends BaseListFragment<LendPhoneNote> implements AdminApplyBackUpListView {
     private AdminApplyBackUpListPresenter mAdminPhoneListPresenter;
-    private List<AdminPhoneDetailNote> adminPhoneDetailNotes = new ArrayList<>();
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    private final List<AdminPhoneDetailNote> adminPhoneDetailNotes = new ArrayList<>();
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (PhoneDetailActivity.LEND_PHONE_NOTE_CHANGE_ACTION.equals(intent.getAction())) {
@@ -49,7 +50,7 @@ public class AdminApplyBackUpListFragment extends BaseListFragment<LendPhoneNote
         recycler.setRefreshing();
     }
 
-    public void updateData() {
+    private void updateData() {
         if (recycler != null) {
             recycler.setRefreshing();
         }
@@ -82,8 +83,8 @@ public class AdminApplyBackUpListFragment extends BaseListFragment<LendPhoneNote
 
     @Override
     protected BasePullListAdapter createAdapter() {
-        BasePullListAdapter basePullListAdapter = new AdminApplyBackUpListAdapter(getActivity(),
-                R.layout.admin_apply_phone_list_item_view, adminPhoneDetailNotes);
+        BasePullListAdapter<AdminPhoneDetailNote> basePullListAdapter = new AdminApplyBackUpListAdapter(getActivity(),
+                adminPhoneDetailNotes);
         basePullListAdapter.setOnItemClickListener(new OnItemClickListener<AdminPhoneDetailNote>() {
             @Override
             public void onItemClick(ViewGroup parent, View view, AdminPhoneDetailNote adminPhoneDetailNote, int position) {
@@ -122,6 +123,7 @@ public class AdminApplyBackUpListFragment extends BaseListFragment<LendPhoneNote
         mAdminPhoneListPresenter.queryApplyDataBaseAll();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onFetchedLendPhones(List<AdminPhoneDetailNote> lendPhoneNotes) {
         adapter.setData(lendPhoneNotes);

@@ -202,8 +202,23 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            showExitDialog();
+//            super.onBackPressed();
         }
+    }
+
+    private void showExitDialog() {
+        MyDialogFragment.newInstance("", getString(R.string.exit_app_dialog_msg), new MyDialogFragment.DialogListener() {
+            @Override
+            public void onClickDialogOk() {
+                finishActivity();
+            }
+
+            @Override
+            public void onClickDialogCancel() {
+
+            }
+        }).show(getSupportFragmentManager(), "");
     }
 
     @Override

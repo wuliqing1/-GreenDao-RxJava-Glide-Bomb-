@@ -20,9 +20,8 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
 
     @Override
     public List<LendPhoneNote> queryAll() {
-        List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
+        return lendPhoneNoteDao.queryBuilder()
                 .orderDesc(LendPhoneNoteDao.Properties.Lend_phone_time).build().list();
-        return list;
     }
 
     @Override
@@ -30,18 +29,16 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
         if (TextUtils.isEmpty(id)) {
             throw new IllegalArgumentException();
         }
-        List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
+        return lendPhoneNoteDao.queryBuilder()
                 .where(LendPhoneNoteDao.Properties.Attach_bmob_phone_id.eq(id))
                 .orderDesc(LendPhoneNoteDao.Properties.Lend_phone_time).build().list();
-        return list;
     }
 
     @Override
     public List<LendPhoneNote> queryWithColumn(Property property, Object column) {
-        List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
+        return lendPhoneNoteDao.queryBuilder()
                 .where(property.eq(column))
                 .orderDesc(LendPhoneNoteDao.Properties.Lend_phone_time).build().list();
-        return list;
     }
 
     @Override
@@ -112,10 +109,9 @@ public class LendPhoneTableAction implements DataBaseAction<LendPhoneNote> {
             throw new IllegalArgumentException();
         }
         //需要优化，目前只支持lend_phone_name字段查询
-        List<LendPhoneNote> list = lendPhoneNoteDao.queryBuilder()
+        return lendPhoneNoteDao.queryBuilder()
                 .where(LendPhoneNoteDao.Properties.Lend_phone_name.like(key))
                 .orderAsc(LendPhoneNoteDao.Properties.Lend_phone_time).build().list();
-        return list;
     }
 
     @Override

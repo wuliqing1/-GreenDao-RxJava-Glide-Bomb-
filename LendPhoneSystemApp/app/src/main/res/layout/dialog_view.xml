@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:layout_marginLeft="3dp"
-        android:gravity="left" />
+        android:layout_marginStart="3dp"
+        android:gravity="start" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAppearance="@android:style/TextAppearance.Medium"
-            android:text="@android:string/no" />
+            android:text="@android:string/cancel" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAppearance="@android:style/TextAppearance.Medium"
-            android:text="@android:string/yes" />
+            android:text="@android:string/ok" />
     </LinearLayout>
 
 </LinearLayout>

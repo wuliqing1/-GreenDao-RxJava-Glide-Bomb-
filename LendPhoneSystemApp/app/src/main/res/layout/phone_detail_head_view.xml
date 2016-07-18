@@ -12,11 +12,12 @@
             android:id="@+id/phone_detail_item_left_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_margin="5dp">
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:id="@+id/phone_detail_icon_view"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -31,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/phone_detail_icon_view"
                 android:layout_centerHorizontal="true"
-                android:text="name"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="?colorPrimary" />
         </RelativeLayout>
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/phone_detail_item_left_layout"
+            android:layout_toEndOf="@id/phone_detail_item_left_layout"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -58,9 +58,8 @@
                     android:id="@+id/phone_detail_number_left_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@id/phone_detail_number_left_tv"
-                    android:text="10"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/phone_detail_number_left_tv"
                     android:textAppearance="@android:style/TextAppearance.Material.Body1"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -80,9 +79,8 @@
                     android:id="@+id/phone_detail_number_lend_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@id/phone_detail_number_lend_tv"
-                    android:text="10"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/phone_detail_number_lend_tv"
                     android:textAppearance="@android:style/TextAppearance.Material.Body1"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -102,9 +100,8 @@
                     android:id="@+id/phone_detail_names_lend_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@id/phone_detail_names_lend_tv"
-                    android:text="wuliqing "
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/phone_detail_names_lend_tv"
                     android:textAppearance="@android:style/TextAppearance.Material.Body1"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -124,9 +121,8 @@
                     android:id="@+id/phone_detail_record_time_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@id/phone_detail_record_time_tv"
-                    android:text="2010 10-12"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/phone_detail_record_time_tv"
                     android:textAppearance="@android:style/TextAppearance.Material.Body1"
                     android:textStyle="bold" />
             </RelativeLayout>

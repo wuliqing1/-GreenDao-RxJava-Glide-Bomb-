@@ -14,18 +14,32 @@
         android:orientation="vertical"
         android:paddingLeft="5dp">
 
-        <TextView
-            android:id="@+id/input_dialog_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="title"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <!--<TextView-->
+            <!--android:id="@+id/input_dialog_title"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="title"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
-        <EditText
-            android:id="@+id/input_dialog_edit"
+        <!--<EditText-->
+            <!--android:id="@+id/input_dialog_edit"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="text" />-->
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/input_dialog_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/phone_number_apply"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
     <LinearLayout

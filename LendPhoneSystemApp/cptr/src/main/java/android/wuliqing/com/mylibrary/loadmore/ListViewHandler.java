@@ -71,8 +71,6 @@ public class ListViewHandler implements ViewHandler {
         }
     }
 
-    ;
-
     /**
      * 滚动到底部自动加载更多数据
      */
@@ -99,5 +97,4 @@ public class ListViewHandler implements ViewHandler {
         }
     }
 
-    ;
 }

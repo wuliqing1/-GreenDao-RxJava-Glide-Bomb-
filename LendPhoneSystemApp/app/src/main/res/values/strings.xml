@@ -10,7 +10,6 @@
     <string name="add_phone_success">添加手机成功!</string>
     <string name="update_phone_success">更新手机成功!</string>
     <string name="delete_phone_success">删除手机成功!</string>
-    <string name="add_phone_error">添加手机失败,请检查网络!</string>
     <string name="add_phone_alert_dialog">确定对该修改进行保存吗?</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -19,25 +18,25 @@
     <string name="action_sync">同步</string>
     <string name="action_add">添加</string>
     <string name="action_exit">退出</string>
-    <string name="sync_in_msg">正在同步...</string>
+    <string name="sync_in_msg">正在同步&#8230;</string>
     <string name="sync_success_msg">服务器数据同步完成!</string>
     <string name="sync_error_msg">同步失败!!</string>
-    <string name="load_more_message">正在加载...</string>
-    <string name="up_data_message">正在上传...</string>
-    <string name="update_message">正在更新...</string>
-    <string name="apply_message">正在申请...</string>
-    <string name="agree_message">正在处理...</string>
-    <string name="backup_message">正在归还...</string>
-    <string name="delete_message">正在删除...</string>
+    <string name="load_more_message">正在加载&#8230;</string>
+    <string name="up_data_message">正在上传&#8230;</string>
+    <string name="update_message">正在更新&#8230;</string>
+    <string name="apply_message">正在申请&#8230;</string>
+    <string name="agree_message">正在处理&#8230;</string>
+    <string name="backup_message">正在归还&#8230;</string>
+    <string name="delete_message">正在删除&#8230;</string>
     <string name="menu_clear_title">清除本地数据</string>
     <string name="menu_home_title">主界面</string>
     <string name="menu_my_phone_title">我的手机</string>
     <string name="menu_admin_title">管理员</string>
     <string name="menu_additional_title">附加功能</string>
     <string name="phone_number_left">剩余数量:</string>
-    <string name="phone_number_lend">申请数量:</string>
+    <string name="phone_number_lend">借走数量:</string>
+    <string name="phone_number_apply">申请数量:</string>
     <string name="phone_names_lend">借走人员:</string>
-    <string name="phone_name_title">手机名称:</string>
     <string name="phone_number_title">手机数量:</string>
     <string name="lend_phone_name_title">借手机者:</string>
     <string name="lend_phone_time_title">申请时间:</string>
@@ -49,16 +48,15 @@
     <string name="apply_backup_dialog_msg">同意将 <xliff:g id="name">%s</xliff:g> 手机归还吗?</string>
     <string name="phone_delete_dialog_msg">确定删除 <xliff:g id="name">%s</xliff:g> 手机吗？</string>
     <string name="edit_phone_title">编辑手机</string>
-    <string name="none">无</string>
     <string name="select_picture_title">相册</string>
     <string name="select_capture_title">拍照</string>
     <string name="select_delete_title">删除</string>
     <string name="user_no_login_msg">请点击头像登录</string>
     <string name="title_activity_login">登陆</string>
     <string name="title_activity_update">用户更新</string>
+    <string name="exit_app_dialog_msg">确定退出该应用吗?</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">邮箱</string>
     <string name="prompt_name">姓名</string>
     <string name="prompt_password">密码</string>
     <string name="prompt_password_again">重复密码</string>
@@ -69,10 +67,8 @@
     <string name="action_register">注册</string>
     <string name="register_success">注册成功,请登陆!</string>
     <string name="exit_account_message">确定退出该账户吗?</string>
-    <string name="error_invalid_email">邮箱地址无效</string>
     <string name="error_invalid_password">密码太短</string>
     <string name="error_not_same_password">密码不相同</string>
-    <string name="error_incorrect_password">密码不正确</string>
     <string name="error_field_required">该字段不能为空</string>
 
     <string name="need_permission_msg">需要相应权限才能设置头像!</string>
@@ -85,12 +81,11 @@
     <string name="login_prompt_msg">请登录您的账户!</string>
     <string name="input_lend_phone_number_title">申请几部?(剩余<xliff:g id="name">%s</xliff:g>部)</string>
     <string name="input_number_big_msg">借的太多，库存不够!</string>
-    <string name="lend_phone_ing_msg">正在处理...</string>
-    <string name="apply_ing_status">申请中..</string>
+    <string name="apply_ing_status">申请中&#8230;</string>
     <string name="apply_suc_status">到手</string>
     <string name="click_to_agree_title">点击同意</string>
     <string name="click_to_backup_title">点击归还</string>
-    <string name="backup_ing_title">归还中...</string>
+    <string name="backup_ing_title">归还中&#8230;</string>
     <string name="sync_dialog_msg">同步服务器数据,确定?</string>
 
     <string name="admin_apply_phone_tab">申请手机</string>

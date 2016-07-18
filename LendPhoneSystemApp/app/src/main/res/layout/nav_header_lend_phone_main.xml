@@ -13,6 +13,7 @@
 
 
     <ImageView
+        android:contentDescription="@string/app_name"
         android:id="@+id/user_imageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -22,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:orientation="vertical">
 
         <TextView

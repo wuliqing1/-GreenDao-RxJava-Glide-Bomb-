@@ -58,7 +58,7 @@ public class LendPhoneListFragment extends BaseListFragment<PhoneNote> implement
     @Override
     protected BasePullListAdapter createAdapter() {
         BasePullListAdapter basePullListAdapter = new LendPhoneListAdapter(getActivity(),
-                R.layout.lend_phone_list_item_view, lendPhoneNotes);
+                lendPhoneNotes);
         basePullListAdapter.setOnItemClickListener(new OnItemClickListener<LendPhoneNote>() {
             @Override
             public void onItemClick(ViewGroup parent, View view, LendPhoneNote phoneNoteModel, int position) {

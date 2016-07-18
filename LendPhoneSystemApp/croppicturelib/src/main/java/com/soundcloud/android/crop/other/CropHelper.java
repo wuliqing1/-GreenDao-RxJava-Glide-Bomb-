@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import java.io.File;
+import java.util.Locale;
 
 /**
  * Created with Android Studio.
@@ -27,7 +28,7 @@ import java.io.File;
  */
 public class CropHelper {
 
-    public static final String TAG = "CropHelper";
+    private static final String TAG = "CropHelper";
 
     /**
      * request code of Activities or Fragments
@@ -49,7 +50,7 @@ public class CropHelper {
                 Log.e(TAG, "generateUri failed: " + cacheFolder, e);
             }
         }
-        String name = String.format("image-%d.jpg", System.currentTimeMillis());
+        String name = String.format(Locale.ENGLISH, "image-%d.jpg", System.currentTimeMillis());
         return Uri
                 .fromFile(cacheFolder)
                 .buildUpon()
@@ -150,7 +151,8 @@ public class CropHelper {
     }
 
     private static Intent buildCropIntent(String action, CropParams params) {
-        Intent intent = new Intent(action).setDataAndType(params.uri, params.type)
+        //        intent.setClipData(ClipData.newRawUri(MediaStore.EXTRA_OUTPUT,params.uri));
+        return new Intent(action).setDataAndType(params.uri, params.type)
                 .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 .putExtra("crop", "true")
                 .putExtra("scale", params.scale)
@@ -163,8 +165,6 @@ public class CropHelper {
                 .putExtra("noFaceDetection", params.noFaceDetection)
                 .putExtra("scaleUpIfNeeded", params.scaleUpIfNeeded)
                 .putExtra(MediaStore.EXTRA_OUTPUT, params.uri);
-//        intent.setClipData(ClipData.newRawUri(MediaStore.EXTRA_OUTPUT,params.uri));
-        return intent;
     }
 
     // Clear Cache

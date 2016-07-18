@@ -38,7 +38,7 @@ public class PhoneDetailActivity extends SwipeBackActivity implements PhoneDetai
     //    private PhoneNodeWrap mPhoneNodeWrap;
     private String phone_id;
     private PhoneDetailPresenter mPhoneDetailPresenter;
-    private FragmentManager mFragmentManager;
+//    private FragmentManager mFragmentManager;
     private LendPhoneListFragment mLendPhoneListFragment;
     private ImageView mPhonePhoto;
     private TextView phone_detail_name_view;
@@ -124,7 +124,7 @@ public class PhoneDetailActivity extends SwipeBackActivity implements PhoneDetai
 
     private void initListView() {
         final String PHONE_LIST_TAG = "lend_phone_list_tag";
-        mFragmentManager = getSupportFragmentManager();
+        FragmentManager mFragmentManager = getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         mLendPhoneListFragment = (LendPhoneListFragment) mFragmentManager.findFragmentByTag(PHONE_LIST_TAG);
         Bundle bundle = new Bundle();
@@ -139,9 +139,9 @@ public class PhoneDetailActivity extends SwipeBackActivity implements PhoneDetai
     }
 
     private void showInputDialog() {
-        String title = getString(R.string.input_lend_phone_number_title,
-                phone_detail_number_left_view.getText().toString());
-        InputDialogFragment inputDialogFragment = InputDialogFragment.newInstance(0, title, "1");
+//        String title = getString(R.string.input_lend_phone_number_title,
+//                phone_detail_number_left_view.getText().toString());
+        InputDialogFragment inputDialogFragment = InputDialogFragment.newInstance(0, "", "");
         inputDialogFragment.setListener(new InputDialogFragment.OnFragmentInteractionListener() {
             @Override
             public void onFragmentInteraction(String text, int id) {

@@ -8,11 +8,12 @@
         android:id="@+id/phone_item_left_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_margin="5dp">
 
         <ImageView
+            android:contentDescription="@string/app_name"
             android:id="@+id/admin_phone_icon_view"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -27,7 +28,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/admin_phone_icon_view"
             android:layout_centerHorizontal="true"
-            android:text="name"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="?colorPrimary" />
     </RelativeLayout>
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/phone_item_left_layout"
+        android:layout_toEndOf="@id/phone_item_left_layout"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -54,9 +54,8 @@
                 android:id="@+id/admin_lend_phone_name_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/admin_lend_phone_name_tv"
-                android:text="10"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/admin_lend_phone_name_tv"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -69,16 +68,15 @@
                 android:id="@+id/admin_phone_number_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/phone_number_lend"
+                android:text="@string/phone_number_apply"
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
                 android:id="@+id/admin_phone_number_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/admin_phone_number_tv"
-                android:text="10"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/admin_phone_number_tv"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -98,9 +96,8 @@
                 android:id="@+id/admin_phone_time_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/admin_phone_time_tv"
-                android:text="2010 10-12"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/admin_phone_time_tv"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -122,8 +119,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/admin_status_tv"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/admin_status_tv"
                 android:background="@color/colorPrimary"
                 android:padding="2dp"
                 android:text="@string/click_to_agree_title"

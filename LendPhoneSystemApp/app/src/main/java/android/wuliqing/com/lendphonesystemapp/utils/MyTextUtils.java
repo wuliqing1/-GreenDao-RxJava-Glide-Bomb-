@@ -2,6 +2,7 @@ package android.wuliqing.com.lendphonesystemapp.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by 10172915 on 2016/5/31.
@@ -18,9 +19,8 @@ public class MyTextUtils {
     }
 
     public static String getDateStringForName() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
-        String str = format.format(new Date());
-        return str;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss", Locale.ENGLISH);
+        return format.format(new Date());
     }
 
 }

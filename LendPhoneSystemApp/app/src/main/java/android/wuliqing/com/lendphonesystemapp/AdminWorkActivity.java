@@ -8,8 +8,8 @@ import android.wuliqing.com.lendphonesystemapp.fragment.AdminApplyPhoneListFragm
 import android.wuliqing.com.lendphonesystemapp.swipeBack.SwipeBackActivity;
 
 public class AdminWorkActivity extends SwipeBackActivity {
-    private AdminFragmentPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
+//    private AdminFragmentPagerAdapter mSectionsPagerAdapter;
+//    private ViewPager mViewPager;
 
     @Override
     protected void detachPresenter() {
@@ -36,12 +36,12 @@ public class AdminWorkActivity extends SwipeBackActivity {
 
     @Override
     protected void initWidgets() {
-        mSectionsPagerAdapter = new AdminFragmentPagerAdapter(getSupportFragmentManager());
+        AdminFragmentPagerAdapter mSectionsPagerAdapter = new AdminFragmentPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter.addFragment(new AdminApplyPhoneListFragment());
         mSectionsPagerAdapter.addFragment(new AdminApplyBackUpListFragment());
         mSectionsPagerAdapter.addTitle(getString(R.string.admin_apply_phone_tab));
         mSectionsPagerAdapter.addTitle(getString(R.string.admin_apply_backup_tab));
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
