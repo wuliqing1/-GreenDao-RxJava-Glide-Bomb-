@@ -101,8 +101,8 @@ public class SyncDataListenerService extends Service {
                     JsonElement element = new JsonParser().parse(data.toString());
                     Gson gson = new Gson();
                     MyUser myUser = gson.fromJson(element, MyUser.class);
+                    notifyCurUserData(myUser);
                     if (!TextUtils.isEmpty(myUser.getPhoto_url())) {
-                        notifyCurUserData(myUser);
                         BmobPhoneNoteHelp.updateLendPhoneNoteTableWithPhoto(myUser, new UpdateDataListener() {
                             @Override
                             public void onResult(Object result) {

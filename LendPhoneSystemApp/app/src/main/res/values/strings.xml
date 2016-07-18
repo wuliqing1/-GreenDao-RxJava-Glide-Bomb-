@@ -87,7 +87,7 @@
     <string name="click_to_agree_title">点击同意</string>
     <string name="click_to_backup_title">点击归还</string>
     <string name="backup_ing_title">归还中&#8230;</string>
-    <string name="sync_dialog_msg">同步服务器数据,确定?</string>
+    <string name="sync_dialog_msg">同步服务器数据，确定？</string>
 
     <string name="admin_apply_phone_tab">申请手机</string>
     <string name="admin_apply_backup_tab">归还手机</string>
