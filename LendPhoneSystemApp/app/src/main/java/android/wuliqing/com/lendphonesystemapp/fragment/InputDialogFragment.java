@@ -75,7 +75,7 @@ public class InputDialogFragment extends DialogFragment {
             }
         });
         builder.setView(v);
-        final Dialog dialog = builder.create();
+//        final Dialog dialog = builder.create();
         setCancelable(false);
         return builder.create();
     }

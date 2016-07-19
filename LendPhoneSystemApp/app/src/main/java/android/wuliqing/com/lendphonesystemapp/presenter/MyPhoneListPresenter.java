@@ -47,7 +47,7 @@ public class MyPhoneListPresenter extends BasePresenter<MyPhoneListView> {
                                 , LendPhoneNoteDao.Properties.Lend_phone_status.eq(BmobLendPhoneNote.APPLY_BACK_ING_STATUS))
                         .orderDesc(LendPhoneNoteDao.Properties.Lend_phone_time).build().list();
 
-                List<AdminPhoneDetailNote> adminPhoneDetailNotes = new ArrayList<AdminPhoneDetailNote>();
+                List<AdminPhoneDetailNote> adminPhoneDetailNotes = new ArrayList<>();
                 for (int i = 0; i < list.size(); i++) {
                     LendPhoneNote lendPhoneNote = list.get(i);
                     AdminPhoneDetailNote adminPhoneDetailNote = new AdminPhoneDetailNote();

@@ -93,7 +93,7 @@ public class PermissionManager {
      * @param results
      */
     public void onPermissionResult(String[] permissions, int[] results) {
-        List<String> deniedPermissions = new ArrayList<String>();
+        List<String> deniedPermissions = new ArrayList<>();
         for (int i = 0; i < results.length; i++) {
             if (results[i] != PackageManager.PERMISSION_GRANTED) {//未授权
                 deniedPermissions.add(permissions[i]);
@@ -111,9 +111,9 @@ public class PermissionManager {
     }
 
     private Map<String, List<String>> findDeniedPermissions(Activity activity, String... permissions) {
-        Map<String, List<String>> map = new HashMap<String, List<String>>();
-        List<String> denyList = new ArrayList<String>();//未授权的权限
-        List<String> rationaleList = new ArrayList<String>();//需要显示提示框的权限
+        Map<String, List<String>> map = new HashMap<>();
+        List<String> denyList = new ArrayList<>();//未授权的权限
+        List<String> rationaleList = new ArrayList<>();//需要显示提示框的权限
         for (String value : permissions) {
             if (ContextCompat.checkSelfPermission(activity, value) != PackageManager.PERMISSION_GRANTED) {
                 denyList.add(value);

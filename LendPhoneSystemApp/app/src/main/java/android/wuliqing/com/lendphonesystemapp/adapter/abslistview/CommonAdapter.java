@@ -1,7 +1,6 @@
 package android.wuliqing.com.lendphonesystemapp.adapter.abslistview;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,12 +11,12 @@ import java.util.List;
 public abstract class CommonAdapter<T> extends BaseAdapter {
     final Context mContext;
     final List<T> mDatas;
-    private final LayoutInflater mInflater;
+//    private final LayoutInflater mInflater;
     private final int layoutId;
 
     CommonAdapter(Context context, int layoutId, List<T> datas) {
         this.mContext = context;
-        mInflater = LayoutInflater.from(context);
+//        mInflater = LayoutInflater.from(context);
         this.mDatas = datas;
         this.layoutId = layoutId;
     }

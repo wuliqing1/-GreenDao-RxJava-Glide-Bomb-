@@ -111,7 +111,7 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
     private void showPopWindow() {
         requestPermission();
         final ListPopupWindow listPopupWindow = new ListPopupWindow(this);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
                 new String[]{getString(R.string.select_capture_title),
                         getString(R.string.select_picture_title),
                         getString(R.string.select_delete_title)});

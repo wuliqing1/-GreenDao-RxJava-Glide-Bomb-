@@ -43,7 +43,7 @@ public class AdminApplyPhoneListPresenter extends BasePresenter<AdminApplyPhoneL
             public void call(Subscriber<? super List<AdminPhoneDetailNote>> subscriber) {
                 List<LendPhoneNote> list = mLendPhoneTableAction
                         .queryWithColumn(LendPhoneNoteDao.Properties.Lend_phone_status, BmobLendPhoneNote.APPLY_ING_STATUS);
-                List<AdminPhoneDetailNote> adminPhoneDetailNotes = new ArrayList<AdminPhoneDetailNote>();
+                List<AdminPhoneDetailNote> adminPhoneDetailNotes = new ArrayList<>();
                 for (int i = 0; i < list.size(); i++) {
                     LendPhoneNote lendPhoneNote = list.get(i);
                     AdminPhoneDetailNote adminPhoneDetailNote = new AdminPhoneDetailNote();

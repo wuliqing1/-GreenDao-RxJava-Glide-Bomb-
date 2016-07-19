@@ -107,6 +107,7 @@ public class PhoneDetailActivity extends SwipeBackActivity implements PhoneDetai
     protected void initWidgets() {
         initHeadView();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.lend_phone_fab);
+        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,9 +1,11 @@
 package android.wuliqing.com.lendphonesystemapp;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.wuliqing.com.lendphonesystemapp.dataBase.DBHelper;
+
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobConfig;
@@ -12,8 +14,8 @@ import cn.bmob.v3.BmobConfig;
  * Created by 10172915 on 2016/5/25.
  */
 public class LendPhoneApplication extends Application {
-    private static Context mContext;
-//    private static RefWatcher mRefWatcher;
+    private static Application mContext;
+    private static RefWatcher mRefWatcher;
     /**
      * SDK初始化也可以放到Application中
      */
@@ -23,7 +25,7 @@ public class LendPhoneApplication extends Application {
         super.onCreate();
         DBHelper.init(this);
         mContext = this;
-//        mRefWatcher = LeakCanary.install(this);
+        mRefWatcher = LeakCanary.install(this);
 
         //提供以下两种方式进行初始化操作：
 //		//第一：设置BmobConfig，允许设置请求超时时间、文件分片上传时每片的大小、文件的过期时间(单位为秒)
@@ -45,11 +47,11 @@ public class LendPhoneApplication extends Application {
         startService(intent);
     }
 
-    public static Context getAppContext() {
+    public static Application getAppContext() {
         return mContext;
     }
 
-//    public static RefWatcher getRefWatcher() {
-//        return mRefWatcher;
-//    }
+    public static RefWatcher getRefWatcher() {
+        return mRefWatcher;
+    }
 }

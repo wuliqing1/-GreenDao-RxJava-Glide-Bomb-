@@ -96,6 +96,7 @@ public class UserActivity extends SwipeBackActivity implements UserView {
         });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.user_save_button);
+        assert mEmailSignInButton != null;
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -181,7 +182,7 @@ public class UserActivity extends SwipeBackActivity implements UserView {
     private void showPopWindow() {
         requestPermission();
         final ListPopupWindow listPopupWindow = new ListPopupWindow(this);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
                 new String[]{getString(R.string.select_capture_title),
                         getString(R.string.select_picture_title),
                         getString(R.string.select_delete_title)});

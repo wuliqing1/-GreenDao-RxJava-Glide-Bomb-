@@ -3,6 +3,7 @@ package android.wuliqing.com.lendphonesystemapp.fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,7 @@ public class MyDialogFragment extends DialogFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -76,7 +78,7 @@ public class MyDialogFragment extends DialogFragment {
             }
         });
         builder.setView(v);
-        final Dialog dialog = builder.create();
+//        final Dialog dialog = builder.create();
         setCancelable(false);
         return builder.create();
     }

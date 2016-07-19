@@ -2,7 +2,6 @@ package android.wuliqing.com.lendphonesystemapp.adapter.recyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.wuliqing.com.lendphonesystemapp.adapter.ViewHolder;
@@ -16,7 +15,7 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
     protected final Context mContext;
     protected int mLayoutId;
     protected final List<T> mDatas;
-    private final LayoutInflater mInflater;
+//    private final LayoutInflater mInflater;
 
     private OnItemClickListener mOnItemClickListener;
 
@@ -26,7 +25,7 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
 
     public CommonAdapter(Context context, int layoutId, List<T> datas) {
         mContext = context;
-        mInflater = LayoutInflater.from(context);
+//        mInflater = LayoutInflater.from(context);
         mLayoutId = layoutId;
         mDatas = datas;
     }

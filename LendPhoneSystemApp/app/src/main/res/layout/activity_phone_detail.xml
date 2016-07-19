@@ -12,16 +12,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar_view"></include>
+        <include layout="@layout/toolbar_view"/>
 
         <include
             android:id="@+id/phone_head_layout"
-            layout="@layout/phone_detail_head_view"></include>
+            layout="@layout/phone_detail_head_view"/>
 
         <FrameLayout
             android:id="@+id/lend_phone_detail_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></FrameLayout>
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

@@ -42,8 +42,10 @@ public class AdminWorkActivity extends SwipeBackActivity {
         mSectionsPagerAdapter.addTitle(getString(R.string.admin_apply_phone_tab));
         mSectionsPagerAdapter.addTitle(getString(R.string.admin_apply_backup_tab));
         ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
+        assert mViewPager != null;
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        assert tabLayout != null;
         tabLayout.setupWithViewPager(mViewPager);
     }
 

@@ -63,6 +63,7 @@ public class LoginActivity extends SwipeBackActivity implements LoginView {
         });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.login_sign_in_button);
+        assert mEmailSignInButton != null;
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

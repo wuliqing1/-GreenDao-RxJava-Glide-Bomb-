@@ -22,7 +22,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:contentDescription="@string/BMGprsCondition"
                 android:src="@drawable/bmob_update_wifi_disable" />
 
@@ -38,9 +38,9 @@
                 android:id="@+id/bmob_update_id_close"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_alignParentRight="true"
+				android:layout_alignParentEnd="true"
 				android:layout_centerVertical="true"
-				android:layout_marginRight="10dp"
+				android:layout_marginEnd="10dp"
 				android:focusable="true"
 				android:visibility="gone"
 				android:background="@drawable/bmob_update_button_close_bg_selector"/>

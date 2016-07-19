@@ -87,7 +87,7 @@ public class BmobPhoneHttp extends BaseHttp {
 
     @Override
     public void queryOnePhoneWithId(String method, String url, String phone_id, final LoadDataListener loadDataListener) {
-        BmobQuery<BmobPhoneNote> query = new BmobQuery<BmobPhoneNote>();
+        BmobQuery<BmobPhoneNote> query = new BmobQuery<>();
         query.getObject(LendPhoneApplication.getAppContext(), phone_id, new GetListener<BmobPhoneNote>() {
             @Override
             public void onSuccess(BmobPhoneNote bmobPhoneNote) {
