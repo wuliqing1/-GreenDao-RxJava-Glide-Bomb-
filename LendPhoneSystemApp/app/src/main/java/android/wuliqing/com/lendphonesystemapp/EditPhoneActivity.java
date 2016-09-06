@@ -3,6 +3,7 @@ package android.wuliqing.com.lendphonesystemapp;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransfo
 import android.wuliqing.com.lendphonesystemapp.utils.MyTextUtils;
 import android.wuliqing.com.lendphonesystemapp.utils.ProgressDialogHelper;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
+import android.wuliqing.com.lendphonesystemapp.utils.Util;
 
 import com.bumptech.glide.Glide;
 import com.soundcloud.android.crop.Crop;
@@ -62,6 +64,7 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
     private ProgressDialog mProgressDialog;
     private Uri outUri;
     private PermissionManager helper;
+    private int tint_color;
 
     @Override
     protected void detachPresenter() {
@@ -75,6 +78,8 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
         if (mPhone_id != null) {
             mAddPhonePresenter.queryPhoneWithID(mPhone_id);
 //            updateUi();
+        } else {
+            mAdd_phone_photo_view.setImageTintList(ColorStateList.valueOf(tint_color));
         }
     }
 
@@ -106,6 +111,7 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
             }
         });
         initProgressDialog();
+        tint_color = Util.getThemeColorPrimary(this);
     }
 
     private void showPopWindow() {
@@ -130,6 +136,7 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
                     case 2: {
                         mAddPhonePresenter.setBmobFile(null);
                         mAdd_phone_photo_view.setImageResource(R.drawable.ic_camera_48pt_3x);
+                        mAdd_phone_photo_view.setImageTintList(ColorStateList.valueOf(tint_color));
                     }
                     break;
                 }
@@ -150,7 +157,7 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
 
                     @Override
                     public void onGranted() {
-                        ToastUtils.show(EditPhoneActivity.this, getString(R.string.get_permission_success));
+//                        ToastUtils.show(EditPhoneActivity.this, getString(R.string.get_permission_success));
                     }
 
                     @Override
@@ -248,7 +255,7 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
                     public void onClickDialogCancel() {
 
                     }
-                }).show(getSupportFragmentManager(), "");
+                }).show(getFragmentManager(), "");
     }
 
     private boolean isInvalidString(String phone_name, String phone_number) {
@@ -370,7 +377,7 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
 
     private void showMyDialog() {
         MyDialogFragment.newInstance("", getResources().getString(R.string.add_phone_alert_dialog), this)
-                .show(getSupportFragmentManager(), "");
+                .show(getFragmentManager(), "");
     }
 
     @Override
@@ -416,6 +423,9 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
                     .centerCrop()
                     .bitmapTransform(new CropCircleTransformation(this))
                     .into(mAdd_phone_photo_view);
+        } else {
+            mAdd_phone_photo_view.setImageResource(R.drawable.ic_camera_48pt_3x);
+            mAdd_phone_photo_view.setImageTintList(ColorStateList.valueOf(tint_color));
         }
     }
 
@@ -480,6 +490,10 @@ public class EditPhoneActivity extends SwipeBackActivity implements AddPhoneView
                     .bitmapTransform(new CropCircleTransformation(this))
                     .into(mAdd_phone_photo_view);
 //            mAdd_phone_photo_view.setImageURI(uri);
+            if (uri == null) {
+                mAdd_phone_photo_view.setImageResource(R.drawable.ic_camera_48pt_3x);
+                mAdd_phone_photo_view.setImageTintList(ColorStateList.valueOf(tint_color));
+            }
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }

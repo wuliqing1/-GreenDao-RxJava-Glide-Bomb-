@@ -54,6 +54,7 @@ public class AdminApplyPhoneListPresenter extends BasePresenter<AdminApplyPhoneL
                     adminPhoneDetailNotes.add(adminPhoneDetailNote);
                 }
                 subscriber.onNext(adminPhoneDetailNotes);
+                subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

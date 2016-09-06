@@ -1,6 +1,7 @@
 package android.wuliqing.com.lendphonesystemapp.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.text.TextUtils;
 import android.widget.ImageView;
 import android.wuliqing.com.lendphonesystemapp.R;
@@ -37,6 +38,7 @@ public class PhoneListAdapter extends BasePullListAdapter<PhoneNote> {
                     .into((ImageView) holder.getView(R.id.phone_icon_view));
         } else {
             ((ImageView) holder.getView(R.id.phone_icon_view)).setImageResource(R.drawable.ic_phone_iphone_48pt_2x);
+            ((ImageView) holder.getView(R.id.phone_icon_view)).setImageTintList(ColorStateList.valueOf(tint_color));
         }
         if (!TextUtils.isEmpty(phoneNoteModel.getPhone_time())) {
             holder.setText(R.id.phone_record_time_view, phoneNoteModel.getPhone_time().toString());

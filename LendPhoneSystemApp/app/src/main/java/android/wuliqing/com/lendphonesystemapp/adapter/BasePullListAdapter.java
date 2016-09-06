@@ -5,6 +5,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.ViewGroup;
 import android.wuliqing.com.lendphonesystemapp.R;
 import android.wuliqing.com.lendphonesystemapp.adapter.recyclerview.CommonAdapter;
+import android.wuliqing.com.lendphonesystemapp.utils.Util;
 
 import java.util.List;
 
@@ -16,9 +17,10 @@ public abstract class BasePullListAdapter<T> extends CommonAdapter<T> {
 
     protected static final int VIEW_TYPE_LOAD_MORE_FOOTER = 100;
     protected boolean isLoadMoreFooterShown;
-
+    protected int tint_color;
     public BasePullListAdapter(Context context, int layoutId, List<T> datas) {
         super(context, layoutId, datas);
+        tint_color = Util.getThemeColorPrimary(context);
     }
 
     @Override

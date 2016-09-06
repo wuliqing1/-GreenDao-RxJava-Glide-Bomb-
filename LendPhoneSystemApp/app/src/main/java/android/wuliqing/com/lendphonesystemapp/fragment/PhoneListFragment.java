@@ -134,7 +134,7 @@ public class PhoneListFragment extends BaseListFragment<PhoneNote> implements Ph
                     public void onClickDialogCancel() {
 
                     }
-                }).show(getFragmentManager(), "");
+                }).show(getActivity().getFragmentManager(), "");
     }
 
     @Override

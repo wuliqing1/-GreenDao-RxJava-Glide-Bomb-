@@ -1,128 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/phone_list_bg">
+    android:layout_margin="@dimen/cardview_margin"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="2dp">
 
     <RelativeLayout
-        android:id="@+id/phone_item_left_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="5dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:contentDescription="@string/app_name"
-            android:id="@+id/phone_icon_view"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerHorizontal="true"
-            android:padding="5dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_phone_iphone_48pt_2x" />
-
-        <TextView
-            android:id="@+id/phone_name_view"
+        <RelativeLayout
+            android:id="@+id/phone_item_left_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/phone_icon_view"
-            android:layout_centerHorizontal="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?colorPrimary" />
-    </RelativeLayout>
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/phone_item_left_layout"
-        android:orientation="vertical">
+            <ImageView
+                android:id="@+id/phone_icon_view"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_name"
+                android:padding="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_phone_iphone_48pt_2x" />
 
-        <!--<RelativeLayout-->
+            <!--<TextView-->
+            <!--android:id="@+id/phone_name_view"-->
             <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/phone_name_tv"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/phone_name_title"-->
-                <!--android:textAppearance="@android:style/TextAppearance.Material.Body1" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/phone_name_view"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:layout_toRightOf="@id/phone_name_tv"-->
-                <!--android:text="10"-->
-                <!--android:textAppearance="@android:style/TextAppearance.Material.Body1"-->
-                <!--android:textStyle="bold" />-->
-        <!--</RelativeLayout>-->
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/phone_number_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/phone_number_title"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1" />
-
-            <TextView
-                android:id="@+id/phone_number_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_toEndOf="@id/phone_number_tv"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1"
-                android:textStyle="bold" />
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/phone_icon_view"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+            <!--android:textColor="?colorPrimary" />-->
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/phone_item_left_layout"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/phone_project_tv"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/phone_project_name_title"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/phone_project_view"
+                <TextView
+                    android:id="@+id/phone_name_tv"
+                    style="@style/listTextViewStyle1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_name_title" />
+
+                <TextView
+                    android:id="@+id/phone_name_view"
+                    style="@style/listTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/phone_name_tv" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_toEndOf="@id/phone_project_tv"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/phone_number_tv"
+                    style="@style/listTextViewStyle1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_number_title" />
 
-            <TextView
-                android:id="@+id/phone_record_time_tv"
+                <TextView
+                    android:id="@+id/phone_number_view"
+                    style="@style/listTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/phone_number_tv" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/phone_record_time"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/phone_record_time_view"
+                <TextView
+                    android:id="@+id/phone_project_tv"
+                    style="@style/listTextViewStyle1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_project_name_title" />
+
+                <TextView
+                    android:id="@+id/phone_project_view"
+                    style="@style/listTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/phone_project_tv" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_toEndOf="@id/phone_record_time_tv"
-                android:textAppearance="@android:style/TextAppearance.Material.Body1"
-                android:textStyle="bold" />
-        </RelativeLayout>
-    </LinearLayout>
+                android:layout_height="wrap_content">
 
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/phone_record_time_tv"
+                    style="@style/listTextViewStyle1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_record_time" />
+
+                <TextView
+                    android:id="@+id/phone_record_time_view"
+                    style="@style/listTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/phone_record_time_tv" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

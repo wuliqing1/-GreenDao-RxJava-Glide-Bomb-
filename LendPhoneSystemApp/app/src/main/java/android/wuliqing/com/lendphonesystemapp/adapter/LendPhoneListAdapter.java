@@ -1,6 +1,7 @@
 package android.wuliqing.com.lendphonesystemapp.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.widget.ImageView;
 import android.wuliqing.com.lendphonesystemapp.R;
 import android.wuliqing.com.lendphonesystemapp.model.BmobLendPhoneNote;
@@ -36,6 +37,7 @@ public class LendPhoneListAdapter extends BasePullListAdapter<LendPhoneNote> {
                     .into((ImageView) holder.getView(R.id.lend_phone_icon_view));
         } else {
             ((ImageView) holder.getView(R.id.lend_phone_icon_view)).setImageResource(R.drawable.ic_account_circle_60pt_2x);
+            ((ImageView) holder.getView(R.id.lend_phone_icon_view)).setImageTintList(ColorStateList.valueOf(tint_color));
         }
         holder.setText(R.id.lend_phone_time_view, lendPhoneNote.getLend_phone_time());
         if (lendPhoneNote.getLend_phone_status() == BmobLendPhoneNote.APPLY_ING_STATUS) {

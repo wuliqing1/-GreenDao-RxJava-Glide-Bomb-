@@ -35,6 +35,7 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
 //                List<PhoneNoteModel> phoneNoteModels = phoneNotes == null ? null
 //                        : BmobPhoneNoteHelp.getConvertPhoneModelData(phoneNotes);//数据转换
                 subscriber.onNext(phoneNotes);
+                subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -70,6 +71,7 @@ public class PhoneListPresenter extends BasePresenter<PhoneListView> {
 //                        : BmobPhoneNoteHelp.convertPhoneNoteToPhoneNoteModel(phoneNote);//数据转换
                 basePullListAdapter.updateOneData(phoneNote, phone_id);
                 subscriber.onNext(phoneNote);
+                subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -34,11 +34,14 @@
     <string name="menu_my_phone_title">我的手机</string>
     <string name="menu_admin_title">管理员</string>
     <string name="menu_additional_title">附加功能</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_about">关于</string>
     <string name="phone_number_left">剩余数量:</string>
     <string name="phone_number_lend">借走数量:</string>
     <string name="phone_number_apply">申请数量:</string>
     <string name="phone_names_lend">借走人员:</string>
     <string name="phone_number_title">手机数量:</string>
+    <string name="phone_name_title">手机名称:</string>
     <string name="lend_phone_name_title">借手机者:</string>
     <string name="lend_phone_time_title">申请时间:</string>
     <string name="phone_project_name_title">项目名称:</string>
@@ -91,4 +94,21 @@
 
     <string name="admin_apply_phone_tab">申请手机</string>
     <string name="admin_apply_backup_tab">归还手机</string>
+    <string name="aboutContent">做这个项目的缘由是科室内部经常不断的借手机，借着借着手机不知道跑哪去了，很是头疼。后来科长让一个人来统一管理手机。借的人必须登记，这样手机在谁那一目了然。随着项目越来越多，手机也越来越多。管理手机的人每天都要应付借手机和还手机的人，使得自己没法安心工作。我看在眼里也觉得好烦，最近闲了下来，我就打算做一款APP来管理这堆手机，希望能使管理员能轻松点，而且每个人都可以安装APP来查看当前所有手机的状态，借手机只要操作APP即可，管理员看到申请，审批即可，APP会帮你管理手机，岂不是很方便？</string>
+    <string name="open_source">• RxJava: github.com/ReactiveX/RxJava\n• RxAndroid: github.com/ReactiveX/RxAndroid\n• GreenDao: github.com/greenrobot/greenDAO\n• Glide: github.com/bumptech/glide\n• Bmob后台云服务支持</string>
+    <string name="about_bug_title">意见错误反馈</string>
+    <string name="about_update_title">检查软件更新</string>
+    <string name="about_share_title">分享借机系统</string>
+    <string name="about_pay_title">随意捐赠支持</string>
+    <string name="about_blog_title">查看个人博客</string>
+    <string name="about_code_title">查看项目源码</string>
+    <string name="about_tip_two">一切都很值得</string>
+    <string name="about_tip_one">很高兴认识你</string>
+    <string name="about_tip_three">感谢开源的世界和开放的资源</string>
+    <string name="share_txt">欢迎使用“借机系统”，希望每天都是好心情，您可以在http://www.wandoujia.com/apps/com.xiecc.seeWeather下载</string>
+    <string name="share_app">分享-借机系统</string>
+    <string name="change_theme_title">更换主题</string>
+    <string name="clear_cache_title">清除缓存</string>
+    <string name="settings_title">设置</string>
+
 </resources>

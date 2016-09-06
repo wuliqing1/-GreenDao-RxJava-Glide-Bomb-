@@ -124,7 +124,7 @@ public class MyPhoneListFragment extends BaseListFragment<LendPhoneNote> impleme
                     public void onClickDialogCancel() {
 
                     }
-                }).show(getFragmentManager(), "");
+                }).show(getActivity().getFragmentManager(), "");
     }
 
     @Override

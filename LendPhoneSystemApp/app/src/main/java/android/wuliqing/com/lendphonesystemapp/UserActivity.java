@@ -176,7 +176,7 @@ public class UserActivity extends SwipeBackActivity implements UserView {
             public void onClickDialogCancel() {
 
             }
-        }).show(getSupportFragmentManager(), "");
+        }).show(getFragmentManager(), "");
     }
 
     private void showPopWindow() {

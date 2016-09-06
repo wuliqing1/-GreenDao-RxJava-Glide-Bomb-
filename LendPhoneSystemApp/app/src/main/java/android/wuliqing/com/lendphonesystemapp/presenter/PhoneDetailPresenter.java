@@ -72,6 +72,7 @@ public class PhoneDetailPresenter extends BasePresenter<PhoneDetailView> {
                 PhoneNote phoneNode = phoneTableAction.queryOneDataWithID(phone_id);
                 PhoneDetailNote phoneDetailNote = BmobPhoneNoteHelp.convertPhoneNoteToPhoneNoteModel(phoneNode);
                 subscriber.onNext(phoneDetailNote);
+                subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

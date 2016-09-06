@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="界面">
+        <Preference
+            android:key="change_theme"
+            android:title="@string/change_theme_title"/>
+        <!--<CheckBoxPreference-->
+            <!--android:key="animation_start"-->
+            <!--android:title="首页 Item 动画"-->
+            <!--/>-->
+    </PreferenceCategory>
+    <PreferenceCategory android:title="系统">
+        <!--<Preference-->
+            <!--android:key="change_update_time"-->
+            <!--android:title="自动刷新频率"/>-->
+        <!--<CheckBoxPreference-->
+            <!--android:key="notification_model"-->
+            <!--android:title="通知栏常驻"/>-->
+        <Preference
+            android:key="clear_cache"
+            android:title="@string/clear_cache_title"/>
+    </PreferenceCategory>
+</PreferenceScreen>

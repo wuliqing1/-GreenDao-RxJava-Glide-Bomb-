@@ -118,6 +118,7 @@ public class BmobPhoneNoteHelp {
                 }
 
                 subscriber.onNext(lendPhoneNote);
+                subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -166,6 +167,7 @@ public class BmobPhoneNoteHelp {
                 }
 
                 subscriber.onNext(true);
+                subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -196,6 +198,7 @@ public class BmobPhoneNoteHelp {
                 syncLendPhoneNoteTable(bmobPhoneNotes);
 
                 subscriber.onNext(true);
+                subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -276,6 +279,7 @@ public class BmobPhoneNoteHelp {
                 syncPhoneNoteTable(bmobPhoneNotes);
 
                 subscriber.onNext(true);
+                subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

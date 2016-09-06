@@ -112,7 +112,7 @@ public class AdminApplyBackUpListFragment extends BaseListFragment<LendPhoneNote
                     public void onClickDialogCancel() {
 
                     }
-                }).show(getFragmentManager(), "");
+                }).show(getActivity().getFragmentManager(), "");
     }
 
     @Override

@@ -1,1 +1,1 @@
-include ':app', ':phonedaogenerator', ':cptr', ':croppicturelib'
+include ':app', ':phonedaogenerator', ':croppicturelib', ':RxJavaAndRetrofitDemo'

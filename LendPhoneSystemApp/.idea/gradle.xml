@@ -8,21 +8,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/RxJavaAndRetrofitDemo" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/cptr" />
             <option value="$PROJECT_DIR$/croppicturelib" />
             <option value="$PROJECT_DIR$/phonedaogenerator" />
           </set>
         </option>
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/cptr" />
-            <option value="$PROJECT_DIR$/croppicturelib" />
-            <option value="$PROJECT_DIR$/phonedaogenerator" />
-          </set>
-        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

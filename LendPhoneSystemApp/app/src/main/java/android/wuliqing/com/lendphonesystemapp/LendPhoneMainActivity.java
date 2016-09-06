@@ -27,12 +27,15 @@ import android.wuliqing.com.lendphonesystemapp.presenter.MainPresenter;
 import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 import android.wuliqing.com.lendphonesystemapp.utils.PreferenceUtil;
 import android.wuliqing.com.lendphonesystemapp.utils.ProgressDialogHelper;
+import android.wuliqing.com.lendphonesystemapp.utils.RxDrawer;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
 
 import com.bumptech.glide.Glide;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.update.BmobUpdateAgent;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class LendPhoneMainActivity extends BaseToolBarActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainView {
@@ -49,6 +52,7 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
     private TextView user_department;
     private TextView user_position;
     private NavigationView navigationView;
+    private DrawerLayout drawer;
 //    private UpdateResponse ur;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -123,12 +127,12 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             public void onClickDialogCancel() {
 
             }
-        }).show(getSupportFragmentManager(), "");
+        }).show(getFragmentManager(), "");
     }
 
     @Override
     protected void initWidgets() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         assert drawer != null;
@@ -236,7 +240,7 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
             public void onClickDialogCancel() {
 
             }
-        }).show(getSupportFragmentManager(), "");
+        }).show(getFragmentManager(), "");
     }
 
     @Override
@@ -331,28 +335,57 @@ public class LendPhoneMainActivity extends BaseToolBarActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(final MenuItem item) {
         // Handle navigation view item clicks here.
+        RxDrawer.close(drawer).subscribeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Void>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                ToastUtils.show(LendPhoneApplication.getAppContext(), e.toString());
+            }
+
+            @Override
+            public void onNext(Void aVoid) {
+                switchNaveMenu(item);
+            }
+        });
+
+        return true;
+    }
+
+    private void switchNaveMenu(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
+            mToolbar.setTitle(R.string.app_name);
             mFragmentManager.beginTransaction().replace(R.id.fragment_layout_content, mPhoneListFragment).commit();
-        } else if (id == R.id.nav_clear) {
-            mainPresenter.clearDataBase();
-            ToastUtils.show(this, R.string.clear_database_success);
-        } else if (id == R.id.nav_admin) {
-            Intent intent = new Intent(this, AdminWorkActivity.class);
+        }
+//        else if (id == R.id.nav_clear) {
+//            mainPresenter.clearDataBase();
+//            ToastUtils.show(LendPhoneMainActivity.this, R.string.clear_database_success);
+//        }
+        else if (id == R.id.nav_admin) {
+            Intent intent = new Intent(LendPhoneMainActivity.this, AdminWorkActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_user) {
+            mToolbar.setTitle(R.string.menu_my_phone_title);
             mFragmentManager.beginTransaction().replace(R.id.fragment_layout_content, mMyPhoneListFragment).commit();
-        } else if (id == R.id.nav_update) {
-            BmobUpdateAgent.update(this);
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        assert drawer != null;
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+//        else if (id == R.id.nav_update) {
+//            BmobUpdateAgent.update(LendPhoneMainActivity.this);
+//        }
+        else if (id == R.id.nav_set) {
+            Intent intentSetting = new Intent(LendPhoneMainActivity.this, SettingActivity.class);
+            startActivity(intentSetting);
+        } else if (id == R.id.nav_about) {
+            startActivity(new Intent(LendPhoneMainActivity.this, AboutActivity.class));
+        }
     }
 
     @Override

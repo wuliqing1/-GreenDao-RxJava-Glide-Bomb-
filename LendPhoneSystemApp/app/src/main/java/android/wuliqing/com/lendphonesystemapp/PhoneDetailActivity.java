@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +26,7 @@ import android.wuliqing.com.lendphonesystemapp.swipeBack.SwipeBackActivity;
 import android.wuliqing.com.lendphonesystemapp.transformations.CropCircleTransformation;
 import android.wuliqing.com.lendphonesystemapp.utils.ProgressDialogHelper;
 import android.wuliqing.com.lendphonesystemapp.utils.ToastUtils;
+import android.wuliqing.com.lendphonesystemapp.utils.Util;
 
 import com.bumptech.glide.Glide;
 
@@ -142,7 +144,7 @@ public class PhoneDetailActivity extends SwipeBackActivity implements PhoneDetai
     private void showInputDialog() {
 //        String title = getString(R.string.input_lend_phone_number_title,
 //                phone_detail_number_left_view.getText().toString());
-        InputDialogFragment inputDialogFragment = InputDialogFragment.newInstance(0, "", "");
+        InputDialogFragment inputDialogFragment = InputDialogFragment.newInstance(0, "", "1");
         inputDialogFragment.setListener(new InputDialogFragment.OnFragmentInteractionListener() {
             @Override
             public void onFragmentInteraction(String text, int id) {
@@ -197,6 +199,10 @@ public class PhoneDetailActivity extends SwipeBackActivity implements PhoneDetai
                     .centerCrop()
                     .bitmapTransform(new CropCircleTransformation(this))
                     .into(mPhonePhoto);
+        } else {
+            int tint_color = Util.getThemeColorPrimary(this);
+            mPhonePhoto.setImageResource(R.drawable.ic_phone_iphone_48pt_2x);
+            mPhonePhoto.setImageTintList(ColorStateList.valueOf(tint_color));
         }
 
     }

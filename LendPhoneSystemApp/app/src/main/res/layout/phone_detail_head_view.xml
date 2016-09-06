@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/phone_number_left"
-                    android:textAppearance="@android:style/TextAppearance.Material.Body1" />
+                    style="@style/listTextViewStyle1" />
 
                 <TextView
                     android:id="@+id/phone_detail_number_left_view"
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@id/phone_detail_number_left_tv"
-                    android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                    style="@style/listTextViewStyle"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -73,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/phone_number_lend"
-                    android:textAppearance="@android:style/TextAppearance.Material.Body1" />
+                    style="@style/listTextViewStyle1" />
 
                 <TextView
                     android:id="@+id/phone_detail_number_lend_view"
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@id/phone_detail_number_lend_tv"
-                    android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                    style="@style/listTextViewStyle"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/phone_names_lend"
-                    android:textAppearance="@android:style/TextAppearance.Material.Body1" />
+                    style="@style/listTextViewStyle1" />
 
                 <TextView
                     android:id="@+id/phone_detail_names_lend_view"
@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@id/phone_detail_names_lend_tv"
-                    android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                    style="@style/listTextViewStyle"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/phone_record_time"
-                    android:textAppearance="@android:style/TextAppearance.Material.Body1" />
+                    style="@style/listTextViewStyle1" />
 
                 <TextView
                     android:id="@+id/phone_detail_record_time_view"
@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@id/phone_detail_record_time_tv"
-                    android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                    style="@style/listTextViewStyle"
                     android:textStyle="bold" />
             </RelativeLayout>
         </LinearLayout>

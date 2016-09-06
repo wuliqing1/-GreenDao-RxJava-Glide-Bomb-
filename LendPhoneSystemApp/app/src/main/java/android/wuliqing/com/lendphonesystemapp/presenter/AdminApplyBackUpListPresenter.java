@@ -56,6 +56,7 @@ public class AdminApplyBackUpListPresenter extends BasePresenter<AdminApplyBackU
                     adminPhoneDetailNotes.add(adminPhoneDetailNote);
                 }
                 subscriber.onNext(adminPhoneDetailNotes);
+                subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

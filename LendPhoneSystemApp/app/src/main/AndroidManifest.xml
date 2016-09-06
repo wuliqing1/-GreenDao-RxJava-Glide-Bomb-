@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="android.wuliqing.com.lendphonesystemapp"
-    android:versionCode="3"
-    android:versionName="1.3">
+    package="android.wuliqing.com.lendphonesystemapp">
 
     <!-- BmobSDK权限 -->
     <!-- 允许联网 -->
@@ -78,10 +76,17 @@
 
         <activity
             android:name=".AdminWorkActivity"
-            android:label="@string/menu_admin_title"/>
+            android:label="@string/menu_admin_title" />
         <activity
             android:name="cn.bmob.v3.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/menu_about" />
+        <activity
+            android:name=".SettingActivity"
+            android:label="@string/settings_title" />
     </application>
 
 </manifest>

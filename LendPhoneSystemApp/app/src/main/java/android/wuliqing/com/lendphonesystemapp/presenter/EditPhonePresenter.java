@@ -216,6 +216,7 @@ public class EditPhonePresenter extends BasePresenter<AddPhoneView> {
             public void call(Subscriber<? super PhoneNote> subscriber) {
                 PhoneNote mPhoneNote = new PhoneTableAction().queryOneDataWithID(phone_id);
                 subscriber.onNext(mPhoneNote);
+                subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

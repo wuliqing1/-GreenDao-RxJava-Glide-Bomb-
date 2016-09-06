@@ -58,6 +58,7 @@ public class MyPhoneListPresenter extends BasePresenter<MyPhoneListView> {
                     adminPhoneDetailNotes.add(adminPhoneDetailNote);
                 }
                 subscriber.onNext(adminPhoneDetailNotes);
+                subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
